@@ -12,7 +12,7 @@ getVars = (ast) ->
 				@skip()
 
 		leave: (node, parent) ->
-			if node.type == 'FunctionExpression'
+			if node.type == 'VariableDeclarator'
 				vars.push node.id.name
 	}
 
