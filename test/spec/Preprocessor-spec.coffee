@@ -19,3 +19,17 @@ describe 'preprocessor', ->
 
 			expect processed.vars
 			.toEqual ['a', 'b', 'c', 'd']
+
+		it 'gathers all vars from local scopes', ->
+			processed = process '''
+				var a, b, c;
+				function f() {
+					var d;
+				}
+			'''
+
+			expect processed.vars
+			.toEqual ['a', 'b', 'c']
+
+			expect processed.body[1].body.vars
+			.toEqual ['d']

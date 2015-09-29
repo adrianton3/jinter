@@ -8,7 +8,7 @@ getVars = (ast) ->
 	estraverse.traverse ast, {
 		enter: (node, parent) ->
 			if node.type in ['FunctionExpression', 'FunctionDeclaration']
-				functions.push node
+				functions.push node.body
 				@skip()
 
 		leave: (node, parent) ->
