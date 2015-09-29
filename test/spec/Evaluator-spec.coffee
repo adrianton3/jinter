@@ -28,6 +28,9 @@ describe 'ev', ->
 		'"asd" + "dsa"'
 		'123 + "asd"'
 		'"asd" + 123'
+		'(function () { return 123; })()'
+		'(function (a) { return a; })(123)'
+		'(function (a, b) { return a + b; })(123, 456)'
 	].forEach (string) ->
 		it string, ->
 			(expect jinterEv string).toEqual (jsEv string)

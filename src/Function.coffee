@@ -1,9 +1,9 @@
 'use strict'
 
-{ ev, OBJECT } = jinter
+{ OBJECT } = jinter
 
 
-FUNCTION = (@body, @env, @formalArgs) ->
+FUNCTION = (@body, @env, @formalArguments) ->
 	OBJECT.apply @
 	return
 

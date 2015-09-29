@@ -1,9 +1,10 @@
 'use strict'
 
-{ NUMBER, STRING, NULL, UNDEFINED } = jinter
+{ NUMBER, STRING, NULL, UNDEFINED, FUNCTION } = jinter
 
 
 ev = (exp, env) ->
+	throw (new Error 'null env') unless env?
 	Nodes[exp.type] exp, env
 
 
@@ -51,14 +52,26 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 	return
 
 
+Nodes['BlockStatement'] = (exp, env) ->
+	for statement in exp.body
+		returnCandidate = ev statement, env
+		if returnCandidate?.return
+			return returnCandidate
+
+
+Nodes['ReturnStatement'] = (exp, env) ->
+	return: true
+	value: ev exp.argument, env
+
+
 Nodes['CallExpression'] = (exp, env) ->
-	closure = ev exp.callee
+	closure = ev exp.callee, env
 
 	# this
 	newEnv = closure.env.con 'this', NULL
 
 	# arguments
-	newEnv = exp.arguments.reduce (argument, resultingEnv, index) ->
+	newEnv = exp.arguments.reduce (resultingEnv, argument, index) ->
 		name = closure.formalArguments[index]
 		value = ev argument, env
 
@@ -66,11 +79,16 @@ Nodes['CallExpression'] = (exp, env) ->
 	, newEnv
 
 	# vars
-	newEnv = closure.body.vars.reduce (name, resultingEnv) ->
+	newEnv = closure.body.vars.reduce (resultingEnv, name) ->
 		resultingEnv.con name, UNDEFINED
 	, newEnv
 
-	ev closure.body, newEnv
+	returnCandidate = ev closure.body, newEnv
+
+	if returnCandidate?.return
+		returnCandidate.value
+	else
+		UNDEFINED
 
 
 Nodes['FunctionDeclaration'] = (exp, env) ->
