@@ -1,6 +1,6 @@
 'use strict'
 
-{ NUMBER, STRING, NULL } = jinter
+{ NUMBER, STRING, NULL, UNDEFINED } = jinter
 
 
 ev = (exp, env) ->
@@ -54,16 +54,23 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 Nodes['CallExpression'] = (exp, env) ->
 	closure = ev exp.callee
 
-	env = exp.arguments.reduce (argument, env, index) =>
-		env.con 'this', NULL
+	# this
+	newEnv = closure.env.con 'this', NULL
 
+	# arguments
+	newEnv = exp.arguments.reduce (argument, resultingEnv, index) ->
 		name = closure.formalArguments[index]
-		value = ev argument, @env
+		value = ev argument, env
 
-		env.con name, value
-	, @env
+		resultingEnv.con name, value
+	, newEnv
 
-	ev closure.body, closure.env
+	# vars
+	newEnv = closure.body.vars.reduce (name, resultingEnv) ->
+		resultingEnv.con name, UNDEFINED
+	, newEnv
+
+	ev closure.body, newEnv
 
 
 Nodes['FunctionDeclaration'] = (exp, env) ->
@@ -71,6 +78,14 @@ Nodes['FunctionDeclaration'] = (exp, env) ->
 		formalArgument.name
 
 	new FUNCTION exp.body, env, formalArguments
+
+
+Nodes['FunctionExpression'] = (exp, env) ->
+	formalArguments = exp.params.map (formalArgument) ->
+		formalArgument.name
+
+	new FUNCTION exp.body, env, formalArguments
+
 
 
 Nodes['Program'] = (exp, env) ->
