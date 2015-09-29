@@ -15,7 +15,7 @@ OBJECT::get = (key) ->
 
 
 OBJECT::put = (key, value) ->
-	if @extensible and not @map.has key
+	if not @extensible and not @map.has key
 		throw new Error "Object is not extensible"
 	else
 		@map.set key, value

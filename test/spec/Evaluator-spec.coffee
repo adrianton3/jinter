@@ -31,6 +31,8 @@ describe 'ev', ->
 		'(function () { return 123; })()'
 		'(function (a) { return a; })(123)'
 		'(function (a, b) { return a + b; })(123, 456)'
+		'({ a: 123 }).a'
+		'({ a: 123, b: function () { return this.a } }).b()'
 	].forEach (string) ->
 		it string, ->
 			(expect jinterEv string).toEqual (jsEv string)

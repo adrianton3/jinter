@@ -1,6 +1,6 @@
 'use strict'
 
-{ NUMBER, STRING, NULL, UNDEFINED, FUNCTION } = jinter
+{ NUMBER, STRING, NULL, UNDEFINED, FUNCTION, OBJECT } = jinter
 
 
 ev = (exp, env) ->
@@ -64,11 +64,37 @@ Nodes['ReturnStatement'] = (exp, env) ->
 	value: ev exp.argument, env
 
 
+Nodes['ThisExpression'] = (exp, env) ->
+	env.get 'this'
+
+
+Nodes['ObjectExpression'] = (exp, env) ->
+	object = new OBJECT NULL
+
+	exp.properties.forEach (property) ->
+		name = property.key.name
+		value = ev property.value, env
+		object.put name, value
+
+	object
+
+
+Nodes['MemberExpression'] = (exp, env) ->
+	object = ev exp.object, env
+	object.get exp.property.name
+
+
 Nodes['CallExpression'] = (exp, env) ->
-	closure = ev exp.callee, env
+	# determine if it's a method or a function call
+	if exp.callee.type == 'MemberExpression'
+		thisArgument = ev exp.callee.object, env
+		closure = thisArgument.get exp.callee.property.name
+	else
+		thisArgument = NULL
+		closure = ev exp.callee, env
 
 	# this
-	newEnv = closure.env.con 'this', NULL
+	newEnv = closure.env.con 'this', thisArgument
 
 	# arguments
 	newEnv = exp.arguments.reduce (resultingEnv, argument, index) ->
