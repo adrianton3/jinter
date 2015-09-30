@@ -15,10 +15,14 @@ OBJECT::get = (key) ->
 
 
 OBJECT::put = (key, value) ->
+	if key == '__proto__'
+		@proto = value
+		return
+
 	if not @extensible and not @map.has key
 		throw new Error "Object is not extensible"
-	else
-		@map.set key, value
+
+	@map.set key, value
 
 
 OBJECT::seal = ->
