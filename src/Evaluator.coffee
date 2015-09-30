@@ -58,6 +58,14 @@ Nodes['ConditionalExpression'] = (exp, env) ->
 		ev exp.alternate, env
 
 
+Nodes['IfStatement'] = (exp, env) ->
+	testResult = ev exp.test, env
+	if testResult.toBoolean()
+		ev exp.consequent, env
+	else
+		ev exp.alternate, env
+
+
 Nodes['VariableDeclaration'] = (exp, env) ->
 	exp.declarations.forEach (declaration) ->
 		return unless declaration.init?

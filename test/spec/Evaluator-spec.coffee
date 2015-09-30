@@ -46,6 +46,8 @@ describe 'ev', ->
 		'var a = { b: 456 }; a.__proto__ = { b: 123 }; a.b'
 		'var a = { __proto__: { __proto__: { b: 123 } } }; a.b'
 		'var a = { __proto__: { b: 123 } }; a.__proto__.b'
+		'var a; if (true) { a = 123; } else { a = 321; } a'
+		'(function () { if (true) { return 123; } else { return 321; } })()'
 	].forEach (string) ->
 		it string, ->
 			(expect jinterEv string).toEqual (jsEv string)
