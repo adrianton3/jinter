@@ -157,6 +157,34 @@ Nodes['CallExpression'] = (exp, env) ->
 		UNDEFINED
 
 
+Nodes['NewExpression'] = (exp, env) ->
+	closure = ev exp.callee, env
+	thisArgument = new OBJECT closure.get 'prototype'
+
+	# this
+	newEnv = closure.env.con 'this', thisArgument
+
+	# arguments
+	newEnv = exp.arguments.reduce (resultingEnv, argument, index) ->
+		name = closure.formalArguments[index]
+		value = ev argument, env
+
+		resultingEnv.con name, value
+	, newEnv
+
+	# vars
+	newEnv = closure.body.vars.reduce (resultingEnv, name) ->
+		resultingEnv.con name, UNDEFINED
+	, newEnv
+
+	returnCandidate = ev closure.body, newEnv
+
+	if returnCandidate?.return and returnCandidate.value instanceof OBJECT
+			returnCandidate.value
+	else
+		thisArgument
+
+
 Nodes['FunctionDeclaration'] = (exp, env) ->
 	formalArguments = exp.params.map (formalArgument) ->
 		formalArgument.name
@@ -169,7 +197,6 @@ Nodes['FunctionExpression'] = (exp, env) ->
 		formalArgument.name
 
 	new FUNCTION exp.body, env, formalArguments
-
 
 
 Nodes['Program'] = (exp, env) ->

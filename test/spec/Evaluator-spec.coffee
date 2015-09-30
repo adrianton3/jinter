@@ -55,6 +55,22 @@ describe 'ev', ->
 		]], ['if statements', [
 			'var a; if (true) { a = 123; } else { a = 321; } a'
 			'(function () { if (true) { return 123; } else { return 321; } })()'
+		]], ['new', [
+			'var A = function () { this.b = 123; }; var a = new A; a.b'
+			'''
+				var A = function () { this.b = 123; };
+				A.prototype = { c: 456 };
+				var a = new A;
+				a.b + a.c
+			'''
+			'''
+				var A = function () {};
+				A.prototype = { c: 456 };
+				var B = function () {};
+				B.prototype = new A;
+				var b = new B;
+				b.c
+			'''
 	]]].forEach ([ title, specs ]) ->
 		describe title, ->
 			specs.forEach (spec) ->

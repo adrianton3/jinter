@@ -1,10 +1,11 @@
 'use strict'
 
-{ OBJECT } = jinter
+{ OBJECT, NULL } = jinter
 
 
 FUNCTION = (@body, @env, @formalArguments) ->
-	OBJECT.apply @
+	OBJECT.call @, NULL
+	@put 'prototype', new OBJECT NULL
 	return
 
 
