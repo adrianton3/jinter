@@ -45,7 +45,7 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 		return unless declaration.init?
 
 		name = declaration.id.name
-		value = ev declaration.init
+		value = ev declaration.init, env
 		env.set name, value
 
 		return
