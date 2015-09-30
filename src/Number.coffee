@@ -24,8 +24,12 @@ NUMBER::toNumber = ->
 	@value
 
 
+NUMBER::toBoolean = ->
+	Boolean @value
+
+
 NUMBER::toString = ->
-	"#{@value}"
+	String @value
 
 
 NUMBER::isCallable = ->

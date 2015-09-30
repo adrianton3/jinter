@@ -16,6 +16,10 @@ UNDEFINED.toNumber = ->
 	NaN
 
 
+UNDEFINED.toBoolean = ->
+	false
+
+
 UNDEFINED.toString = ->
 	'undefined'
 

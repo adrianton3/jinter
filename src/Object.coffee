@@ -45,6 +45,10 @@ OBJECT::toNumber = ->
 	throw new Error 'Cannot convert object to primitive value'
 
 
+OBJECT::toBoolean = ->
+	true
+
+
 OBJECT::toString = ->
 	toString = @get 'toString'
 

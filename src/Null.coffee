@@ -16,6 +16,10 @@ NULL.toNumber = ->
 	0
 
 
+NULL.toBoolean = ->
+	true
+
+
 NULL.toString = ->
 	'null'
 

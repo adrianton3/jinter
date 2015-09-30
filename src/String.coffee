@@ -18,7 +18,11 @@ STRING::addString = (that) ->
 
 
 STRING::toNumber = ->
-	parseFloat @value
+	Number @value
+
+
+STRING::toBoolean = ->
+	Boolean @value
 
 
 STRING::toString = ->
