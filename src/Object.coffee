@@ -8,7 +8,9 @@ OBJECT = (@proto) ->
 
 
 OBJECT::get = (key) ->
-	if @map.has key
+	if key == '__proto__'
+		@proto
+	else if @map.has key
 		@map.get key
 	else
 		@proto.get key
