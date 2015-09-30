@@ -16,7 +16,7 @@ Node::set = (key, value) ->
 	if @key == key
 		@value = value
 	else
-		@parent.get key
+		@parent.set key, value
 
 	return
 

@@ -52,6 +52,20 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 	return
 
 
+Nodes['AssignmentExpression'] = (exp, env) ->
+	if exp.left.type == 'MemberExpression'
+		object = ev exp.left.object, env
+		name = exp.left.property.name
+		value = ev exp.right, env
+		object.put name, value
+	else
+		name = exp.left.name
+		value = ev exp.right, env
+		env.set name, value
+
+	value
+
+
 Nodes['BlockStatement'] = (exp, env) ->
 	for statement in exp.body
 		returnCandidate = ev statement, env
@@ -133,8 +147,12 @@ Nodes['FunctionExpression'] = (exp, env) ->
 
 
 Nodes['Program'] = (exp, env) ->
+	newEnv = exp.vars.reduce (resultingEnv, name) ->
+		resultingEnv.con name, UNDEFINED
+	, env
+
 	exp.body.reduce (prev, statement) ->
-		ev statement, env
+		ev statement, newEnv
 	, null
 
 
