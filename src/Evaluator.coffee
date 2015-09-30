@@ -1,6 +1,14 @@
 'use strict'
 
-{ NUMBER, STRING, NULL, UNDEFINED, FUNCTION, OBJECT } = jinter
+{
+	NUMBER,
+	BOOLEAN,
+	STRING,
+	NULL,
+	UNDEFINED,
+	FUNCTION,
+	OBJECT
+} = jinter
 
 
 ev = (exp, env) ->
@@ -16,6 +24,8 @@ Nodes['Literal'] = (exp, env) ->
 	switch exp.dataType
 		when 'number'
 			new NUMBER value
+		when 'boolean'
+			new BOOLEAN value
 		when 'string'
 			new STRING value
 		when 'object'
@@ -38,6 +48,14 @@ do ->
 		right = ev exp.right, env
 
 		OPERATORS[exp.operator] left, right
+
+
+Nodes['ConditionalExpression'] = (exp, env) ->
+	testResult = ev exp.test, env
+	if testResult.toBoolean()
+		ev exp.consequent, env
+	else
+		ev exp.alternate, env
 
 
 Nodes['VariableDeclaration'] = (exp, env) ->
