@@ -20,6 +20,10 @@ NUMBER::addString = (that) ->
 	new STRING that.toString() + @toString()
 
 
+NUMBER::sub = (that) ->
+	new NUMBER @toNumber() - that.toNumber()
+
+
 NUMBER::toNumber = ->
 	@value
 

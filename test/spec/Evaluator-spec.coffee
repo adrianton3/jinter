@@ -78,6 +78,17 @@ describe 'ev', ->
 				function g() { return 123 }
 				f()
 			'''
+		]], ['recursion', [
+			'''
+				function sum(n) {
+					if (n) {
+						return n + sum(n - 1)
+					} else {
+						return 0
+					}
+				}
+				sum(10)
+			'''
 	]]].forEach ([ title, specs ]) ->
 		describe title, ->
 			specs.forEach (spec) ->
