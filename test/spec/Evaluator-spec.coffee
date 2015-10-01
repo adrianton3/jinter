@@ -71,6 +71,13 @@ describe 'ev', ->
 				var b = new B;
 				b.c
 			'''
+		]], ['function declarations', [
+			'function f() { return 123 } f()'
+			'''
+				function f() { return g() }
+				function g() { return 123 }
+				f()
+			'''
 	]]].forEach ([ title, specs ]) ->
 		describe title, ->
 			specs.forEach (spec) ->

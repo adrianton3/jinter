@@ -133,21 +133,31 @@ Nodes['CallExpression'] = (exp, env) ->
 		thisArgument = NULL
 		closure = ev exp.callee, env
 
+	# every function gets its scope
+	newEnv = closure.env.addEntry()
+
 	# this
-	newEnv = closure.env.con 'this', thisArgument
+	newEnv.addBinding 'this', thisArgument
 
 	# arguments
-	newEnv = exp.arguments.reduce (resultingEnv, argument, index) ->
+	exp.arguments.forEach (argument, index) ->
 		name = closure.formalArguments[index]
 		value = ev argument, env
 
-		resultingEnv.con name, value
-	, newEnv
+		newEnv.addBinding name, value
+		return
 
 	# vars
-	newEnv = closure.body.vars.reduce (resultingEnv, name) ->
-		resultingEnv.con name, UNDEFINED
-	, newEnv
+	closure.body.vars.forEach (name) ->
+		newEnv.addBinding name, UNDEFINED
+		return
+
+	# function declarations
+	closure.body.functionDeclarations.forEach (node) ->
+		name = node.id.name
+		closure = ev node, newEnv
+		newEnv.addBinding name, closure
+		return
 
 	returnCandidate = ev closure.body, newEnv
 
@@ -161,21 +171,31 @@ Nodes['NewExpression'] = (exp, env) ->
 	closure = ev exp.callee, env
 	thisArgument = new OBJECT closure.get 'prototype'
 
+	# every function gets its scope
+	newEnv = closure.env.addEntry()
+
 	# this
-	newEnv = closure.env.con 'this', thisArgument
+	newEnv.addBinding 'this', thisArgument
 
 	# arguments
-	newEnv = exp.arguments.reduce (resultingEnv, argument, index) ->
+	exp.arguments.forEach (argument, index) ->
 		name = closure.formalArguments[index]
 		value = ev argument, env
 
-		resultingEnv.con name, value
-	, newEnv
+		newEnv.addBinding name, value
+		return
 
 	# vars
-	newEnv = closure.body.vars.reduce (resultingEnv, name) ->
-		resultingEnv.con name, UNDEFINED
-	, newEnv
+	closure.body.vars.forEach (name) ->
+		newEnv.addBinding name, UNDEFINED
+		return
+
+	# function declarations
+	closure.body.functionDeclarations.forEach (node) ->
+		name = node.id.name
+		closure = ev node, newEnv
+		newEnv.addBinding name, closure
+		return
 
 	returnCandidate = ev closure.body, newEnv
 
@@ -200,9 +220,18 @@ Nodes['FunctionExpression'] = (exp, env) ->
 
 
 Nodes['Program'] = (exp, env) ->
-	newEnv = exp.vars.reduce (resultingEnv, name) ->
-		resultingEnv.con name, UNDEFINED
-	, env
+	newEnv = env.addEntry()
+
+	exp.vars.forEach (name) ->
+		newEnv.addBinding name, UNDEFINED
+		return
+
+	# function declarations
+	exp.functionDeclarations.forEach (node) ->
+		name = node.id.name
+		closure = ev node, newEnv
+		newEnv.addBinding name, closure
+		return
 
 	exp.body.reduce (prev, statement) ->
 		ev statement, newEnv

@@ -18,7 +18,7 @@ describe 'preprocessor', ->
 			'''
 
 			expect processed.vars
-			.toEqual ['a', 'b', 'c', 'd']
+			.toEqual new Set ['a', 'b', 'c', 'd']
 
 		it 'gathers all vars from local scopes', ->
 			processed = process '''
@@ -29,7 +29,7 @@ describe 'preprocessor', ->
 			'''
 
 			expect processed.vars
-			.toEqual ['a', 'b', 'c']
+			.toEqual new Set ['a', 'b', 'c']
 
 			expect processed.body[1].body.vars
-			.toEqual ['d']
+			.toEqual new Set ['d']

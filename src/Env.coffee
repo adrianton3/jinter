@@ -1,36 +1,47 @@
 'use strict'
 
 
-Node = (@key, @value, @parent) ->
+{ UNDEFINED } = jinter
+
+
+Node = (@parent) ->
+	@bindings = new Map
 	return
 
 
 Node::get = (key) ->
-	if @key == key
-		@value
+	if @bindings.has key
+		@bindings.get key
 	else
 		@parent.get key
 
 
 Node::set = (key, value) ->
-	if @key == key
-		@value = value
+	if @bindings.has key
+		@bindings.set key, value
 	else
 		@parent.set key, value
 
 	return
 
 
-Node::con = (key, value) ->
-	new Node key, value, @
+Node::addEntry = ->
+	new Node @
+
+
+Node::addBinding = (key, value) ->
+	@bindings.set key, value
 
 
 EMPTY =
 	get: (key) ->
 		throw new Error "Could not find #{key}"
 
-	con: (key, value) ->
-		new Node key, value, EMPTY
+	addEntry: ->
+		new Node EMPTY
+
+	addBinding: ->
+		new Node EMPTY
 
 
 window.jinter ?= {}

@@ -2,7 +2,8 @@
 
 
 getVars = (ast) ->
-	vars = []
+	vars = new Set
+	functionDeclarations = new Set
 	functions = []
 
 	estraverse.traverse ast, {
@@ -13,15 +14,18 @@ getVars = (ast) ->
 
 		leave: (node, parent) ->
 			if node.type == 'VariableDeclarator'
-				vars.push node.id.name
+				vars.add node.id.name
+			if node.type == 'FunctionDeclaration'
+				functionDeclarations.add node
 	}
 
-	{ vars, functions }
+	{ vars, functions, functionDeclarations }
 
 
 processVars = (ast) ->
-	{ vars, functions } = getVars ast
+	{ vars, functions, functionDeclarations } = getVars ast
 	ast.vars = vars
+	ast.functionDeclarations = functionDeclarations
 	functions.forEach processVars
 	return
 
