@@ -75,6 +75,22 @@ Nodes['WhileStatement'] = (exp, env) ->
 		if returnCandidate?.return
 			return returnCandidate
 
+	return
+
+
+Nodes['ForStatement'] = (exp, env) ->
+	ev exp.init, env
+
+	while (ev exp.test, env).toBoolean()
+		returnCandidate = ev exp.body, env
+
+		if returnCandidate?.return
+			return returnCandidate
+
+		ev exp.update, env
+
+	return
+
 
 Nodes['VariableDeclaration'] = (exp, env) ->
 	exp.declarations.forEach (declaration) ->

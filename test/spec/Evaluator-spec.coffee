@@ -105,6 +105,23 @@ describe 'ev', ->
 				}
 				f()
 			'''
+		]], ['while', [
+			'''
+				var sum = 0;
+				for (var i = 10; i; i = i - 1) {
+					sum = sum + i;
+				}
+				sum
+			'''
+			'''
+				function f() {
+					var sum = 0;
+					for (var i = 10; i; i = i - 1) {
+						return 123
+					}
+				}
+				f()
+			'''
 		]], ['recursion', [
 			'''
 				function sum(n) {
