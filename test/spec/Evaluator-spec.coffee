@@ -87,6 +87,24 @@ describe 'ev', ->
 				}
 				sum
 			'''
+			'''
+				function f() {
+					while (true) {
+						return 123
+					}
+				}
+				f()
+			'''
+			'''
+				function f() {
+					while (true) {
+						while (true) {
+							return 123
+						}
+					}
+				}
+				f()
+			'''
 		]], ['recursion', [
 			'''
 				function sum(n) {
