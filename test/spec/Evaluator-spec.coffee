@@ -78,6 +78,15 @@ describe 'ev', ->
 				function g() { return 123 }
 				f()
 			'''
+		]], ['while', [
+			'''
+				var i = 0, sum = 10;
+				while (i) {
+					sum = sum + i;
+					i = i + 1;
+				}
+				sum
+			'''
 		]], ['recursion', [
 			'''
 				function sum(n) {

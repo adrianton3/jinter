@@ -52,6 +52,7 @@ do ->
 
 Nodes['ConditionalExpression'] = (exp, env) ->
 	testResult = ev exp.test, env
+
 	if testResult.toBoolean()
 		ev exp.consequent, env
 	else
@@ -60,10 +61,19 @@ Nodes['ConditionalExpression'] = (exp, env) ->
 
 Nodes['IfStatement'] = (exp, env) ->
 	testResult = ev exp.test, env
+
 	if testResult.toBoolean()
 		ev exp.consequent, env
 	else
 		ev exp.alternate, env
+
+
+Nodes['WhileStatement'] = (exp, env) ->
+	while (ev exp.test, env).toBoolean()
+		returnCandidate = ev exp.body, env
+
+		if returnCandidate?.return
+			return returnCandidate
 
 
 Nodes['VariableDeclaration'] = (exp, env) ->
