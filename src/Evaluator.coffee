@@ -171,10 +171,13 @@ Nodes['CallExpression'] = (exp, env) ->
 
 	# arguments
 	exp.arguments.forEach (argument, index) ->
-		name = closure.formalArguments[index]
 		value = ev argument, env
 
-		newEnv.addBinding name, value
+		# all parameters must be evaluated but only named
+		# ones must be bound in the new environment
+		if index < closure.formalArguments.length
+			name = closure.formalArguments[index]
+			newEnv.addBinding name, value
 		return
 
 	# vars
@@ -213,10 +216,13 @@ Nodes['NewExpression'] = (exp, env) ->
 
 	# arguments
 	exp.arguments.forEach (argument, index) ->
-		name = closure.formalArguments[index]
 		value = ev argument, env
 
-		newEnv.addBinding name, value
+		# all parameters must be evaluated but only named
+		# ones must be bound in the new environment
+		if index < closure.formalArguments.length
+			name = closure.formalArguments[index]
+			newEnv.addBinding name, value
 		return
 
 	# vars

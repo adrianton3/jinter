@@ -78,6 +78,11 @@ describe 'ev', ->
 				function g() { return 123 }
 				f()
 			'''
+		]], ['function calls', [
+			'''
+				// more parameters than formal arguments
+				(function (a, b) { return 123 })(1, 2, 3, 4)
+			'''
 		]], ['while', [
 			'''
 				var i = 0, sum = 10;
