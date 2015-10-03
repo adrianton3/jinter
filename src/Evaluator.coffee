@@ -150,15 +150,7 @@ Nodes['MemberExpression'] = (exp, env) ->
 	object.get exp.property.name
 
 
-Nodes['CallExpression'] = (exp, env) ->
-	# determine if it's a method or a function call
-	if exp.callee.type == 'MemberExpression'
-		thisArgument = ev exp.callee.object, env
-		closure = thisArgument.get exp.callee.property.name
-	else
-		thisArgument = NULL
-		closure = ev exp.callee, env
-
+call = (exp, env, closure, thisArgument) ->
 	# every function gets its scope
 	newEnv = closure.env.addEntry()
 
@@ -192,7 +184,19 @@ Nodes['CallExpression'] = (exp, env) ->
 		newEnv.addBinding name, closure
 		return
 
-	returnCandidate = ev closure.body, newEnv
+	ev closure.body, newEnv
+
+
+Nodes['CallExpression'] = (exp, env) ->
+	# determine if it's a method or a function call
+	if exp.callee.type == 'MemberExpression'
+		thisArgument = ev exp.callee.object, env
+		closure = thisArgument.get exp.callee.property.name
+	else
+		thisArgument = NULL
+		closure = ev exp.callee, env
+
+	returnCandidate = call exp, env, closure, thisArgument
 
 	if returnCandidate?.return
 		returnCandidate.value
@@ -204,40 +208,7 @@ Nodes['NewExpression'] = (exp, env) ->
 	closure = ev exp.callee, env
 	thisArgument = new OBJECT closure.get 'prototype'
 
-	# every function gets its scope
-	newEnv = closure.env.addEntry()
-
-	# own name
-	if closure.ownName?
-		newEnv.addBinding closure.ownName.name, closure
-
-	# this
-	newEnv.addBinding 'this', thisArgument
-
-	# arguments
-	exp.arguments.forEach (argument, index) ->
-		value = ev argument, env
-
-		# all parameters must be evaluated but only named
-		# ones must be bound in the new environment
-		if index < closure.formalArguments.length
-			name = closure.formalArguments[index]
-			newEnv.addBinding name, value
-		return
-
-	# vars
-	closure.body.vars.forEach (name) ->
-		newEnv.addBinding name, UNDEFINED
-		return
-
-	# function declarations
-	closure.body.functionDeclarations.forEach (node) ->
-		name = node.id.name
-		closure = ev node, newEnv
-		newEnv.addBinding name, closure
-		return
-
-	returnCandidate = ev closure.body, newEnv
+	returnCandidate = call exp, env, closure, thisArgument
 
 	if returnCandidate?.return and returnCandidate.value instanceof OBJECT
 			returnCandidate.value
