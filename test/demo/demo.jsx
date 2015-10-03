@@ -33,12 +33,18 @@ var Describe = React.createClass({
 			}, this);
 
 			return <div>
-				<span onClick={this.toggle}>{this.props.text}</span>
+				<div
+					className="describe"
+					onClick={this.toggle}
+				>{this.props.text}</div>
 				<ul>{items}</ul>
 			</div>;
 		} else {
 			return <div>
-				<span onClick={this.toggle}>{this.props.text}</span>
+				<div
+					className="describe"
+					onClick={this.toggle}
+				>{this.props.text}</div>
 			</div>;
 		}
 	}
