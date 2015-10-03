@@ -155,10 +155,10 @@ snippets =
 
 	'while':
 		'simple loop': '''
-			var i = 0, sum = 10;
+			var i = 10, sum = 0;
 			while (i) {
 				sum = sum + i;
-				i = i + 1;
+				i = i - 1;
 			}
 			sum
 		'''
