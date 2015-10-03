@@ -92,6 +92,14 @@ describe 'ev', ->
 				// functions return undefined by default
 				(function () {})()
 			'''
+			'''
+				// currying
+				(function (a) {
+					return function (b) {
+						return a + b
+					}
+				})(123)(456)
+			'''
 		]], ['while', [
 			'''
 				var i = 0, sum = 10;
