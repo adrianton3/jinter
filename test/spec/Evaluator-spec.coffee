@@ -124,6 +124,7 @@ describe 'ev', ->
 			'''
 		]], ['recursion', [
 			'''
+				// function declaration
 				function sum(n) {
 					if (n) {
 						return n + sum(n - 1)
@@ -132,6 +133,16 @@ describe 'ev', ->
 					}
 				}
 				sum(10)
+			'''
+			'''
+				// function expression
+				(function sum(n) {
+					if (n) {
+						return n + sum(n - 1)
+					} else {
+						return 0
+					}
+				})(10)
 			'''
 	]]].forEach ([ title, specs ]) ->
 		describe title, ->

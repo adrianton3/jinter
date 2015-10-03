@@ -3,7 +3,7 @@
 { OBJECT, NULL } = jinter
 
 
-FUNCTION = (@body, @env, @formalArguments) ->
+FUNCTION = (@body, @env, @formalArguments, @ownName) ->
 	OBJECT.call @, NULL
 	@put 'prototype', new OBJECT NULL
 	return

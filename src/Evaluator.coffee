@@ -162,6 +162,10 @@ Nodes['CallExpression'] = (exp, env) ->
 	# every function gets its scope
 	newEnv = closure.env.addEntry()
 
+	# own name
+	if closure.ownName?
+		newEnv.addBinding closure.ownName.name, closure
+
 	# this
 	newEnv.addBinding 'this', thisArgument
 
@@ -199,6 +203,10 @@ Nodes['NewExpression'] = (exp, env) ->
 
 	# every function gets its scope
 	newEnv = closure.env.addEntry()
+
+	# own name
+	if closure.ownName?
+		newEnv.addBinding closure.ownName.name, closure
 
 	# this
 	newEnv.addBinding 'this', thisArgument
@@ -242,7 +250,7 @@ Nodes['FunctionExpression'] = (exp, env) ->
 	formalArguments = exp.params.map (formalArgument) ->
 		formalArgument.name
 
-	new FUNCTION exp.body, env, formalArguments
+	new FUNCTION exp.body, env, formalArguments, exp.id
 
 
 Nodes['Program'] = (exp, env) ->
