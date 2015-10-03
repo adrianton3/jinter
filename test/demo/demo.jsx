@@ -45,10 +45,17 @@ var Describe = React.createClass({
 });
 
 var It = React.createClass({
+	rawHljs: function (source) {
+		var highlight = hljs.highlight('javascript', source, false);
+		return { __html: highlight.value };
+	},
 	render: function () {
 		return <li>
 			<div className="it text">{this.props.text}</div>
-			<div className="source">{this.props.source}</div>
+			<pre
+				className="hljs source"
+				dangerouslySetInnerHTML={this.rawHljs(this.props.source)}
+			/>
 		</li>;
 	}
 });
