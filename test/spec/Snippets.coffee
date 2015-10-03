@@ -1,8 +1,10 @@
 snippets =
 	'literal':
 		'numbers': '1'
+		'booleans': 'true'
+		'strings': '"asd"'
 
-	'+':
+	'+ operator':
 		'numbers': '2 + 3'
 		'strings': '"asd" + "dsa"'
 		'number and string': '123 + "asd"'
