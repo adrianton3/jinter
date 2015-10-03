@@ -58,7 +58,7 @@ var It = React.createClass({
 		};
 	},
 	evJs: function (source) {
-		var resultRaw = eval(source);
+		var resultRaw = new Function('source', 'return eval(source)')(source);
 
 		return resultRaw ?
 			resultRaw.toString() :
