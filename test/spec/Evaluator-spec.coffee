@@ -27,48 +27,76 @@ describe 'ev', ->
 			'undefined'
 
 
-	[['literal', [
-			'1'
-		]], ['+', [
-			'2 + 3'
-			'"asd" + "dsa"'
-			'123 + "asd"'
-			'"asd" + 123'
-		]], ['if expressions', [
-			'true ? 123 : 321'
-			'123 ? 456 : 789'
-			'"" ? 456 : 789'
-		]], ['function calls', [
-			'(function () { return 123; })()'
-			'(function (a) { return a; })(123)'
-			'(function (a, b) { return a + b; })(123, 456)'
-		]], ['objects', [
-			'({ a: 123 }).a'
-			'({ a: 123, b: function () { return this.a } }).b()'
-		]], ['assignment expressions', [
-			'var a; a = 123; a'
-			'var a, b; a = 123; b = 456; a + b'
-			'var a, b; a = b = 123; a + b'
-			'var a; a = {}; a.b = 123; a.b'
-			'var a = 123, b = 456; a + b'
-			'var a = 123, b = a; a + b'
-		]], ['__proto__ and the prototype chain', [
-			'var a = {}; a.__proto__ = { b: 123 }; a.b'
-			'var a = { b: 456 }; a.__proto__ = { b: 123 }; a.b'
-			'var a = { __proto__: { __proto__: { b: 123 } } }; a.b'
-			'var a = { __proto__: { b: 123 } }; a.__proto__.b'
-		]], ['if statements', [
-			'var a; if (true) { a = 123; } else { a = 321; } a'
-			'(function () { if (true) { return 123; } else { return 321; } })()'
-		]], ['new', [
-			'var A = function () { this.b = 123; }; var a = new A; a.b'
+	describes =
+		'literal':
+			'numbers': '1'
+
+		'+':
+			'numbers': '2 + 3'
+			'strings': '"asd" + "dsa"'
+			'number and string': '123 + "asd"'
+			'string and number': '"asd" + 123'
+
+		'if expressions':
+			'booleans cast to boolean': 'true ? 123 : 321'
+			'numbers cast to boolean': '123 ? 456 : 789'
+			'strings cast to boolean': '"" ? 456 : 789'
+
+		'function calls':
+			'one parameter': '(function () { return 123; })()'
+			'two parameters': '(function (a) { return a; })(123)'
+			'three parameters': '(function (a, b) { return a + b; })(123, 456)'
+
+		'objects':
+			'can lookup a property': '({ a: 123 }).a'
+			'can call a property': '({ a: 123, b: function () { return this.a } }).b()'
+
+		'assignment expressions':
+			'one assignment': 'var a; a = 123; a'
+			'two assignments': 'var a, b; a = 123; b = 456; a + b'
+			'assignment is an expression': 'var a, b; a = b = 123; a + b'
+			'assignment to object member': 'var a; a = {}; a.b = 123; a.b'
+			'assignment from declaration': 'var a = 123, b = 456; a + b'
+			'assignment from var': 'var a = 123, b = a; a + b'
+
+		'__proto__ and the prototype chain':
+			'lookup reached proto': 'var a = {}; a.__proto__ = { b: 123 }; a.b'
+			'lookup does not reach proto': 'var a = { b: 456 }; a.__proto__ = { b: 123 }; a.b'
+			'prototype chain': 'var a = { __proto__: { __proto__: { b: 123 } } }; a.b'
+			'lookup on __proto__ directly': 'var a = { __proto__: { b: 123 } }; a.__proto__.b'
+
+		'if statements':
+			'simple if statement': '''
+				var a;
+				if (true) {
+					a = 123;
+				} else {
+					a = 321;
+				}
+				a
 			'''
+			'return from if statement': '''
+				(function () {
+					if (true) {
+						return 123;
+					} else {
+						return 321;
+					}
+				})()'''
+
+		'new':
+			'instantiation and assignment to this': '''
+				var A = function () { this.b = 123; };
+				var a = new A;
+				a.b
+			'''
+			'set prototype': '''
 				var A = function () { this.b = 123; };
 				A.prototype = { c: 456 };
 				var a = new A;
 				a.b + a.c
 			'''
-			'''
+			'inheritance': '''
 				var A = function () {};
 				A.prototype = { c: 456 };
 				var B = function () {};
@@ -76,32 +104,32 @@ describe 'ev', ->
 				var b = new B;
 				b.c
 			'''
-		]], ['function declarations', [
-			'function f() { return 123 } f()'
-			'''
+
+		'function declarations':
+			'functions are bound to their name': 'function f() { return 123 } f()'
+			'all functions are bound to their name before execution': '''
 				function f() { return g() }
 				function g() { return 123 }
 				f()
 			'''
-		]], ['function calls', [
-			'''
-				// more parameters than formal arguments
+
+		'function calls':
+			'more parameters than formal arguments': '''
 				(function (a, b) { return 123 })(1, 2, 3, 4)
 			'''
-			'''
-				// functions return undefined by default
+			'functions return undefined by default': '''
 				(function () {})()
 			'''
-			'''
-				// currying
+			'currying': '''
 				(function (a) {
 					return function (b) {
 						return a + b
 					}
 				})(123)(456)
 			'''
-		]], ['while', [
-			'''
+
+		'while':
+			'simple loop': '''
 				var i = 0, sum = 10;
 				while (i) {
 					sum = sum + i;
@@ -109,7 +137,7 @@ describe 'ev', ->
 				}
 				sum
 			'''
-			'''
+			'return from while': '''
 				function f() {
 					while (true) {
 						return 123
@@ -117,7 +145,7 @@ describe 'ev', ->
 				}
 				f()
 			'''
-			'''
+			'return from nested while': '''
 				function f() {
 					while (true) {
 						while (true) {
@@ -127,15 +155,16 @@ describe 'ev', ->
 				}
 				f()
 			'''
-		]], ['while', [
-			'''
+
+		'for':
+			'simple for': '''
 				var sum = 0;
 				for (var i = 10; i; i = i - 1) {
 					sum = sum + i;
 				}
 				sum
 			'''
-			'''
+			'return from for': '''
 				function f() {
 					var sum = 0;
 					for (var i = 10; i; i = i - 1) {
@@ -144,9 +173,9 @@ describe 'ev', ->
 				}
 				f()
 			'''
-		]], ['recursion', [
-			'''
-				// function declaration
+
+		'recursion':
+			'function declaration can refer to itself': '''
 				function sum(n) {
 					if (n) {
 						return n + sum(n - 1)
@@ -156,8 +185,7 @@ describe 'ev', ->
 				}
 				sum(10)
 			'''
-			'''
-				// function expression
+			'named function expression can refer to itself': '''
 				(function sum(n) {
 					if (n) {
 						return n + sum(n - 1)
@@ -166,8 +194,10 @@ describe 'ev', ->
 					}
 				})(10)
 			'''
-	]]].forEach ([ title, specs ]) ->
+
+
+	for title, its of describes
 		describe title, ->
-			specs.forEach (spec) ->
-				it spec, ->
+			for text, spec of its
+				it text, ->
 					(expect jinterEv spec).toEqual (jsEv spec)
