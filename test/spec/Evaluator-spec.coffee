@@ -19,7 +19,12 @@ describe 'ev', ->
 
 
 	jsEv = (string) ->
-		(eval string).toString()
+		result = eval string
+
+		if result?
+			result.toString()
+		else
+			'undefined'
 
 
 	[['literal', [
@@ -82,6 +87,10 @@ describe 'ev', ->
 			'''
 				// more parameters than formal arguments
 				(function (a, b) { return 123 })(1, 2, 3, 4)
+			'''
+			'''
+				// functions return undefined by default
+				(function () {})()
 			'''
 		]], ['while', [
 			'''
