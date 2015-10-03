@@ -52,28 +52,45 @@ var Describe = React.createClass({
 
 var It = React.createClass({
 	getInitialState: function () {
-		return { result: null };
+		return {
+			resultJinter: null,
+			resultJs: null
+		};
 	},
-	ev: function (e) {
-		e.preventDefault();
+	evJs: function (source) {
+		var resultRaw = eval(source);
 
+		return resultRaw ?
+			resultRaw.toString() :
+			'undefined';
+	},
+	evJinter: function (source) {
 		var tree = esprima.parse(this.props.source);
 		jinter.processLiterals(tree);
 		jinter.processVars(tree);
 
 		var resultRaw = jinter.ev(tree, jinter.EMPTY);
 
-		var result = resultRaw ?
+		return resultRaw ?
 			resultRaw.toString() :
 			'undefined';
+	},
+	ev: function (e) {
+		e.preventDefault();
 
-		this.setState({ result: result });
+		this.setState({
+			resultJinter: this.evJinter(this.props.source),
+			resultJs: this.evJs(this.props.source)
+		});
 	},
 	rawHljs: function (source) {
 		var highlight = hljs.highlight('javascript', source, false);
 		return { __html: highlight.value };
 	},
 	render: function () {
+		var message = this.state.resultJinter ?
+			"jinter: " + this.state.resultJinter + "; js: " + this.state.resultJs :
+			"click to eval";
 		return <li onClick={this.ev}>
 			<div className="it text">{this.props.text}</div>
 			<pre
@@ -82,8 +99,7 @@ var It = React.createClass({
 			/>
 			<pre
 				className="hljs source result"
-			>{this.state.result || "click to eval"}
-			</pre>
+			>{message}</pre>
 		</li>;
 	}
 });
