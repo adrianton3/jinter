@@ -65,7 +65,7 @@ var It = React.createClass({
 			'undefined';
 	},
 	evJinter: function (source) {
-		var tree = esprima.parse(this.props.source);
+		var tree = esprima.parse(source);
 		jinter.processLiterals(tree);
 		jinter.processVars(tree);
 
