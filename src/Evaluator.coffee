@@ -158,7 +158,12 @@ Nodes['ObjectExpression'] = (exp, env) ->
 
 Nodes['MemberExpression'] = (exp, env) ->
 	object = ev exp.object, env
-	object.get exp.property.name
+
+	if exp.computed
+		key = ev exp.property, env
+		object.get key.toString()
+	else
+		object.get exp.property.name
 
 
 call = (exp, env, closure, thisArgument) ->
