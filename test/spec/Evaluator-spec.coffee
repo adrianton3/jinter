@@ -28,7 +28,12 @@ describe 'ev', ->
 
 
 	for title, its of window.snippets
-		describe title, ->
-			for text, spec of its
-				it text, ->
-					(expect jinterEv spec).toEqual (jsEv spec)
+		do (title, its) ->
+			describe title, ->
+				for text, spec of its
+					do (text, spec) ->
+						it text, ->
+							(expect jinterEv spec).toEqual (jsEv spec)
+							return
+				return
+	return
