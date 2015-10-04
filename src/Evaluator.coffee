@@ -50,7 +50,8 @@ do ->
 		'-': (left, right) ->
 			new NUMBER left.toNumber() - right.toNumber()
 
-		'*': (e1, e2) -> e1.mul e2
+		'*': (left, right) ->
+			new NUMBER left.toNumber() * right.toNumber()
 
 
 	Nodes['BinaryExpression'] = (exp, env) ->

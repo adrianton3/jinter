@@ -16,6 +16,10 @@ snippets =
 		'number and string': '123 + "234"'
 		'string and number': '"234" + 123'
 
+	'* operator':
+		'numbers': '2 - 3'
+		'strings': '"2" * "3"'
+
 	'if expressions':
 		'booleans cast to boolean': 'true ? 123 : 321'
 		'numbers cast to boolean': '123 ? 456 : 789'
