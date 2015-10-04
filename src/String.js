@@ -5,18 +5,7 @@
 
   STRING = function(value) {
     this.value = value;
-  };
-
-  STRING.prototype.add = function(that) {
-    return that.addString(this);
-  };
-
-  STRING.prototype.addNumber = function(that) {
-    return new STRING(that.toString() + this.toString());
-  };
-
-  STRING.prototype.addString = function(that) {
-    return new STRING(that.toString() + this.toString());
+    this.type = 'string';
   };
 
   STRING.prototype.toNumber = function() {
@@ -29,6 +18,10 @@
 
   STRING.prototype.toString = function() {
     return this.value;
+  };
+
+  STRING.prototype.toPrimitive = function() {
+    return this;
   };
 
   STRING.prototype.isCallable = function() {

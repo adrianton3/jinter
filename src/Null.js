@@ -5,8 +5,10 @@
 
   NULL = {};
 
+  NULL.type = 'null';
+
   NULL.get = function(key) {
-    throw new Error("Cannot read property " + key + " of null");
+    return null;
   };
 
   NULL.put = function(key, value) {

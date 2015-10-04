@@ -5,6 +5,8 @@
 
   UNDEFINED = {};
 
+  UNDEFINED.type = 'undefined';
+
   UNDEFINED.get = function(key) {
     throw new Error("Cannot read property " + key + " of undefined");
   };

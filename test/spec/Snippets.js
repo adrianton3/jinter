@@ -8,11 +8,26 @@
       'booleans': 'true',
       'strings': '"asd"'
     },
-    '+ operator': {
+    'binary +': {
       'numbers': '2 + 3',
       'strings': '"asd" + "dsa"',
       'number and string': '123 + "asd"',
-      'string and number': '"asd" + 123'
+      'string and number': '"asd" + 123',
+      'with toString': 'var a = { toString: function () { return "asd" } };\na + 123',
+      'with valueOf': 'var a = { valueOf: function () { return 234 } };\na + 123',
+      'valueOf has precedence over toString': 'var a = {\n	toString: function () { return "asd" },\n	valueOf: function () { return 234 }\n};\na + 123',
+      'toString can return a number': 'var a = { toString: function () { return 234 } };\na + 123',
+      'valueOf can return a string': 'var a = { valueOf: function () { return "asd" } };\na + 123'
+    },
+    'binary -': {
+      'numbers': '2 - 3',
+      'strings': '"2" - "3"',
+      'number and string': '123 + "234"',
+      'string and number': '"234" + 123'
+    },
+    '* operator': {
+      'numbers': '2 - 3',
+      'strings': '"2" * "3"'
     },
     'if expressions': {
       'booleans cast to boolean': 'true ? 123 : 321',
@@ -25,14 +40,17 @@
       'three parameters': '(function (a, b) { return a + b; })(123, 456)'
     },
     'objects': {
-      'can lookup a property': '({ a: 123 }).a',
-      'can call a property': '({ a: 123, b: function () { return this.a } }).b()'
+      'can lookup a member': '({ a: 123 }).a',
+      'can call a member': '({\n	a: 123,\n	b: function () { return this.a }\n}).b()',
+      'computed member expression': '({ asd: 123 })["a" + "sd"]',
+      'can call a computed member': '({\n	asd: function () { return 123 }\n})["a" + "sd"]()'
     },
     'assignment expressions': {
       'one assignment': 'var a;\na = 123;\na',
       'two assignments': 'var a, b;\na = 123;\nb = 456;\na + b',
       'assignment is an expression': 'var a, b;\na = b = 123;\na + b',
       'assignment to object member': 'var a;\na = {};\na.b = 123;\na.b',
+      'assignment to computed object member': 'var a;\na = {};\na["a" + "sd"] = 123;\na.asd',
       'assignment from declaration': 'var a = 123, b = 456;\na + b',
       'assignment from var': 'var a = 123, b = a;\na + b'
     },

@@ -7,22 +7,7 @@
 
   NUMBER = function(value) {
     this.value = value;
-  };
-
-  NUMBER.prototype.add = function(that) {
-    return that.addNumber(this);
-  };
-
-  NUMBER.prototype.addNumber = function(that) {
-    return new NUMBER(that.toNumber() + this.toNumber());
-  };
-
-  NUMBER.prototype.addString = function(that) {
-    return new STRING(that.toString() + this.toString());
-  };
-
-  NUMBER.prototype.sub = function(that) {
-    return new NUMBER(this.toNumber() - that.toNumber());
+    this.type = 'number';
   };
 
   NUMBER.prototype.toNumber = function() {
@@ -35,6 +20,10 @@
 
   NUMBER.prototype.toString = function() {
     return String(this.value);
+  };
+
+  NUMBER.prototype.toPrimitive = function() {
+    return this;
   };
 
   NUMBER.prototype.isCallable = function() {
