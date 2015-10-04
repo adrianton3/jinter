@@ -2,26 +2,41 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+h1 {
+    font-weight: 400;
+    font-size: 22px;
+    display: block;
+    margin: 0 auto;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: medium;
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
 }
 
-#container {
+.center {
     display: block;
     max-width: 700px;
     margin: 32px auto 0 auto;
 }
 
 .describe {
+    font-weight: 700;
     color: #ffffff;
-    background-color: #123;
+    background-color: #121621;
     margin-bottom: 2px;
     padding: 2px 4px;
 }
 
 .describe:hover {
-    background-color: #154f64;
+    background-color: #0b4283;
 }
 
 .it {
