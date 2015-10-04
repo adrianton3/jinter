@@ -47,7 +47,9 @@ do ->
 			else
 				new NUMBER leftPrimitive.toNumber() + rightPrimitive.toNumber()
 
-		'-': (e1, e2) -> e1.sub e2
+		'-': (left, right) ->
+			new NUMBER left.toNumber() - right.toNumber()
+
 		'*': (e1, e2) -> e1.mul e2
 
 

@@ -9,10 +9,6 @@ NUMBER = (@value) ->
 	return
 
 
-NUMBER::sub = (that) ->
-	new NUMBER @toNumber() - that.toNumber()
-
-
 NUMBER::toNumber = ->
 	@value
 
