@@ -1,0 +1,41 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#container {
+    display: block;
+    max-width: 700px;
+    margin: 32px auto 0 auto;
+}
+
+.describe {
+    color: #ffffff;
+    background-color: #123;
+    margin-bottom: 2px;
+    padding: 2px 4px;
+}
+
+.describe:hover {
+    background-color: #154f64;
+}
+
+.it {
+    padding: 2px 4px;
+    margin-top: 8px;
+}
+
+.source {
+    font-family: 'Consolas', 'Monaco', 'Source Code Pro', monospace;
+    font-size: 16px;
+    margin: 0;
+}
+
+.result {
+    margin-top: 4px;
+    margin-bottom: 32px;
+}

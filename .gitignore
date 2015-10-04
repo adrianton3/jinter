@@ -1,0 +1,4 @@
+.idea
+src/**/*.coffee
+test/spec/**/*.coffee
+test/lib
