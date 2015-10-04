@@ -212,7 +212,13 @@ Nodes['CallExpression'] = (exp, env) ->
 	# determine if it's a method or a function call
 	if exp.callee.type == 'MemberExpression'
 		thisArgument = ev exp.callee.object, env
-		closure = thisArgument.get exp.callee.property.name
+
+		key = if exp.callee.computed
+			(ev exp.callee.property, env).toString()
+		else
+			exp.callee.property.name
+
+		closure = thisArgument.get key
 	else
 		thisArgument = NULL
 		closure = ev exp.callee, env

@@ -54,9 +54,19 @@ snippets =
 		'three parameters': '(function (a, b) { return a + b; })(123, 456)'
 
 	'objects':
-		'can lookup a property': '({ a: 123 }).a'
-		'can call a property': '({ a: 123, b: function () { return this.a } }).b()'
+		'can lookup a member': '({ a: 123 }).a'
+		'can call a member': '''
+			({
+				a: 123,
+				b: function () { return this.a }
+			}).b()
+		'''
 		'computed member expression': '({ asd: 123 })["a" + "sd"]'
+		'can call a computed member': '''
+			({
+				asd: function () { return 123 }
+			})["a" + "sd"]()
+		'''
 
 	'assignment expressions':
 		'one assignment': '''
