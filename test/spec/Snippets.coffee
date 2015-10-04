@@ -9,6 +9,29 @@ snippets =
 		'strings': '"asd" + "dsa"'
 		'number and string': '123 + "asd"'
 		'string and number': '"asd" + 123'
+		'with toString': '''
+			var a = { toString: function () { return "asd" } };
+			a + 123
+		'''
+		'with valueOf': '''
+			var a = { valueOf: function () { return 234 } };
+			a + 123
+		'''
+		'valueOf has precedence over toString': '''
+			var a = {
+				toString: function () { return "asd" },
+				valueOf: function () { return 234 }
+			};
+			a + 123
+		'''
+		'toString can return a number': '''
+			var a = { toString: function () { return 234 } };
+			a + 123
+		'''
+		'valueOf can return a string': '''
+			var a = { valueOf: function () { return "asd" } };
+			a + 123
+		'''
 
 	'binary -':
 		'numbers': '2 - 3'

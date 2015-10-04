@@ -32,16 +32,42 @@ OBJECT::seal = ->
 	@extensible = false
 
 
+call = (closure, thisArgument) ->
+	newEnv = closure.env.addEntry()
+
+	# this
+	newEnv.addBinding 'this', thisArgument
+
+	# vars
+	closure.body.vars.forEach (name) ->
+		newEnv.addBinding name, UNDEFINED
+		return
+
+	# function declarations
+	closure.body.functionDeclarations.forEach (node) ->
+		name = node.id.name
+		closure = jinter.ev node, newEnv
+		newEnv.addBinding name, closure
+		return
+
+	returnCandidate = jinter.ev closure.body, newEnv
+
+	if returnCandidate?.return
+		returnCandidate.value
+	else
+		jinter.UNDEFINED
+
+
 OBJECT::toNumber = ->
 	valueOf = @get 'valueOf'
 
 	if valueOf?.isCallable()
-		return valueOf.call @
+		return call valueOf, @
 
 	toString = @get 'toString'
 
 	if toString?.isCallable()
-		return toString.call @
+		return call toString, @
 
 	throw new Error 'Cannot convert object to primitive value'
 
@@ -54,12 +80,12 @@ OBJECT::toString = ->
 	toString = @get 'toString'
 
 	if toString?.isCallable()
-		return toString.call @
+		return call toString, @
 
 	valueOf = @get 'valueOf'
 
 	if valueOf?.isCallable()
-		return valueOf.call @
+		return call valueOf, @
 
 	throw new Error 'Cannot convert object to primitive value'
 
