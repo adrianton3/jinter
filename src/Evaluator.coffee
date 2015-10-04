@@ -115,15 +115,17 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 	return
 
 
+computeMemberKey = (exp, env) ->
+	if exp.computed
+		(ev exp.property, env).toString()
+	else
+		exp.property.name
+
+
 Nodes['AssignmentExpression'] = (exp, env) ->
 	if exp.left.type == 'MemberExpression'
 		object = ev exp.left.object, env
-
-		key = if exp.left.computed
-			(ev exp.left.property, env).toString()
-		else
-			exp.left.property.name
-
+		key = computeMemberKey exp.left, env
 		value = ev exp.right, env
 		object.put key, value
 	else
@@ -163,12 +165,8 @@ Nodes['ObjectExpression'] = (exp, env) ->
 
 Nodes['MemberExpression'] = (exp, env) ->
 	object = ev exp.object, env
-
-	if exp.computed
-		key = ev exp.property, env
-		object.get key.toString()
-	else
-		object.get exp.property.name
+	key = computeMemberKey exp, env
+	object.get key
 
 
 call = (exp, env, closure, thisArgument) ->
@@ -212,12 +210,7 @@ Nodes['CallExpression'] = (exp, env) ->
 	# determine if it's a method or a function call
 	if exp.callee.type == 'MemberExpression'
 		thisArgument = ev exp.callee.object, env
-
-		key = if exp.callee.computed
-			(ev exp.callee.property, env).toString()
-		else
-			exp.callee.property.name
-
+		key = computeMemberKey exp.callee, env
 		closure = thisArgument.get key
 	else
 		thisArgument = NULL
