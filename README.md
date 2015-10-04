@@ -4,8 +4,7 @@ The project's purpose is purely educational.
 Language constructs supported (thus far):
 
  + literals (numbers, strings, booleans and null)
- + the binary `+` operator for strings and numbers
- + the binary `-` operator
+ + the binary `+`, `-`, `*` operators for strings, numbers and objects with `valueOf`/`toString`
  + cast to boolean
  + if expressions and statements
  + while statements
