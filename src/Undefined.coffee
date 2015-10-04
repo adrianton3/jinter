@@ -4,6 +4,9 @@
 UNDEFINED = {}
 
 
+UNDEFINED.type = 'undefined'
+
+
 UNDEFINED.get = (key) ->
 	throw new Error "Cannot read property #{key} of undefined"
 

@@ -5,19 +5,8 @@
 
 
 NUMBER = (@value) ->
+	@type = 'number'
 	return
-
-
-NUMBER::add = (that) ->
-	that.addNumber @
-
-
-NUMBER::addNumber = (that) ->
-	new NUMBER that.toNumber() + @toNumber()
-
-
-NUMBER::addString = (that) ->
-	new STRING that.toString() + @toString()
 
 
 NUMBER::sub = (that) ->
@@ -34,6 +23,10 @@ NUMBER::toBoolean = ->
 
 NUMBER::toString = ->
 	String @value
+
+
+NUMBER::toPrimitive = ->
+	@
 
 
 NUMBER::isCallable = ->

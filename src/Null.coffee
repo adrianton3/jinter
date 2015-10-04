@@ -4,6 +4,9 @@
 NULL = {}
 
 
+NULL.type = 'null'
+
+
 NULL.get = (key) ->
 	throw new Error "Cannot read property #{key} of null"
 

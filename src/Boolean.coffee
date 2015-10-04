@@ -2,6 +2,7 @@
 
 
 BOOLEAN = (@value) ->
+	@type = 'boolean'
 	return
 
 

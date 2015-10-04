@@ -38,7 +38,15 @@ Nodes['Identifier'] = (exp, env) ->
 
 do ->
 	OPERATORS =
-		'+': (e1, e2) -> e1.add e2
+		'+': (left, right) ->
+			leftPrimitive = left.toPrimitive()
+			rightPrimitive = right.toPrimitive()
+
+			if leftPrimitive.type == 'string' or rightPrimitive.type == 'string'
+				new STRING leftPrimitive.toString() + rightPrimitive.toString()
+			else
+				new NUMBER leftPrimitive.toNumber() + rightPrimitive.toNumber()
+
 		'-': (e1, e2) -> e1.sub e2
 		'*': (e1, e2) -> e1.mul e2
 

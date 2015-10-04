@@ -4,11 +4,14 @@ snippets =
 		'booleans': 'true'
 		'strings': '"asd"'
 
-	'+ operator':
+	'binary +':
 		'numbers': '2 + 3'
 		'strings': '"asd" + "dsa"'
 		'number and string': '123 + "asd"'
 		'string and number': '"asd" + 123'
+
+	'binary -':
+		'numbers': '2 - 3'
 
 	'if expressions':
 		'booleans cast to boolean': 'true ? 123 : 321'

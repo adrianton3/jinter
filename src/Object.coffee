@@ -4,6 +4,7 @@
 OBJECT = (@proto) ->
 	@map = new Map
 	@extensible = true
+	@type = 'object'
 	return
 
 
@@ -61,6 +62,17 @@ OBJECT::toString = ->
 		return valueOf.call @
 
 	throw new Error 'Cannot convert object to primitive value'
+
+
+OBJECT::toPrimitive = (prefferedType) ->
+	@defaultValue prefferedType
+
+
+OBJECT::defaultValue = (hint) ->
+	if not hint? or hint == 'number'
+		@toNumber()
+	else
+		@toString()
 
 
 OBJECT::isCallable = ->

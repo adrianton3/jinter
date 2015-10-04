@@ -2,19 +2,8 @@
 
 
 STRING = (@value) ->
+	@type = 'string'
 	return
-
-
-STRING::add = (that) ->
-	that.addString @
-
-
-STRING::addNumber = (that) ->
-	new STRING that.toString() + @toString()
-
-
-STRING::addString = (that) ->
-	new STRING that.toString() + @toString()
 
 
 STRING::toNumber = ->
@@ -27,6 +16,10 @@ STRING::toBoolean = ->
 
 STRING::toString = ->
 	@value
+
+
+STRING::toPrimitive = ->
+	@
 
 
 STRING::isCallable = ->
