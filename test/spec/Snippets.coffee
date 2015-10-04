@@ -81,6 +81,12 @@ snippets =
 			a.b = 123;
 			a.b
 		'''
+		'assignment to computed object member': '''
+			var a;
+			a = {};
+			a["a" + "sd"] = 123;
+			a.asd
+		'''
 		'assignment from declaration': '''
 			var a = 123, b = 456;
 			a + b

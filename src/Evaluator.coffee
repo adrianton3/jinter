@@ -118,9 +118,14 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 Nodes['AssignmentExpression'] = (exp, env) ->
 	if exp.left.type == 'MemberExpression'
 		object = ev exp.left.object, env
-		name = exp.left.property.name
+
+		key = if exp.left.computed
+			(ev exp.left.property, env).toString()
+		else
+			exp.left.property.name
+
 		value = ev exp.right, env
-		object.put name, value
+		object.put key, value
 	else
 		name = exp.left.name
 		value = ev exp.right, env
