@@ -1,4 +1,4 @@
 .idea
 src/**/*.coffee
-test/spec/**/*.coffee
-test/lib
+test
+!test/spec/Snippets.js
