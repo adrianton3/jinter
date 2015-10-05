@@ -1,7 +1,7 @@
 'use strict'
 
 
-{ UNDEFINED } = jinter
+{ UNDEFINED, WINDOW } = jinter
 
 
 Node = (@parent) ->
@@ -35,7 +35,12 @@ Node::addBinding = (key, value) ->
 
 EMPTY =
 	get: (key) ->
-		throw new Error "Could not find #{key}"
+		fromWindow = WINDOW.get key
+
+		if fromWindow?
+			fromWindow
+		else
+			throw new Error "Could not find #{key}"
 
 	addEntry: ->
 		new Node EMPTY

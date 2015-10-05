@@ -270,5 +270,9 @@ snippets =
 			})(10)
 		'''
 
+	'scopes':
+		'undefined is located on window': 'undefined'
+		
+
 window.snippets ?= {}
 Object.assign window.snippets, snippets
