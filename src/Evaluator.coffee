@@ -170,6 +170,13 @@ Nodes['MemberExpression'] = (exp, env) ->
 
 
 call = (exp, env, closure, thisArgument) ->
+	# handle native functions early
+	if closure.native
+		args = exp.arguments.map (argument) ->
+			ev argument, env
+
+		return closure.fun.apply thisArgument, args
+
 	# every function gets its scope
 	newEnv = closure.env.addEntry()
 

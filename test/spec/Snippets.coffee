@@ -272,7 +272,17 @@ snippets =
 
 	'scopes':
 		'undefined is located on window': 'undefined'
-		
+
+
+	'Object.create':
+		'can create an object with a prototype': '''
+			var a = Object.create({ b: 123 });
+			a.b
+		'''
+		'can access prototype via __proto__': '''
+			var a = Object.create({ b: 123 });
+			a.__proto__.b
+		'''
 
 window.snippets ?= {}
 Object.assign window.snippets, snippets
