@@ -33,6 +33,10 @@ Node::addBinding = (key, value) ->
 	@bindings.set key, value
 
 
+Node::entryHas = (key) ->
+	@bindings.has key
+
+
 EMPTY =
 	get: (key) ->
 		fromWindow = WINDOW.get key

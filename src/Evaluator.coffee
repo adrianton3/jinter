@@ -200,7 +200,8 @@ call = (exp, env, closure, thisArgument) ->
 
 	# vars
 	closure.body.vars.forEach (name) ->
-		newEnv.addBinding name, UNDEFINED
+		if not newEnv.entryHas name
+			newEnv.addBinding name, UNDEFINED
 		return
 
 	# function declarations

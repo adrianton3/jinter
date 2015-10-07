@@ -272,6 +272,28 @@ snippets =
 
 	'scopes':
 		'undefined is located on window': 'undefined'
+		'local variables shadow top level variables': '''
+			var a = 123;
+			(function () {
+				var a = 321;
+				return a;
+			})()
+ 		'''
+		'local variables shadow parent scopes': '''
+			(function () {
+				var a = 123;
+				return (function () {
+					var a = 321;
+					return a;
+				})()
+			})()
+ 		'''
+		'local variables does not shadow function parameter': '''
+			(function (a) {
+				var a;
+				return a;
+			})(123)
+ 		'''
 
 
 	'Object.create':
