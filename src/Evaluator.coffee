@@ -1,13 +1,14 @@
 'use strict'
 
 {
-	NUMBER,
-	BOOLEAN,
-	STRING,
-	NULL,
-	UNDEFINED,
-	FUNCTION,
+	NUMBER
+	BOOLEAN
+	STRING
+	NULL
+	UNDEFINED
+	FUNCTION
 	OBJECT
+	ARRAY
 } = jinter
 
 
@@ -150,6 +151,16 @@ Nodes['ReturnStatement'] = (exp, env) ->
 
 Nodes['ThisExpression'] = (exp, env) ->
 	env.get 'this'
+
+
+Nodes['ArrayExpression'] = (exp, env) ->
+	array = new ARRAY
+
+	exp.elements.forEach (element, index) ->
+		value = ev element, env
+		array.put index, value
+
+	array
 
 
 Nodes['ObjectExpression'] = (exp, env) ->

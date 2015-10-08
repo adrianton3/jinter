@@ -40,7 +40,7 @@ snippets =
 		'string and number': '"234" + 123'
 
 	'* operator':
-		'numbers': '2 - 3'
+		'numbers': '2 * 3'
 		'strings': '"2" * "3"'
 
 	'if expressions':
@@ -295,7 +295,6 @@ snippets =
 			})(123)
  		'''
 
-
 	'Object.create':
 		'can create an object with a prototype': '''
 			var a = Object.create({ b: 123 });
@@ -304,6 +303,13 @@ snippets =
 		'can access prototype via __proto__': '''
 			var a = Object.create({ b: 123 });
 			a.__proto__.b
+		'''
+
+	'Array':
+		'can set/get numeric property': '''
+			var a = [];
+			a[3] = 123;
+			a[3]
 		'''
 
 window.snippets ?= {}
