@@ -26,7 +26,7 @@
       'string and number': '"234" + 123'
     },
     '* operator': {
-      'numbers': '2 - 3',
+      'numbers': '2 * 3',
       'strings': '"2" * "3"'
     },
     'if expressions': {
@@ -90,6 +90,19 @@
     'recursion': {
       'function declaration can refer to itself': 'function sum(n) {\n	if (n) {\n		return n + sum(n - 1)\n	} else {\n		return 0\n	}\n}\nsum(10)',
       'named function expression can refer to itself': '(function sum(n) {\n	if (n) {\n		return n + sum(n - 1)\n	} else {\n		return 0\n	}\n})(10)'
+    },
+    'scopes': {
+      'undefined is located on window': 'undefined',
+      'local variables shadow top level variables': 'var a = 123;\n(function () {\n	var a = 321;\n	return a;\n})()',
+      'local variables shadow parent scopes': '(function () {\n	var a = 123;\n	return (function () {\n		var a = 321;\n		return a;\n	})()\n})()',
+      'local variables does not shadow function parameter': '(function (a) {\n	var a;\n	return a;\n})(123)'
+    },
+    'Object.create': {
+      'can create an object with a prototype': 'var a = Object.create({ b: 123 });\na.b',
+      'can access prototype via __proto__': 'var a = Object.create({ b: 123 });\na.__proto__.b'
+    },
+    'Array': {
+      'can set/get numeric property': 'var a = [];\na[3] = 123;\na[3]'
     }
   };
 

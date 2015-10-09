@@ -7,8 +7,9 @@
     this.proto = proto;
     this.map = new Map;
     this.extensible = true;
-    this.type = 'object';
   };
+
+  OBJECT.prototype.type = 'object';
 
   OBJECT.prototype.get = function(key) {
     if (key === '__proto__') {

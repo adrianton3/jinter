@@ -5,8 +5,9 @@
 
   STRING = function(value) {
     this.value = value;
-    this.type = 'string';
   };
+
+  STRING.prototype.type = 'string';
 
   STRING.prototype.toNumber = function() {
     return Number(this.value);

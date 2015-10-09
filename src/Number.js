@@ -7,8 +7,9 @@
 
   NUMBER = function(value) {
     this.value = value;
-    this.type = 'number';
   };
+
+  NUMBER.prototype.type = 'number';
 
   NUMBER.prototype.toNumber = function() {
     return this.value;

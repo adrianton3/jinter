@@ -5,8 +5,9 @@
 
   BOOLEAN = function(value) {
     this.value = value;
-    this.type = 'boolean';
   };
+
+  BOOLEAN.prototype.type = 'boolean';
 
   BOOLEAN.prototype.toNumber = function() {
     return Number(this.value);
