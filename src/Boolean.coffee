@@ -2,8 +2,10 @@
 
 
 BOOLEAN = (@value) ->
-	@type = 'boolean'
 	return
+
+
+BOOLEAN::type = 'boolean'
 
 
 BOOLEAN::toNumber = ->

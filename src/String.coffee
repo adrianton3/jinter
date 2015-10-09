@@ -2,8 +2,10 @@
 
 
 STRING = (@value) ->
-	@type = 'string'
 	return
+
+
+STRING::type = 'string'
 
 
 STRING::toNumber = ->

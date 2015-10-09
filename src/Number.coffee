@@ -5,8 +5,10 @@
 
 
 NUMBER = (@value) ->
-	@type = 'number'
 	return
+
+
+NUMBER::type = 'number'
 
 
 NUMBER::toNumber = ->

@@ -4,8 +4,10 @@
 OBJECT = (@proto) ->
 	@map = new Map
 	@extensible = true
-	@type = 'object'
 	return
+
+
+OBJECT::type = 'object'
 
 
 OBJECT::get = (key) ->
