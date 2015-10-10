@@ -103,6 +103,14 @@
     },
     'Array': {
       'can set/get numeric property': 'var a = [];\na[3] = 123;\na[3]'
+    },
+    'Array methods': {
+      'toString': '[11, 22, 33, 44, 55].toString()',
+      'slice': '[11, 22, 33, 44, 55].slice(2, 3)'
+    },
+    'Function methods': {
+      'apply': 'var f = function (a, b) { return a + b };\nf.apply(null, [11, 22])',
+      'apply with this': 'var f = function (a) { return this + a };\nf.apply(11, [22])'
     }
   };
 
