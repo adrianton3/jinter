@@ -1,12 +1,26 @@
 'use strict'
 
-{ OBJECT, NULL } = jinter
+{ OBJECT, NULL, NATIVE_FUNCTION, STRING } = jinter
 
 
-ARRAY = ->
-	OBJECT.call @, NULL
-	@data = []
-	@put 'prototype', new OBJECT NULL
+ARRAY_PROTOTYPE = new OBJECT NULL
+
+ARRAY_PROTOTYPE.put 'toString', new NATIVE_FUNCTION ->
+	resultRaw = Array::toString.apply @data, arguments
+
+	return: true
+	value: new STRING resultRaw
+
+ARRAY_PROTOTYPE.put 'slice', new NATIVE_FUNCTION ->
+	resultRaw = Array::slice.apply @data, arguments
+
+	return: true
+	value: new ARRAY resultRaw
+
+
+ARRAY = (@data = []) ->
+	OBJECT.call @, ARRAY_PROTOTYPE
+	@put 'prototype', ARRAY_PROTOTYPE
 	return
 
 
@@ -32,6 +46,10 @@ ARRAY::put = (key, value) ->
 		@data[key] = value
 	else
 		OBJECT::get.call @, key
+
+
+ARRAY::toString = ->
+	@data.toString()
 
 
 window.jinter ?= {}

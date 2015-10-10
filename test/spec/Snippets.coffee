@@ -312,5 +312,13 @@ snippets =
 			a[3]
 		'''
 
+	'Array methods':
+		'toString': '''
+			[11, 22, 33, 44, 55].toString()
+		'''
+		'slice': '''
+			[11, 22, 33, 44, 55].slice(2, 3)
+		'''
+
 window.snippets ?= {}
 Object.assign window.snippets, snippets

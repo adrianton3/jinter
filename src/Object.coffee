@@ -35,24 +35,28 @@ OBJECT::seal = ->
 
 
 call = (closure, thisArgument) ->
-	newEnv = closure.env.addEntry()
+	# handle native functions early
+	returnCandidate = if closure.native
+		closure.fun.call thisArgument
+	else
+		newEnv = closure.env.addEntry()
 
-	# this
-	newEnv.addBinding 'this', thisArgument
+		# this
+		newEnv.addBinding 'this', thisArgument
 
-	# vars
-	closure.body.vars.forEach (name) ->
-		newEnv.addBinding name, UNDEFINED
-		return
+		# vars
+		closure.body.vars.forEach (name) ->
+			newEnv.addBinding name, UNDEFINED
+			return
 
-	# function declarations
-	closure.body.functionDeclarations.forEach (node) ->
-		name = node.id.name
-		closure = jinter.ev node, newEnv
-		newEnv.addBinding name, closure
-		return
+		# function declarations
+		closure.body.functionDeclarations.forEach (node) ->
+			name = node.id.name
+			closure = jinter.ev node, newEnv
+			newEnv.addBinding name, closure
+			return
 
-	returnCandidate = jinter.ev closure.body, newEnv
+		jinter.ev closure.body, newEnv
 
 	if returnCandidate?.return
 		returnCandidate.value
