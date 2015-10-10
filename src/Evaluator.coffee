@@ -303,4 +303,5 @@ Nodes['ExpressionStatement'] = (exp, env) ->
 
 window.jinter ?= {}
 window.jinter.ev = ev
+window.jinter.callRaw = callRaw
 window.jinter.call = call

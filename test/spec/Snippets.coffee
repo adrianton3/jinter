@@ -320,5 +320,16 @@ snippets =
 			[11, 22, 33, 44, 55].slice(2, 3)
 		'''
 
+	'Function methods':
+		'apply': '''
+			var f = function (a, b) { return a + b };
+			f.apply(null, [11, 22])
+		'''
+		'apply with this': '''
+			var f = function (a) { return this + a };
+			f.apply(11, [22])
+		'''
+
+
 window.snippets ?= {}
 Object.assign window.snippets, snippets
