@@ -180,12 +180,9 @@ Nodes['MemberExpression'] = (exp, env) ->
 	object.get key
 
 
-call = (exp, env, closure, thisArgument) ->
+callRaw = (closure, thisArgument, args, env) ->
 	# handle native functions early
 	if closure.native
-		args = exp.arguments.map (argument) ->
-			ev argument, env
-
 		return closure.fun.apply thisArgument, args
 
 	# every function gets its scope
@@ -199,9 +196,7 @@ call = (exp, env, closure, thisArgument) ->
 	newEnv.addBinding 'this', thisArgument
 
 	# arguments
-	exp.arguments.forEach (argument, index) ->
-		value = ev argument, env
-
+	args.forEach (value, index) ->
 		# all parameters must be evaluated but only named
 		# ones must be bound in the new environment
 		if index < closure.formalArguments.length
@@ -225,6 +220,24 @@ call = (exp, env, closure, thisArgument) ->
 	ev closure.body, newEnv
 
 
+call = (closure, thisArgument, args, env) ->
+	returnCandidate = callRaw closure, thisArgument, args, env
+
+	if returnCandidate?.return
+		returnCandidate.value
+	else
+		UNDEFINED
+
+
+callNew = (closure, thisArgument, args, env) ->
+	returnCandidate = callRaw closure, thisArgument, args, env
+
+	if returnCandidate?.return and returnCandidate.value.type == 'object'
+		returnCandidate.value
+	else
+		thisArgument
+
+
 Nodes['CallExpression'] = (exp, env) ->
 	# determine if it's a method or a function call
 	if exp.callee.type == 'MemberExpression'
@@ -235,24 +248,20 @@ Nodes['CallExpression'] = (exp, env) ->
 		thisArgument = NULL
 		closure = ev exp.callee, env
 
-	returnCandidate = call exp, env, closure, thisArgument
+	args = exp.arguments.map (argument) ->
+		ev argument, env
 
-	if returnCandidate?.return
-		returnCandidate.value
-	else
-		UNDEFINED
+	call closure, thisArgument, args, env
 
 
 Nodes['NewExpression'] = (exp, env) ->
 	closure = ev exp.callee, env
 	thisArgument = new OBJECT closure.get 'prototype'
 
-	returnCandidate = call exp, env, closure, thisArgument
+	args = exp.arguments.map (argument) ->
+		ev argument, env
 
-	if returnCandidate?.return and returnCandidate.value instanceof OBJECT
-			returnCandidate.value
-	else
-		thisArgument
+	callNew closure, thisArgument, args, env
 
 
 Nodes['FunctionDeclaration'] = (exp, env) ->
@@ -294,3 +303,4 @@ Nodes['ExpressionStatement'] = (exp, env) ->
 
 window.jinter ?= {}
 window.jinter.ev = ev
+window.jinter.call = call

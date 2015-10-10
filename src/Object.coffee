@@ -1,6 +1,9 @@
 'use strict'
 
 
+{ EMPTY } = jinter
+
+
 OBJECT = (@proto) ->
 	@map = new Map
 	@extensible = true
@@ -34,46 +37,16 @@ OBJECT::seal = ->
 	@extensible = false
 
 
-call = (closure, thisArgument) ->
-	# handle native functions early
-	returnCandidate = if closure.native
-		closure.fun.call thisArgument
-	else
-		newEnv = closure.env.addEntry()
-
-		# this
-		newEnv.addBinding 'this', thisArgument
-
-		# vars
-		closure.body.vars.forEach (name) ->
-			newEnv.addBinding name, UNDEFINED
-			return
-
-		# function declarations
-		closure.body.functionDeclarations.forEach (node) ->
-			name = node.id.name
-			closure = jinter.ev node, newEnv
-			newEnv.addBinding name, closure
-			return
-
-		jinter.ev closure.body, newEnv
-
-	if returnCandidate?.return
-		returnCandidate.value
-	else
-		jinter.UNDEFINED
-
-
 OBJECT::toNumber = ->
 	valueOf = @get 'valueOf'
 
 	if valueOf?.isCallable()
-		return call valueOf, @
+		return jinter.call valueOf, @, [], EMPTY
 
 	toString = @get 'toString'
 
 	if toString?.isCallable()
-		return call toString, @
+		return jinter.call toString, @, [], EMPTY
 
 	throw new Error 'Cannot convert object to primitive value'
 
@@ -86,12 +59,12 @@ OBJECT::toString = ->
 	toString = @get 'toString'
 
 	if toString?.isCallable()
-		return call toString, @
+		return jinter.call toString, @, [], EMPTY
 
 	valueOf = @get 'valueOf'
 
 	if valueOf?.isCallable()
-		return call valueOf, @
+		return jinter.call valueOf, @, [], EMPTY
 
 	throw new Error 'Cannot convert object to primitive value'
 

@@ -1,9 +1,6 @@
 'use strict'
 
 
-{ UNDEFINED, WINDOW } = jinter
-
-
 Node = (@parent) ->
 	@bindings = new Map
 	return
@@ -39,7 +36,7 @@ Node::entryHas = (key) ->
 
 EMPTY =
 	get: (key) ->
-		fromWindow = WINDOW.get key
+		fromWindow = jinter.WINDOW.get key
 
 		if fromWindow?
 			fromWindow
