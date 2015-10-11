@@ -329,6 +329,14 @@ snippets =
 			var f = function (a) { return this + a };
 			f.apply(11, [22])
 		'''
+		'call': '''
+			var f = function (a, b) { return a + b };
+			f.call(null, 11, 22)
+		'''
+		'call with this': '''
+			var f = function (a) { return this + a };
+			f.call(11, 22)
+		'''
 
 
 window.snippets ?= {}

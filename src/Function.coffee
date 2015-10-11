@@ -11,6 +11,11 @@ do ->
 
 	FUNCTION_PROTOTYPE.put 'apply', apply
 
+	call = new jinter.NATIVE_FUNCTION (thisArgument, args...) ->
+		jinter.callRaw @, thisArgument, args, EMPTY
+
+	FUNCTION_PROTOTYPE.put 'call', call
+
 
 FUNCTION = (@body, @env, @formalArguments, @ownName) ->
 	OBJECT.call @, FUNCTION_PROTOTYPE
