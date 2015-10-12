@@ -306,6 +306,10 @@ snippets =
 		'''
 
 	'Array':
+		'can construct': '''
+			var a = [11, 22, 33];
+			a[1]
+		'''
 		'can set/get numeric property': '''
 			var a = [];
 			a[3] = 123;
@@ -318,6 +322,22 @@ snippets =
 		'''
 		'slice': '''
 			[11, 22, 33, 44, 55].slice(2, 3)
+		'''
+		'push return': '''
+			[11, 22, 33, 44, 55].push(66)
+		'''
+		'push original array': '''
+			var a = [11, 22, 33, 44, 55];
+			a.push(66);
+			a
+		'''
+		'pop return': '''
+			[11, 22, 33, 44, 55].pop()
+		'''
+		'pop original array': '''
+			var a = [11, 22, 33, 44, 55];
+			a.pop();
+			a
 		'''
 
 	'Function methods':

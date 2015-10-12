@@ -1,6 +1,6 @@
 'use strict'
 
-{ OBJECT, NULL, NATIVE_FUNCTION, STRING } = jinter
+{ OBJECT, NULL, NATIVE_FUNCTION, STRING, NUMBER } = jinter
 
 
 ARRAY = (@data = []) ->
@@ -46,11 +46,17 @@ addMethod = ({ name, returnType }) ->
 		resultRaw = Array::[name].apply @data, arguments
 
 		return: true
-		value: new returnType resultRaw
+		value:
+			if returnType?
+				new returnType resultRaw
+			else
+				resultRaw
 
 methods = [
 	{ name: 'toString', returnType: STRING }
 	{ name: 'slice', returnType: ARRAY }
+	{ name: 'push', returnType: NUMBER }
+	{ name: 'pop' }
 ]
 
 methods.forEach addMethod
