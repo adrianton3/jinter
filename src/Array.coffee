@@ -3,21 +3,6 @@
 { OBJECT, NULL, NATIVE_FUNCTION, STRING } = jinter
 
 
-ARRAY_PROTOTYPE = new OBJECT NULL
-
-ARRAY_PROTOTYPE.put 'toString', new NATIVE_FUNCTION ->
-	resultRaw = Array::toString.apply @data, arguments
-
-	return: true
-	value: new STRING resultRaw
-
-ARRAY_PROTOTYPE.put 'slice', new NATIVE_FUNCTION ->
-	resultRaw = Array::slice.apply @data, arguments
-
-	return: true
-	value: new ARRAY resultRaw
-
-
 ARRAY = (@data = []) ->
 	OBJECT.call @, ARRAY_PROTOTYPE
 	@put 'prototype', ARRAY_PROTOTYPE
@@ -50,6 +35,25 @@ ARRAY::put = (key, value) ->
 
 ARRAY::toString = ->
 	@data.toString()
+
+
+
+
+ARRAY_PROTOTYPE = new OBJECT NULL
+
+addMethod = ({ name, returnType }) ->
+	ARRAY_PROTOTYPE.put name, new NATIVE_FUNCTION ->
+		resultRaw = Array::[name].apply @data, arguments
+
+		return: true
+		value: new returnType resultRaw
+
+methods = [
+	{ name: 'toString', returnType: STRING }
+	{ name: 'slice', returnType: ARRAY }
+]
+
+methods.forEach addMethod
 
 
 window.jinter ?= {}
