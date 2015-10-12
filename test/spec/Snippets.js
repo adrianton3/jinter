@@ -102,15 +102,22 @@
       'can access prototype via __proto__': 'var a = Object.create({ b: 123 });\na.__proto__.b'
     },
     'Array': {
+      'can construct': 'var a = [11, 22, 33];\na[1]',
       'can set/get numeric property': 'var a = [];\na[3] = 123;\na[3]'
     },
     'Array methods': {
       'toString': '[11, 22, 33, 44, 55].toString()',
-      'slice': '[11, 22, 33, 44, 55].slice(2, 3)'
+      'slice': '[11, 22, 33, 44, 55].slice(2, 3)',
+      'push return': '[11, 22, 33, 44, 55].push(66)',
+      'push original array': 'var a = [11, 22, 33, 44, 55];\na.push(66);\na',
+      'pop return': '[11, 22, 33, 44, 55].pop()',
+      'pop original array': 'var a = [11, 22, 33, 44, 55];\na.pop();\na'
     },
     'Function methods': {
       'apply': 'var f = function (a, b) { return a + b };\nf.apply(null, [11, 22])',
-      'apply with this': 'var f = function (a) { return this + a };\nf.apply(11, [22])'
+      'apply with this': 'var f = function (a) { return this + a };\nf.apply(11, [22])',
+      'call': 'var f = function (a, b) { return a + b };\nf.call(null, 11, 22)',
+      'call with this': 'var f = function (a) { return this + a };\nf.call(11, 22)'
     }
   };
 
