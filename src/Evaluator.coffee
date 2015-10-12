@@ -180,7 +180,7 @@ Nodes['MemberExpression'] = (exp, env) ->
 	object.get key
 
 
-callRaw = (closure, thisArgument, args, env) ->
+callRaw = (closure, thisArgument, args) ->
 	# handle native functions early
 	if closure.native
 		return closure.fun.apply thisArgument, args
@@ -220,8 +220,8 @@ callRaw = (closure, thisArgument, args, env) ->
 	ev closure.body, newEnv
 
 
-call = (closure, thisArgument, args, env) ->
-	returnCandidate = callRaw closure, thisArgument, args, env
+call = (closure, thisArgument, args) ->
+	returnCandidate = callRaw closure, thisArgument, args
 
 	if returnCandidate?.return
 		returnCandidate.value
@@ -230,7 +230,7 @@ call = (closure, thisArgument, args, env) ->
 
 
 callNew = (closure, thisArgument, args, env) ->
-	returnCandidate = callRaw closure, thisArgument, args, env
+	returnCandidate = callRaw closure, thisArgument, args
 
 	if returnCandidate?.return and returnCandidate.value.type == 'object'
 		returnCandidate.value
@@ -251,7 +251,7 @@ Nodes['CallExpression'] = (exp, env) ->
 	args = exp.arguments.map (argument) ->
 		ev argument, env
 
-	call closure, thisArgument, args, env
+	call closure, thisArgument, args
 
 
 Nodes['NewExpression'] = (exp, env) ->
@@ -261,7 +261,7 @@ Nodes['NewExpression'] = (exp, env) ->
 	args = exp.arguments.map (argument) ->
 		ev argument, env
 
-	callNew closure, thisArgument, args, env
+	callNew closure, thisArgument, args
 
 
 Nodes['FunctionDeclaration'] = (exp, env) ->
