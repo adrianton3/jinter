@@ -189,7 +189,15 @@ Nodes['ObjectExpression'] = (exp, env) ->
 Nodes['MemberExpression'] = (exp, env) ->
 	object = ev exp.object, env
 	key = computeMemberKey exp, env
-	object.get key
+
+	entry = object.get key
+	if entry.descriptor?
+		if entry.get?
+			call entry.get, object, []
+		else
+			UNDEFINED
+	else
+		entry
 
 
 callRaw = (closure, thisArgument, args) ->

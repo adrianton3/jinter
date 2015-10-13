@@ -62,5 +62,13 @@ methods = [
 methods.forEach addMethod
 
 
+ARRAY_PROTOTYPE.put 'length', {
+	descriptor: true
+	get: new NATIVE_FUNCTION ->
+		return: true
+		value: new NUMBER @data.length
+}
+
+
 window.jinter ?= {}
 window.jinter.ARRAY = ARRAY

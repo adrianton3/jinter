@@ -328,6 +328,15 @@ snippets =
 			a[3]
 		'''
 
+	'Array length':
+		'for empty arrays': '[].length'
+		'for non-empty arrays': '[11, 22, 33].length'
+		'for sparse arrays': '''
+			var a = [];
+			a[3] = 123;
+			a.length
+		'''
+
 	'Array methods':
 		'toString': '''
 			[11, 22, 33, 44, 55].toString()
