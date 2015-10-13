@@ -54,6 +54,18 @@ do ->
 		'*': (left, right) ->
 			new NUMBER left.toNumber() * right.toNumber()
 
+		'===': (left, right) ->
+			new BOOLEAN(
+				if left.type != right.type
+					false
+				else if left.type in ['number', 'boolean', 'string']
+					left.value == right.value
+				else if left.type == 'object'
+					left == right
+				else
+					true
+			)
+
 
 	Nodes['BinaryExpression'] = (exp, env) ->
 		left = ev exp.left, env

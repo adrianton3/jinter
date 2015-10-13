@@ -43,6 +43,18 @@ snippets =
 		'numbers': '2 * 3'
 		'strings': '"2" * "3"'
 
+	'=== operator':
+		'numbers': '1 + 4 === 2 + 3'
+		'strings': '"a" + "sd" === "as" + "d"'
+		'boolean': 'false === true'
+		'different objects': '({}) === ({})'
+		'same object': '''
+			var a = {};
+			a === a
+		'''
+		'null': 'null === null'
+		'undefined': 'undefined === undefined'
+
 	'if expressions':
 		'booleans cast to boolean': 'true ? 123 : 321'
 		'numbers cast to boolean': '123 ? 456 : 789'
