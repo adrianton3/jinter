@@ -1,7 +1,8 @@
 'use strict'
 
 
-BOOLEAN = (@value) ->
+BOOLEAN = (value) ->
+	@value = Boolean value
 	return
 
 

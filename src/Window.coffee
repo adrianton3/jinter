@@ -6,21 +6,9 @@
 
 WINDOW = new OBJECT NULL
 
-
 WINDOW.put 'undefined', UNDEFINED
 
-
-do ->
-	OBJ = new OBJECT NULL
-
-	WINDOW.put 'Object', OBJ
-
-	create = new NATIVE_FUNCTION (proto) ->
-		return: true,
-		value: new OBJECT proto
-
-	OBJ.put 'create', create
-
+WINDOW.put 'Object', jinter.OBJECT_FUNCTION
 
 window.jinter ?= {}
 window.jinter.WINDOW = WINDOW

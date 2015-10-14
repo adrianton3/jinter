@@ -40,6 +40,7 @@ snippets =
 		'boolean': '+true'
 		'null': '+null'
 		'undefined': '+undefined'
+		'object': '+({})'
 
 	'unary -':
 		'number': '-123'
@@ -48,6 +49,7 @@ snippets =
 		'boolean': '-true'
 		'null': '-null'
 		'undefined': '-undefined'
+		'object': '-({})'
 
 	'! operator':
 		'number': '!123'
@@ -55,6 +57,7 @@ snippets =
 		'boolean': '!true'
 		'null': '!null'
 		'undefined': '!undefined'
+		'object': '!({})'
 
 	'binary -':
 		'numbers': '2 - 3'

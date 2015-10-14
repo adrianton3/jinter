@@ -194,7 +194,7 @@ Nodes['ArrayExpression'] = (exp, env) ->
 
 
 Nodes['ObjectExpression'] = (exp, env) ->
-	object = new OBJECT NULL
+	object = new OBJECT jinter.OBJECT_PROTOTYPE
 
 	exp.properties.forEach (property) ->
 		name = property.key.name

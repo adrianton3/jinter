@@ -4,7 +4,8 @@
 { STRING } = jinter
 
 
-NUMBER = (@value) ->
+NUMBER = (value) ->
+	@value = Number value
 	return
 
 

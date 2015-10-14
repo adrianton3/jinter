@@ -1,7 +1,8 @@
 'use strict'
 
 
-STRING = (@value) ->
+STRING = (value) ->
+	@value = String value
 	return
 
 
