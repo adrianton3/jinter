@@ -39,6 +39,24 @@ Nodes['Identifier'] = (exp, env) ->
 
 do ->
 	OPERATORS =
+		'+': (operand) ->
+			new NUMBER operand.toNumber()
+
+		'-': (operand) ->
+			new NUMBER -operand.toNumber()
+
+		'!': (operand) ->
+			new BOOLEAN !operand.toBoolean()
+
+
+	Nodes['UnaryExpression'] = (exp, env) ->
+		operand = ev exp.argument, env
+
+		OPERATORS[exp.operator] operand
+
+
+do ->
+	OPERATORS =
 		'+': (left, right) ->
 			leftPrimitive = left.toPrimitive()
 			rightPrimitive = right.toPrimitive()

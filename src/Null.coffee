@@ -20,7 +20,7 @@ NULL.toNumber = ->
 
 
 NULL.toBoolean = ->
-	true
+	false
 
 
 NULL.toString = ->

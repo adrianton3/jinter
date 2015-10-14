@@ -33,6 +33,29 @@ snippets =
 			a + 123
 		'''
 
+	'unary +':
+		'number': '+123'
+		'numberic string': '+"123"'
+		'non-numberic string': '+"asd"'
+		'boolean': '+true'
+		'null': '+null'
+		'undefined': '+undefined'
+
+	'unary -':
+		'number': '-123'
+		'numberic string': '-"123"'
+		'non-numberic string': '-"asd"'
+		'boolean': '-true'
+		'null': '-null'
+		'undefined': '-undefined'
+
+	'! operator':
+		'number': '!123'
+		'string': '!"asd"'
+		'boolean': '!true'
+		'null': '!null'
+		'undefined': '!undefined'
+
 	'binary -':
 		'numbers': '2 - 3'
 		'strings': '"2" - "3"'
