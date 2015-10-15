@@ -6,6 +6,8 @@
 
 WINDOW = new OBJECT NULL
 
+WINDOW.put 'window', WINDOW
+
 WINDOW.put 'undefined', UNDEFINED
 
 WINDOW.put 'Object', jinter.OBJECT_FUNCTION

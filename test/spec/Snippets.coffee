@@ -310,6 +310,7 @@ snippets =
 
 	'scopes':
 		'undefined is located on window': 'undefined'
+		'window is located on window': 'window === window.window'
 		'local variables shadow top level variables': '''
 			var a = 123;
 			(function () {
