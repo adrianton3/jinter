@@ -69,6 +69,20 @@ snippets =
 		'numbers': '2 * 3'
 		'strings': '"2" * "3"'
 
+	'&& operator':
+		'numbers': '2 && 3'
+		'strings': '"asd" && ""'
+		'booleans': 'false && true'
+		'null': 'true && null'
+		'undefined': 'true && undefined'
+
+	'|| operator':
+		'numbers': '2 || 3'
+		'strings': '"asd" || ""'
+		'booleans': 'false || true'
+		'null': 'true || null'
+		'undefined': 'true || undefined'
+
 	'=== operator':
 		'numbers': '1 + 4 === 2 + 3'
 		'strings': '"a" + "sd" === "as" + "d"'

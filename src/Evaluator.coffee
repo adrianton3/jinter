@@ -92,6 +92,19 @@ do ->
 		OPERATORS[exp.operator] left, right
 
 
+Nodes['LogicalExpression'] = (exp, env) ->
+	left = ev exp.left, env
+	leftBoolean = left.toBoolean()
+
+	switch exp.operator
+		when '&&'
+			return left unless leftBoolean
+		when '||'
+			return left if leftBoolean
+
+	ev exp.right, env
+
+
 Nodes['ConditionalExpression'] = (exp, env) ->
 	testResult = ev exp.test, env
 

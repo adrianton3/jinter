@@ -21,10 +21,12 @@ describe 'ev', ->
 	jsEv = (string) ->
 		result = eval string
 
-		if result?
-			result.toString()
-		else
+		if result == null
+			'null'
+		else if result == undefined
 			'undefined'
+		else
+			result.toString()
 
 
 	for title, its of window.snippets
