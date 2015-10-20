@@ -12,6 +12,17 @@ create = new NATIVE_FUNCTION (proto) ->
 OBJECT_FUNCTION.put 'create', create
 
 
+keys = new NATIVE_FUNCTION (obj) ->
+	objKeys = []
+	obj.map.forEach (value, key) ->
+		objKeys.push new STRING key
+
+	return: true
+	value: new jinter.ARRAY objKeys
+
+OBJECT_FUNCTION.put 'keys', keys
+
+
 OBJECT_PROTOTYPE = new OBJECT NULL
 
 OBJECT_FUNCTION.put 'prototype', OBJECT_PROTOTYPE

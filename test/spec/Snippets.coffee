@@ -358,6 +358,14 @@ snippets =
 			a.__proto__.b
 		'''
 
+	'Object.keys':
+		'returns an empty array for an empty object': '''
+			Object.keys({})
+		'''
+		'returns the keys of an object': '''
+			Object.keys({ a: 123, b: 321 })
+		'''
+
 	'Array':
 		'can construct': '''
 			var a = [11, 22, 33];
