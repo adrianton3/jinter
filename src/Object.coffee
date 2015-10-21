@@ -33,6 +33,24 @@ OBJECT::put = (key, value) ->
 	@map.set key, value
 
 
+OBJECT::defineGet = (key, get) ->
+	entry = @map.get key
+	if entry?.descriptor
+		entry.get = get
+	else @map.set key,
+		descriptor: true
+		get: get
+
+
+OBJECT::defineSet = (key, set) ->
+	entry = @map.get key
+	if entry?.descriptor
+		entry.set = set
+	else @map.set key,
+		descriptor: true
+		set: set
+
+
 OBJECT::seal = ->
 	@extensible = false
 

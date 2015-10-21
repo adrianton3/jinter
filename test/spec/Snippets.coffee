@@ -119,6 +119,20 @@ snippets =
 				asd: function () { return 123 }
 			})["a" + "sd"]()
 		'''
+		'can define a getter': '''
+			({
+				get a() { return 123 }
+			}).a
+		'''
+		'can define a setter': '''
+			var s;
+			var a = {
+				get a() { return s },
+				set a(value) { s = value * 2 }
+			};
+			a.a = 123;
+			a.a
+		'''
 
 	'assignment expressions':
 		'one assignment': '''

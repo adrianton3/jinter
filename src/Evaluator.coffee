@@ -171,7 +171,13 @@ Nodes['AssignmentExpression'] = (exp, env) ->
 		object = ev exp.left.object, env
 		key = computeMemberKey exp.left, env
 		value = ev exp.right, env
-		object.put key, value
+
+		entry = object.get key
+		if entry?.descriptor?
+			if entry.set?
+				call entry.set, object, [value]
+		else
+			object.put key, value
 	else
 		name = exp.left.name
 		value = ev exp.right, env
@@ -212,7 +218,14 @@ Nodes['ObjectExpression'] = (exp, env) ->
 	exp.properties.forEach (property) ->
 		name = property.key.name
 		value = ev property.value, env
-		object.put name, value
+
+		switch property.kind
+			when 'get'
+				object.defineGet name, value
+			when 'set'
+				object.defineSet name, value
+			else
+				object.put name, value
 
 	object
 
