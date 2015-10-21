@@ -53,8 +53,8 @@ var Describe = React.createClass({
 var It = React.createClass({
 	getInitialState: function () {
 		return {
-			resultJinter: null,
-			resultJs: null
+			//resultJinter: null,
+			//resultJs: null
 		};
 	},
 	evJs: function (source) {
