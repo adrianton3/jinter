@@ -6,7 +6,7 @@
   STRING = jinter.STRING;
 
   NUMBER = function(value) {
-    this.value = value;
+    this.value = Number(value);
   };
 
   NUMBER.prototype.type = 'number';

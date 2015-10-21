@@ -7,20 +7,11 @@
 
   WINDOW = new OBJECT(NULL);
 
+  WINDOW.put('window', WINDOW);
+
   WINDOW.put('undefined', UNDEFINED);
 
-  (function() {
-    var OBJ, create;
-    OBJ = new OBJECT(NULL);
-    WINDOW.put('Object', OBJ);
-    create = new NATIVE_FUNCTION(function(proto) {
-      return {
-        "return": true,
-        value: new OBJECT(proto)
-      };
-    });
-    return OBJ.put('create', create);
-  })();
+  WINDOW.put('Object', jinter.OBJECT_FUNCTION);
 
   if (window.jinter == null) {
     window.jinter = {};

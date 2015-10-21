@@ -36,6 +36,26 @@
   (function() {
     var OPERATORS;
     OPERATORS = {
+      '+': function(operand) {
+        return new NUMBER(operand.toNumber());
+      },
+      '-': function(operand) {
+        return new NUMBER(-operand.toNumber());
+      },
+      '!': function(operand) {
+        return new BOOLEAN(!operand.toBoolean());
+      }
+    };
+    return Nodes['UnaryExpression'] = function(exp, env) {
+      var operand;
+      operand = ev(exp.argument, env);
+      return OPERATORS[exp.operator](operand);
+    };
+  })();
+
+  (function() {
+    var OPERATORS;
+    OPERATORS = {
       '+': function(left, right) {
         var leftPrimitive, rightPrimitive;
         leftPrimitive = left.toPrimitive();
@@ -51,6 +71,10 @@
       },
       '*': function(left, right) {
         return new NUMBER(left.toNumber() * right.toNumber());
+      },
+      '===': function(left, right) {
+        var _ref;
+        return new BOOLEAN(left.type !== right.type ? false : (_ref = left.type) === 'number' || _ref === 'boolean' || _ref === 'string' ? left.value === right.value : left.type === 'object' ? left === right : true);
       }
     };
     return Nodes['BinaryExpression'] = function(exp, env) {
@@ -60,6 +84,24 @@
       return OPERATORS[exp.operator](left, right);
     };
   })();
+
+  Nodes['LogicalExpression'] = function(exp, env) {
+    var left, leftBoolean;
+    left = ev(exp.left, env);
+    leftBoolean = left.toBoolean();
+    switch (exp.operator) {
+      case '&&':
+        if (!leftBoolean) {
+          return left;
+        }
+        break;
+      case '||':
+        if (leftBoolean) {
+          return left;
+        }
+    }
+    return ev(exp.right, env);
+  };
 
   Nodes['ConditionalExpression'] = function(exp, env) {
     var testResult;
@@ -124,12 +166,19 @@
   };
 
   Nodes['AssignmentExpression'] = function(exp, env) {
-    var key, name, object, value;
+    var entry, key, name, object, value;
     if (exp.left.type === 'MemberExpression') {
       object = ev(exp.left.object, env);
       key = computeMemberKey(exp.left, env);
       value = ev(exp.right, env);
-      object.put(key, value);
+      entry = object.get(key);
+      if ((entry != null ? entry.descriptor : void 0) != null) {
+        if (entry.set != null) {
+          call(entry.set, object, [value]);
+        }
+      } else {
+        object.put(key, value);
+      }
     } else {
       name = exp.left.name;
       value = ev(exp.right, env);
@@ -174,24 +223,40 @@
 
   Nodes['ObjectExpression'] = function(exp, env) {
     var object;
-    object = new OBJECT(NULL);
+    object = new OBJECT(jinter.OBJECT_PROTOTYPE);
     exp.properties.forEach(function(property) {
       var name, value;
       name = property.key.name;
       value = ev(property.value, env);
-      return object.put(name, value);
+      switch (property.kind) {
+        case 'get':
+          return object.defineGet(name, value);
+        case 'set':
+          return object.defineSet(name, value);
+        default:
+          return object.put(name, value);
+      }
     });
     return object;
   };
 
   Nodes['MemberExpression'] = function(exp, env) {
-    var key, object;
+    var entry, key, object;
     object = ev(exp.object, env);
     key = computeMemberKey(exp, env);
-    return object.get(key);
+    entry = object.get(key);
+    if (entry.descriptor != null) {
+      if (entry.get != null) {
+        return call(entry.get, object, []);
+      } else {
+        return UNDEFINED;
+      }
+    } else {
+      return entry;
+    }
   };
 
-  callRaw = function(closure, thisArgument, args, env) {
+  callRaw = function(closure, thisArgument, args) {
     var newEnv;
     if (closure["native"]) {
       return closure.fun.apply(thisArgument, args);
@@ -222,9 +287,9 @@
     return ev(closure.body, newEnv);
   };
 
-  call = function(closure, thisArgument, args, env) {
+  call = function(closure, thisArgument, args) {
     var returnCandidate;
-    returnCandidate = callRaw(closure, thisArgument, args, env);
+    returnCandidate = callRaw(closure, thisArgument, args);
     if (returnCandidate != null ? returnCandidate["return"] : void 0) {
       return returnCandidate.value;
     } else {
@@ -234,7 +299,7 @@
 
   callNew = function(closure, thisArgument, args, env) {
     var returnCandidate;
-    returnCandidate = callRaw(closure, thisArgument, args, env);
+    returnCandidate = callRaw(closure, thisArgument, args);
     if ((returnCandidate != null ? returnCandidate["return"] : void 0) && returnCandidate.value.type === 'object') {
       return returnCandidate.value;
     } else {
@@ -255,7 +320,7 @@
     args = exp["arguments"].map(function(argument) {
       return ev(argument, env);
     });
-    return call(closure, thisArgument, args, env);
+    return call(closure, thisArgument, args);
   };
 
   Nodes['NewExpression'] = function(exp, env) {
@@ -265,7 +330,7 @@
     args = exp["arguments"].map(function(argument) {
       return ev(argument, env);
     });
-    return callNew(closure, thisArgument, args, env);
+    return callNew(closure, thisArgument, args);
   };
 
   Nodes['FunctionDeclaration'] = function(exp, env) {

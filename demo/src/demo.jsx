@@ -53,8 +53,8 @@ var Describe = React.createClass({
 var It = React.createClass({
 	getInitialState: function () {
 		return {
-			resultJinter: null,
-			resultJs: null
+			//resultJinter: null,
+			//resultJs: null
 		};
 	},
 	evJs: function (source) {
@@ -88,7 +88,7 @@ var It = React.createClass({
 		return { __html: highlight.value };
 	},
 	render: function () {
-		var message = this.state.resultJinter ?
+		var message = this.state.hasOwnProperty('resultJinter') ?
 			"jinter: " + this.state.resultJinter + "; js: " + this.state.resultJs :
 			"click to eval";
 		return <li onClick={this.ev}>

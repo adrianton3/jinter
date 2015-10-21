@@ -34,6 +34,32 @@
     return this.map.set(key, value);
   };
 
+  OBJECT.prototype.defineGet = function(key, get) {
+    var entry;
+    entry = this.map.get(key);
+    if (entry != null ? entry.descriptor : void 0) {
+      return entry.get = get;
+    } else {
+      return this.map.set(key, {
+        descriptor: true,
+        get: get
+      });
+    }
+  };
+
+  OBJECT.prototype.defineSet = function(key, set) {
+    var entry;
+    entry = this.map.get(key);
+    if (entry != null ? entry.descriptor : void 0) {
+      return entry.set = set;
+    } else {
+      return this.map.set(key, {
+        descriptor: true,
+        set: set
+      });
+    }
+  };
+
   OBJECT.prototype.seal = function() {
     return this.extensible = false;
   };

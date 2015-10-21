@@ -4,7 +4,7 @@
   var BOOLEAN;
 
   BOOLEAN = function(value) {
-    this.value = value;
+    this.value = Boolean(value);
   };
 
   BOOLEAN.prototype.type = 'boolean';

@@ -20,7 +20,7 @@
   };
 
   NULL.toBoolean = function() {
-    return true;
+    return false;
   };
 
   NULL.toString = function() {

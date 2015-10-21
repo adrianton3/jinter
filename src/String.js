@@ -4,7 +4,7 @@
   var STRING;
 
   STRING = function(value) {
-    this.value = value;
+    this.value = String(value);
   };
 
   STRING.prototype.type = 'string';

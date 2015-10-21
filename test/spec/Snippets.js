@@ -19,6 +19,32 @@
       'toString can return a number': 'var a = { toString: function () { return 234 } };\na + 123',
       'valueOf can return a string': 'var a = { valueOf: function () { return "asd" } };\na + 123'
     },
+    'unary +': {
+      'number': '+123',
+      'numberic string': '+"123"',
+      'non-numberic string': '+"asd"',
+      'boolean': '+true',
+      'null': '+null',
+      'undefined': '+undefined',
+      'object': '+({})'
+    },
+    'unary -': {
+      'number': '-123',
+      'numberic string': '-"123"',
+      'non-numberic string': '-"asd"',
+      'boolean': '-true',
+      'null': '-null',
+      'undefined': '-undefined',
+      'object': '-({})'
+    },
+    '! operator': {
+      'number': '!123',
+      'string': '!"asd"',
+      'boolean': '!true',
+      'null': '!null',
+      'undefined': '!undefined',
+      'object': '!({})'
+    },
     'binary -': {
       'numbers': '2 - 3',
       'strings': '"2" - "3"',
@@ -28,6 +54,29 @@
     '* operator': {
       'numbers': '2 * 3',
       'strings': '"2" * "3"'
+    },
+    '&& operator': {
+      'numbers': '2 && 3',
+      'strings': '"asd" && ""',
+      'booleans': 'false && true',
+      'null': 'true && null',
+      'undefined': 'true && undefined'
+    },
+    '|| operator': {
+      'numbers': '2 || 3',
+      'strings': '"asd" || ""',
+      'booleans': 'false || true',
+      'null': 'true || null',
+      'undefined': 'true || undefined'
+    },
+    '=== operator': {
+      'numbers': '1 + 4 === 2 + 3',
+      'strings': '"a" + "sd" === "as" + "d"',
+      'boolean': 'false === true',
+      'different objects': '({}) === ({})',
+      'same object': 'var a = {};\na === a',
+      'null': 'null === null',
+      'undefined': 'undefined === undefined'
     },
     'if expressions': {
       'booleans cast to boolean': 'true ? 123 : 321',
@@ -43,7 +92,9 @@
       'can lookup a member': '({ a: 123 }).a',
       'can call a member': '({\n	a: 123,\n	b: function () { return this.a }\n}).b()',
       'computed member expression': '({ asd: 123 })["a" + "sd"]',
-      'can call a computed member': '({\n	asd: function () { return 123 }\n})["a" + "sd"]()'
+      'can call a computed member': '({\n	asd: function () { return 123 }\n})["a" + "sd"]()',
+      'can define a getter': '({\n	get a() { return 123 }\n}).a',
+      'can define a setter': 'var s;\nvar a = {\n	get a() { return s },\n	set a(value) { s = value * 2 }\n};\na.a = 123;\na.a'
     },
     'assignment expressions': {
       'one assignment': 'var a;\na = 123;\na',
@@ -93,6 +144,7 @@
     },
     'scopes': {
       'undefined is located on window': 'undefined',
+      'window is located on window': 'window === window.window',
       'local variables shadow top level variables': 'var a = 123;\n(function () {\n	var a = 321;\n	return a;\n})()',
       'local variables shadow parent scopes': '(function () {\n	var a = 123;\n	return (function () {\n		var a = 321;\n		return a;\n	})()\n})()',
       'local variables does not shadow function parameter': '(function (a) {\n	var a;\n	return a;\n})(123)'
@@ -101,9 +153,18 @@
       'can create an object with a prototype': 'var a = Object.create({ b: 123 });\na.b',
       'can access prototype via __proto__': 'var a = Object.create({ b: 123 });\na.__proto__.b'
     },
+    'Object.keys': {
+      'returns an empty array for an empty object': 'Object.keys({})',
+      'returns the keys of an object': 'Object.keys({ a: 123, b: 321 })'
+    },
     'Array': {
       'can construct': 'var a = [11, 22, 33];\na[1]',
       'can set/get numeric property': 'var a = [];\na[3] = 123;\na[3]'
+    },
+    'Array length': {
+      'for empty arrays': '[].length',
+      'for non-empty arrays': '[11, 22, 33].length',
+      'for sparse arrays': 'var a = [];\na[3] = 123;\na.length'
     },
     'Array methods': {
       'toString': '[11, 22, 33, 44, 55].toString()',

@@ -74,6 +74,16 @@
 
   methods.forEach(addMethod);
 
+  ARRAY_PROTOTYPE.put('length', {
+    descriptor: true,
+    get: new NATIVE_FUNCTION(function() {
+      return {
+        "return": true,
+        value: new NUMBER(this.data.length)
+      };
+    })
+  });
+
   if (window.jinter == null) {
     window.jinter = {};
   }
