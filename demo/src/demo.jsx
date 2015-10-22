@@ -57,12 +57,19 @@ var It = React.createClass({
 			//resultJs: null
 		};
 	},
+	stringify: function (obj) {
+		if (obj === null) {
+			return 'null';
+		} else if (obj === undefined) {
+			return 'undefined';
+		} else {
+			return obj.toString();
+		}
+	},
 	evJs: function (source) {
 		var resultRaw = new Function('source', 'return eval(source)')(source);
 
-		return resultRaw ?
-			resultRaw.toString() :
-			'undefined';
+		return this.stringify(resultRaw);
 	},
 	evJinter: function (source) {
 		var tree = esprima.parse(source);
@@ -71,9 +78,7 @@ var It = React.createClass({
 
 		var resultRaw = jinter.ev(tree, jinter.EMPTY);
 
-		return resultRaw ?
-			resultRaw.toString() :
-			'undefined';
+		return this.stringify(resultRaw);
 	},
 	ev: function (e) {
 		e.preventDefault();
