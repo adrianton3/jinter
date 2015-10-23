@@ -95,6 +95,15 @@ snippets =
 		'null': 'null === null'
 		'undefined': 'undefined === undefined'
 
+	'typeof':
+		'number': 'typeof 123'
+		'string': 'typeof "asd"'
+		'boolean': 'typeof true'
+		'null': 'typeof null'
+		'undefined': 'typeof undefined'
+		'object': 'typeof ({})'
+		'function': 'typeof (function () {})'
+
 	'if expressions':
 		'booleans cast to boolean': 'true ? 123 : 321'
 		'numbers cast to boolean': '123 ? 456 : 789'

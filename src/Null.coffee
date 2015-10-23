@@ -5,6 +5,7 @@ NULL = {}
 
 
 NULL.type = 'null'
+NULL.typeOf = 'object'
 
 
 NULL.get = (key) ->

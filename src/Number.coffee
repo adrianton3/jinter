@@ -10,6 +10,7 @@ NUMBER = (value) ->
 
 
 NUMBER::type = 'number'
+NUMBER::typeOf = 'number'
 
 
 NUMBER::toNumber = ->

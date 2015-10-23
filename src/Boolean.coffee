@@ -7,6 +7,7 @@ BOOLEAN = (value) ->
 
 
 BOOLEAN::type = 'boolean'
+BOOLEAN::typeOf = 'boolean'
 
 
 BOOLEAN::toNumber = ->

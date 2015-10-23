@@ -5,6 +5,7 @@ UNDEFINED = {}
 
 
 UNDEFINED.type = 'undefined'
+UNDEFINED.typeOf = 'undefined'
 
 
 UNDEFINED.get = (key) ->

@@ -11,6 +11,7 @@ OBJECT = (@proto) ->
 
 
 OBJECT::type = 'object'
+OBJECT::typeOf = 'object'
 
 
 OBJECT::get = (key) ->

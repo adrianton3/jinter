@@ -7,6 +7,7 @@ STRING = (value) ->
 
 
 STRING::type = 'string'
+STRING::typeOf = 'string'
 
 
 STRING::toNumber = ->

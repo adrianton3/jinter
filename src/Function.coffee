@@ -27,6 +27,9 @@ FUNCTION:: = Object.create OBJECT::
 FUNCTION::constructor = FUNCTION
 
 
+FUNCTION::typeOf = 'function'
+
+
 FUNCTION::isCallable = ->
 	true
 

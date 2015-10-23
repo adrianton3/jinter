@@ -17,6 +17,9 @@ NATIVE_FUNCTION::constructor = NATIVE_FUNCTION
 NATIVE_FUNCTION::native = true
 
 
+NATIVE_FUNCTION::typeOf = 'function'
+
+
 NATIVE_FUNCTION::isCallable = ->
 	true
 

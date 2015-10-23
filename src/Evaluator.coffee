@@ -48,6 +48,9 @@ do ->
 		'!': (operand) ->
 			new BOOLEAN !operand.toBoolean()
 
+		'typeof': (operand) ->
+			new STRING operand.typeOf
+
 
 	Nodes['UnaryExpression'] = (exp, env) ->
 		operand = ev exp.argument, env
