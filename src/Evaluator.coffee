@@ -59,6 +59,17 @@ do ->
 
 
 do ->
+	eqeqeq = (left, right) ->
+		if left.type != right.type
+			false
+		else if left.type in ['number', 'boolean', 'string']
+			left.value == right.value
+		else if left.type == 'object'
+			left == right
+		else
+			true
+
+
 	OPERATORS =
 		'+': (left, right) ->
 			leftPrimitive = left.toPrimitive()
@@ -76,16 +87,10 @@ do ->
 			new NUMBER left.toNumber() * right.toNumber()
 
 		'===': (left, right) ->
-			new BOOLEAN(
-				if left.type != right.type
-					false
-				else if left.type in ['number', 'boolean', 'string']
-					left.value == right.value
-				else if left.type == 'object'
-					left == right
-				else
-					true
-			)
+			new BOOLEAN eqeqeq left, right
+
+		'!==': (left, right) ->
+			new BOOLEAN not eqeqeq left, right
 
 
 	Nodes['BinaryExpression'] = (exp, env) ->

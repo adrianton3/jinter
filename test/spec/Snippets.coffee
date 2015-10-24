@@ -95,6 +95,19 @@ snippets =
 		'null': 'null === null'
 		'undefined': 'undefined === undefined'
 
+	'!== operator':
+		'numbers': '2 + 4 !== 2 + 3'
+		'strings': '"as" !== "as" + "d"'
+		'boolean': 'true !== true'
+		'different objects': '({}) !== ({})'
+		'same object': '''
+			var a = {};
+			a !== a
+		'''
+		'null': 'null !== null'
+		'undefined': 'undefined !== undefined'
+		'null and undefined': 'null !== undefined'
+
 	'typeof':
 		'number': 'typeof 123'
 		'string': 'typeof "asd"'
