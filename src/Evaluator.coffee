@@ -69,6 +69,13 @@ do ->
 		else
 			true
 
+	eqeq = (left, right) ->
+		if left in [NULL, UNDEFINED] or right in [NULL, UNDEFINED]
+			true
+		else
+			# !!!
+			eqeqeq left, right
+
 
 	OPERATORS =
 		'+': (left, right) ->
@@ -91,6 +98,12 @@ do ->
 
 		'!==': (left, right) ->
 			new BOOLEAN not eqeqeq left, right
+
+		'==': (left, right) ->
+			new BOOLEAN eqeq left, right
+
+		'!=': (left, right) ->
+			new BOOLEAN not eqeq left, right
 
 
 	Nodes['BinaryExpression'] = (exp, env) ->

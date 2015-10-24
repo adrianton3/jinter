@@ -108,6 +108,16 @@ snippets =
 		'undefined': 'undefined !== undefined'
 		'null and undefined': 'null !== undefined'
 
+	'== operator':
+		'null': 'null == null'
+		'undefined': 'undefined == undefined'
+		'null and undefined': 'null == undefined'
+
+	'!= operator':
+		'null': 'null != null'
+		'undefined': 'undefined != undefined'
+		'null and undefined': 'null != undefined'
+
 	'typeof':
 		'number': 'typeof 123'
 		'string': 'typeof "asd"'
