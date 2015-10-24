@@ -210,6 +210,10 @@ snippets =
 			};
 			a.__proto__.b
 		'''
+		'unresolved properties evaluate to undefined': '''
+			var a = {};
+			a.b
+		'''
 
 	'if statements':
 		'simple if statement': '''

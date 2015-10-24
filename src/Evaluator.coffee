@@ -238,7 +238,9 @@ Nodes['MemberExpression'] = (exp, env) ->
 	key = computeMemberKey exp, env
 
 	entry = object.get key
-	if entry.descriptor?
+	if not entry?
+		UNDEFINED
+	else if entry.descriptor?
 		if entry.get?
 			call entry.get, object, []
 		else
