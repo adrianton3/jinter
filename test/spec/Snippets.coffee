@@ -258,6 +258,9 @@ snippets =
 			})()
 		'''
 
+	'sequence expressions':
+		'evaluate to the last term': '123, 321'
+
 	'new':
 		'instantiation and assignment to this': '''
 			var A = function () { this.b = 123; };

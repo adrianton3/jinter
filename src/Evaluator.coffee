@@ -207,6 +207,11 @@ Nodes['AssignmentExpression'] = (exp, env) ->
 	value
 
 
+Nodes['SequenceExpression'] = (exp, env) ->
+	exp.expressions.reduce (prev, expression) ->
+		ev expression, env
+
+
 Nodes['BlockStatement'] = (exp, env) ->
 	for statement in exp.body
 		returnCandidate = ev statement, env
