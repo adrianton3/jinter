@@ -1,7 +1,13 @@
 'use strict'
 
 
-{ ev, EMPTY, processLiterals, processVars } = jinter
+{
+	ev
+	EMPTY
+	UNDEFINED
+	processLiterals
+	processVars
+} = jinter
 
 
 describe 'ev', ->
@@ -10,7 +16,9 @@ describe 'ev', ->
 		processLiterals tree
 		processVars tree
 
-		result = ev tree, EMPTY
+		env = EMPTY.addEntry()
+		env.addBinding 'this', UNDEFINED
+		result = ev tree, env
 
 		if result?
 			result.toString()

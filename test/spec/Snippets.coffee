@@ -370,6 +370,7 @@ snippets =
 				return a;
 			})(123)
  		'''
+		'the global context has a this': 'this'
 
 	'Object.create':
 		'can create an object with a prototype': '''

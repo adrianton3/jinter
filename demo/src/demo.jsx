@@ -76,7 +76,9 @@ var It = React.createClass({
 		jinter.processLiterals(tree);
 		jinter.processVars(tree);
 
-		var resultRaw = jinter.ev(tree, jinter.EMPTY);
+		var env = jinter.EMPTY.addEntry();
+		env.addBinding('this', jinter.UNDEFINED);
+		var resultRaw = jinter.ev(tree, env);
 
 		return this.stringify(resultRaw);
 	},
