@@ -489,6 +489,34 @@ snippets =
 			a.pop();
 			a
 		'''
+		'forEach iterates over an array': '''
+			var s = 0;
+			[11, 22].forEach(function (element) {
+				s = s + element;
+			});
+			s
+		'''
+		'forEach indices': '''
+			var s = 0;
+			[11, 22].forEach(function (element, index) {
+				s = s + index;
+			});
+			s
+		'''
+		'forEach array argument': '''
+			var s = 0;
+			[11, 22].forEach(function (element, index, array) {
+				s = s + array[index];
+			});
+			s
+		'''
+		'forEach optional this': '''
+			var s = 0;
+			[11, 22].forEach(function (element, index, array) {
+				s = s + this;
+			}, 123);
+			s
+		'''
 
 	'Function methods':
 		'apply': '''

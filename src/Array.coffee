@@ -1,11 +1,10 @@
 'use strict'
 
-{ OBJECT, NULL, NATIVE_FUNCTION, STRING, NUMBER } = jinter
+{ OBJECT } = jinter
 
 
 ARRAY = (@data = []) ->
-	OBJECT.call @, ARRAY_PROTOTYPE
-	@put 'prototype', ARRAY_PROTOTYPE
+	OBJECT.call @, jinter.ARRAY_PROTOTYPE
 	return
 
 
@@ -35,39 +34,6 @@ ARRAY::put = (key, value) ->
 
 ARRAY::toString = ->
 	@data.toString()
-
-
-
-
-ARRAY_PROTOTYPE = new OBJECT NULL
-
-addMethod = ({ name, returnType }) ->
-	ARRAY_PROTOTYPE.put name, new NATIVE_FUNCTION ->
-		resultRaw = Array::[name].apply @data, arguments
-
-		return: true
-		value:
-			if returnType?
-				new returnType resultRaw
-			else
-				resultRaw
-
-methods = [
-	{ name: 'toString', returnType: STRING }
-	{ name: 'slice', returnType: ARRAY }
-	{ name: 'push', returnType: NUMBER }
-	{ name: 'pop' }
-]
-
-methods.forEach addMethod
-
-
-ARRAY_PROTOTYPE.put 'length', {
-	descriptor: true
-	get: new NATIVE_FUNCTION ->
-		return: true
-		value: new NUMBER @data.length
-}
 
 
 window.jinter ?= {}
