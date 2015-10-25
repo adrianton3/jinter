@@ -517,6 +517,11 @@ snippets =
 			}, 123);
 			s
 		'''
+		'map iterates over an array': '''
+			[11, 22].map(function (element) {
+				return element * element;
+			});
+		'''
 
 	'Function methods':
 		'apply': '''

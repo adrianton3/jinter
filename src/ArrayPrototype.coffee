@@ -8,7 +8,6 @@
 	UNDEFINED
 	NUMBER
 	STRING
-	ARRAY
 	NATIVE_FUNCTION
 } = jinter
 
@@ -28,7 +27,7 @@ addMethod = ({ name, returnType }) ->
 
 methods = [
 	{ name: 'toString', returnType: STRING }
-	{ name: 'slice', returnType: ARRAY }
+	{ name: 'slice', returnType: jinter.ARRAY }
 	{ name: 'push', returnType: NUMBER }
 	{ name: 'pop' }
 ]
@@ -54,8 +53,19 @@ forEach = new NATIVE_FUNCTION (fun, optionalThis) ->
 	return: true
 	value: UNDEFINED
 
-
 ARRAY_PROTOTYPE.put 'forEach', forEach
+
+
+map = new NATIVE_FUNCTION (fun, optionalThis) ->
+	results = @data.map (element, index) ->
+		args = [element, (new NUMBER index), @]
+		jinter.call fun, optionalThis, args, EMPTY
+	, @
+
+	return: true
+	value: new jinter.ARRAY results
+
+ARRAY_PROTOTYPE.put 'map', map
 
 
 window.jinter ?= {}
