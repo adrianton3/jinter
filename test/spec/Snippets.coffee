@@ -280,6 +280,12 @@ snippets =
 			(function () { a = 123; })(),(function () { b = 321; })();
 			a + b
 		'''
+		'evaluates all terms, in order': '''
+			var a = 0;
+			(function () { a = a * 10 + 5; })(),
+			(function () { a = a * 10 + 7; })();
+			a
+		'''
 
 	'new':
 		'instantiation and assignment to this': '''
