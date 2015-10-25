@@ -140,7 +140,7 @@ Nodes['IfStatement'] = (exp, env) ->
 
 	if testResult.toBoolean()
 		ev exp.consequent, env
-	else
+	else if exp.alternate?
 		ev exp.alternate, env
 
 

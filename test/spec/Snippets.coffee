@@ -256,6 +256,13 @@ snippets =
 			}
 			a
 		'''
+		'if statement without alternate': '''
+			var a;
+			if (false) {
+				a = 123;
+			}
+			a
+		'''
 		'return from if statement': '''
 			(function () {
 				if (true) {
