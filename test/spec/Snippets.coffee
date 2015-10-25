@@ -237,6 +237,10 @@ snippets =
 			var a = {};
 			a.b
 		'''
+		'functions have a prototype': '''
+			function A() {}
+			!A.prototype
+		'''
 
 	'if statements':
 		'simple if statement': '''

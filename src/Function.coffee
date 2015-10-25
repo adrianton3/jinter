@@ -1,25 +1,11 @@
 'use strict'
 
-{ OBJECT, NULL, EMPTY } = jinter
-
-
-FUNCTION_PROTOTYPE = new OBJECT NULL
-
-do ->
-	apply = new jinter.NATIVE_FUNCTION (thisArgument, args) ->
-		jinter.callRaw @, thisArgument, args.data, EMPTY
-
-	FUNCTION_PROTOTYPE.put 'apply', apply
-
-	call = new jinter.NATIVE_FUNCTION (thisArgument, args...) ->
-		jinter.callRaw @, thisArgument, args, EMPTY
-
-	FUNCTION_PROTOTYPE.put 'call', call
+{ OBJECT, NULL, EMPTY, FUNCTION_PROTOTYPE } = jinter
 
 
 FUNCTION = (@body, @env, @formalArguments, @ownName) ->
 	OBJECT.call @, FUNCTION_PROTOTYPE
-	@put 'prototype', FUNCTION_PROTOTYPE
+	@put 'prototype', new OBJECT NULL
 	return
 
 
