@@ -210,6 +210,7 @@ Nodes['AssignmentExpression'] = (exp, env) ->
 Nodes['SequenceExpression'] = (exp, env) ->
 	exp.expressions.reduce (prev, expression) ->
 		ev expression, env
+	, null
 
 
 Nodes['BlockStatement'] = (exp, env) ->

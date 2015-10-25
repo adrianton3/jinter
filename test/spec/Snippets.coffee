@@ -275,6 +275,11 @@ snippets =
 
 	'sequence expressions':
 		'evaluate to the last term': '123, 321'
+		'evaluates all terms': '''
+			var a, b;
+			(function () { a = 123; })(),(function () { b = 321; })();
+			a + b
+		'''
 
 	'new':
 		'instantiation and assignment to this': '''
