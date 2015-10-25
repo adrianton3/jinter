@@ -112,11 +112,15 @@ snippets =
 		'null': 'null == null'
 		'undefined': 'undefined == undefined'
 		'null and undefined': 'null == undefined'
+		'null and object': 'null == {}'
+		'undefined and object': 'undefined == {}'
 
 	'!= operator':
 		'null': 'null != null'
 		'undefined': 'undefined != undefined'
 		'null and undefined': 'null != undefined'
+		'null and object': 'null != {}'
+		'undefined and object': 'undefined != {}'
 
 	'typeof':
 		'number': 'typeof 123'

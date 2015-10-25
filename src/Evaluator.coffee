@@ -70,7 +70,7 @@ do ->
 			true
 
 	eqeq = (left, right) ->
-		if left in [NULL, UNDEFINED] or right in [NULL, UNDEFINED]
+		if left in [NULL, UNDEFINED] and right in [NULL, UNDEFINED]
 			true
 		else
 			# !!!
