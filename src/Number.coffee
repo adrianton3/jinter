@@ -29,9 +29,5 @@ NUMBER::toPrimitive = ->
 	@
 
 
-NUMBER::isCallable = ->
-	false
-
-
 window.jinter ?= {}
 window.jinter.NUMBER = NUMBER

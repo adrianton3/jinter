@@ -26,9 +26,5 @@ STRING::toPrimitive = ->
 	@
 
 
-STRING::isCallable = ->
-	false
-
-
 window.jinter ?= {}
 window.jinter.STRING = STRING

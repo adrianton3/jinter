@@ -28,9 +28,5 @@ NULL.toString = ->
 	'null'
 
 
-NULL.isCallable = ->
-	false
-
-
 window.jinter ?= {}
 window.jinter.NULL = NULL

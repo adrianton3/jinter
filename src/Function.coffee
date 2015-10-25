@@ -16,9 +16,5 @@ FUNCTION::constructor = FUNCTION
 FUNCTION::typeOf = 'function'
 
 
-FUNCTION::isCallable = ->
-	true
-
-
 window.jinter ?= {}
 window.jinter.FUNCTION = FUNCTION

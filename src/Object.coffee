@@ -59,12 +59,12 @@ OBJECT::seal = ->
 OBJECT::toNumber = ->
 	valueOf = @get 'valueOf'
 
-	if valueOf?.isCallable()
+	if valueOf?.typeOf == 'function'
 		return jinter.call valueOf, @, [], EMPTY
 
 	toString = @get 'toString'
 
-	if toString?.isCallable()
+	if toString?.typeOf == 'function'
 		return jinter.call toString, @, [], EMPTY
 
 	throw new Error 'Cannot convert object to primitive value'
@@ -77,12 +77,12 @@ OBJECT::toBoolean = ->
 OBJECT::toString = ->
 	toString = @get 'toString'
 
-	if toString?.isCallable()
+	if toString?.typeOf == 'function'
 		return jinter.call toString, @, [], EMPTY
 
 	valueOf = @get 'valueOf'
 
-	if valueOf?.isCallable()
+	if valueOf?.typeOf == 'function'
 		return jinter.call valueOf, @, [], EMPTY
 
 	throw new Error 'Cannot convert object to primitive value'
@@ -97,10 +97,6 @@ OBJECT::defaultValue = (hint) ->
 		@toNumber()
 	else
 		@toString()
-
-
-OBJECT::isCallable = ->
-	false
 
 
 window.jinter ?= {}

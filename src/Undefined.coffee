@@ -28,9 +28,5 @@ UNDEFINED.toString = ->
 	'undefined'
 
 
-UNDEFINED.isCallable = ->
-	false
-
-
 window.jinter ?= {}
 window.jinter.UNDEFINED = UNDEFINED

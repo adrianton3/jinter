@@ -22,9 +22,5 @@ BOOLEAN::toString = ->
 	String @value
 
 
-BOOLEAN::isCallable = ->
-	false
-
-
 window.jinter ?= {}
 window.jinter.BOOLEAN = BOOLEAN
