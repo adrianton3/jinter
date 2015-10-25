@@ -372,6 +372,7 @@ Nodes['FunctionExpression'] = (exp, env) ->
 
 Nodes['Program'] = (exp, env) ->
 	newEnv = env.addEntry()
+	newEnv.addBinding 'this', UNDEFINED
 
 	exp.vars.forEach (name) ->
 		newEnv.addBinding name, UNDEFINED

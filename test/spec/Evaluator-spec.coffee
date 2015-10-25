@@ -16,9 +16,7 @@ describe 'ev', ->
 		processLiterals tree
 		processVars tree
 
-		env = EMPTY.addEntry()
-		env.addBinding 'this', UNDEFINED
-		result = ev tree, env
+		result = ev tree, EMPTY
 
 		if result?
 			result.toString()
