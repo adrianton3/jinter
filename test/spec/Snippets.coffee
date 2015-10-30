@@ -522,6 +522,20 @@ snippets =
 				return element * element;
 			});
 		'''
+		'filter eliminates some elements': '''
+			[11, 22, 33, 44].filter(function (element) {
+				return element === 22;
+			});
+		'''
+		'filter eliminates all elements when no return is present': '''
+			[11, 22, 33, 44].filter(function (element) {
+			});
+		'''
+		'filter preserves all elements': '''
+			[11, 22, 33, 44].filter(function (element) {
+				return true;
+			});
+		'''
 
 	'Function methods':
 		'apply': '''

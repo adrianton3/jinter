@@ -68,5 +68,18 @@ map = new NATIVE_FUNCTION (fun, optionalThis) ->
 ARRAY_PROTOTYPE.put 'map', map
 
 
+filter = new NATIVE_FUNCTION (fun, optionalThis) ->
+	results = @data.filter (element, index) ->
+		args = [element, (new NUMBER index), @]
+		result = jinter.call fun, optionalThis, args, EMPTY
+		result.toBoolean()
+	, @
+
+	return: true
+	value: new jinter.ARRAY results
+
+ARRAY_PROTOTYPE.put 'filter', filter
+
+
 window.jinter ?= {}
 window.jinter.ARRAY_PROTOTYPE = ARRAY_PROTOTYPE
