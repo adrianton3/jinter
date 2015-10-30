@@ -536,6 +536,31 @@ snippets =
 				return true;
 			});
 		'''
+		'reduce can sum up numbers': '''
+			[11, 22, 33, 44].reduce(function (base, element) {
+				return base + element;
+			});
+		'''
+		'reduce can take an initial value': '''
+			[11, 22, 33, 44].reduce(function (base, element) {
+				return base + element;
+			}, 123);
+		'''
+		'reduce is called for all elements when the initial value is present': '''
+			var calls = 0;
+			[11, 22, 33, 44].reduce(function (base, element) {
+				calls = calls + 1;
+			}, 123);
+			calls
+		'''
+		'reduce skips the first element when the initial value is missing': '''
+			var calls = 0;
+			[11, 22, 33, 44].reduce(function (base, element) {
+				calls = calls + 1;
+			});
+			calls
+		'''
+
 
 	'Function methods':
 		'apply': '''

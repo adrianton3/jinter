@@ -81,5 +81,21 @@ filter = new NATIVE_FUNCTION (fun, optionalThis) ->
 ARRAY_PROTOTYPE.put 'filter', filter
 
 
+reduce = new NATIVE_FUNCTION (fun, base) ->
+	step = (base, element, index) ->
+		args = [base, element, (new NUMBER index), @]
+		jinter.call fun, NULL, args, EMPTY
+
+	result = if arguments.length == 1
+		@data.reduce step
+	else
+		@data.reduce step, base
+
+	return: true
+	value: result
+
+ARRAY_PROTOTYPE.put 'reduce', reduce
+
+
 window.jinter ?= {}
 window.jinter.ARRAY_PROTOTYPE = ARRAY_PROTOTYPE
