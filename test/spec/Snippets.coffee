@@ -560,6 +560,7 @@ snippets =
 			});
 			calls
 		'''
+
 	'Map':
 		'constructor without arguments': '''
 			var map = new Map;
@@ -569,6 +570,7 @@ snippets =
 			var map = new Map([[123, 'asd'], [321, 'dsa']]);
 			map.get(123) + map.get(321)
 		'''
+
 	'Map methods':
 		'get returns undefined if the entry is missing': '''
 			var map = new Map;
@@ -582,7 +584,16 @@ snippets =
 			var map = new Map([[123, 321]]);
 			map.has(123)
 		'''
-
+		'set can set things': '''
+			var map = new Map;
+			map.set(123, "dsa")
+			map.get(123)
+		'''
+		'set can re-set things': '''
+			var map = new Map([[123, 321]]);
+			map.set(123, "asd")
+			map.get(123)
+		'''
 
 	'Function methods':
 		'apply': '''

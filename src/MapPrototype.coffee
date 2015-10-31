@@ -57,7 +57,7 @@ MAP_PROTOTYPE.put 'has', has
 
 
 set = new NATIVE_FUNCTION (key, value) ->
-	store.set (getKeyValue key), value
+	@store.set (getKeyValue key), value
 
 	return: true
 	value: @
