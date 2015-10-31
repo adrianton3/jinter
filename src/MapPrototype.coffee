@@ -36,8 +36,14 @@ MAP_FUNCTION.put 'prototype', MAP_FUNCTION
 
 
 get = new NATIVE_FUNCTION (key) ->
+	keyValue = getKeyValue key
+	returnValue = if @store.has keyValue
+		@store.get keyValue
+	else
+		UNDEFINED
+
 	return: true
-	value: @store.get getKeyValue key
+	value: returnValue
 
 MAP_PROTOTYPE.put 'get', get
 

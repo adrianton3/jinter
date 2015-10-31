@@ -561,7 +561,11 @@ snippets =
 			calls
 		'''
 	'Map':
-		'constructor works': '''
+		'constructor without arguments': '''
+			var map = new Map;
+			map.get(123)
+		'''
+		'constructor with arguments': '''
 			var map = new Map([[123, 'asd'], [321, 'dsa']]);
 			map.get(123) + map.get(321)
 		'''
