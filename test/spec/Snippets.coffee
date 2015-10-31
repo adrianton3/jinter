@@ -560,6 +560,11 @@ snippets =
 			});
 			calls
 		'''
+	'Map':
+		'constructor works': '''
+			var map = new Map([[123, 'asd'], [321, 'dsa']]);
+			map.get(123) + map.get(321)
+		'''
 
 
 	'Function methods':
