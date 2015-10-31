@@ -9,6 +9,8 @@
 
   STRING.prototype.type = 'string';
 
+  STRING.prototype.typeOf = 'string';
+
   STRING.prototype.toNumber = function() {
     return Number(this.value);
   };
@@ -23,10 +25,6 @@
 
   STRING.prototype.toPrimitive = function() {
     return this;
-  };
-
-  STRING.prototype.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

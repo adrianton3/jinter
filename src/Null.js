@@ -7,6 +7,8 @@
 
   NULL.type = 'null';
 
+  NULL.typeOf = 'object';
+
   NULL.get = function(key) {
     return null;
   };
@@ -25,10 +27,6 @@
 
   NULL.toString = function() {
     return 'null';
-  };
-
-  NULL.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

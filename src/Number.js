@@ -11,6 +11,8 @@
 
   NUMBER.prototype.type = 'number';
 
+  NUMBER.prototype.typeOf = 'number';
+
   NUMBER.prototype.toNumber = function() {
     return this.value;
   };
@@ -25,10 +27,6 @@
 
   NUMBER.prototype.toPrimitive = function() {
     return this;
-  };
-
-  NUMBER.prototype.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

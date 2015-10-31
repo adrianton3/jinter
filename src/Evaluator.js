@@ -44,6 +44,9 @@
       },
       '!': function(operand) {
         return new BOOLEAN(!operand.toBoolean());
+      },
+      'typeof': function(operand) {
+        return new STRING(operand.typeOf);
       }
     };
     return Nodes['UnaryExpression'] = function(exp, env) {
@@ -54,7 +57,26 @@
   })();
 
   (function() {
-    var OPERATORS;
+    var OPERATORS, eqeq, eqeqeq;
+    eqeqeq = function(left, right) {
+      var _ref;
+      if (left.type !== right.type) {
+        return false;
+      } else if ((_ref = left.type) === 'number' || _ref === 'boolean' || _ref === 'string') {
+        return left.value === right.value;
+      } else if (left.type === 'object') {
+        return left === right;
+      } else {
+        return true;
+      }
+    };
+    eqeq = function(left, right) {
+      if ((left === NULL || left === UNDEFINED) && (right === NULL || right === UNDEFINED)) {
+        return true;
+      } else {
+        return eqeqeq(left, right);
+      }
+    };
     OPERATORS = {
       '+': function(left, right) {
         var leftPrimitive, rightPrimitive;
@@ -73,8 +95,16 @@
         return new NUMBER(left.toNumber() * right.toNumber());
       },
       '===': function(left, right) {
-        var _ref;
-        return new BOOLEAN(left.type !== right.type ? false : (_ref = left.type) === 'number' || _ref === 'boolean' || _ref === 'string' ? left.value === right.value : left.type === 'object' ? left === right : true);
+        return new BOOLEAN(eqeqeq(left, right));
+      },
+      '!==': function(left, right) {
+        return new BOOLEAN(!eqeqeq(left, right));
+      },
+      '==': function(left, right) {
+        return new BOOLEAN(eqeq(left, right));
+      },
+      '!=': function(left, right) {
+        return new BOOLEAN(!eqeq(left, right));
       }
     };
     return Nodes['BinaryExpression'] = function(exp, env) {
@@ -118,7 +148,7 @@
     testResult = ev(exp.test, env);
     if (testResult.toBoolean()) {
       return ev(exp.consequent, env);
-    } else {
+    } else if (exp.alternate != null) {
       return ev(exp.alternate, env);
     }
   };
@@ -187,6 +217,12 @@
     return value;
   };
 
+  Nodes['SequenceExpression'] = function(exp, env) {
+    return exp.expressions.reduce(function(prev, expression) {
+      return ev(expression, env);
+    }, null);
+  };
+
   Nodes['BlockStatement'] = function(exp, env) {
     var returnCandidate, statement, _i, _len, _ref;
     _ref = exp.body;
@@ -245,7 +281,9 @@
     object = ev(exp.object, env);
     key = computeMemberKey(exp, env);
     entry = object.get(key);
-    if (entry.descriptor != null) {
+    if (entry == null) {
+      return UNDEFINED;
+    } else if (entry.descriptor != null) {
       if (entry.get != null) {
         return call(entry.get, object, []);
       } else {
@@ -326,7 +364,7 @@
   Nodes['NewExpression'] = function(exp, env) {
     var args, closure, thisArgument;
     closure = ev(exp.callee, env);
-    thisArgument = new OBJECT(closure.get('prototype'));
+    thisArgument = closure["native"] ? null : new OBJECT(closure.get('prototype'));
     args = exp["arguments"].map(function(argument) {
       return ev(argument, env);
     });
@@ -352,6 +390,7 @@
   Nodes['Program'] = function(exp, env) {
     var newEnv;
     newEnv = env.addEntry();
+    newEnv.addBinding('this', UNDEFINED);
     exp.vars.forEach(function(name) {
       newEnv.addBinding(name, UNDEFINED);
     });

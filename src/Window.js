@@ -13,6 +13,8 @@
 
   WINDOW.put('Object', jinter.OBJECT_FUNCTION);
 
+  WINDOW.put('Map', jinter.MAP_FUNCTION);
+
   if (window.jinter == null) {
     window.jinter = {};
   }

@@ -78,6 +78,39 @@
       'null': 'null === null',
       'undefined': 'undefined === undefined'
     },
+    '!== operator': {
+      'numbers': '2 + 4 !== 2 + 3',
+      'strings': '"as" !== "as" + "d"',
+      'boolean': 'true !== true',
+      'different objects': '({}) !== ({})',
+      'same object': 'var a = {};\na !== a',
+      'null': 'null !== null',
+      'undefined': 'undefined !== undefined',
+      'null and undefined': 'null !== undefined'
+    },
+    '== operator': {
+      'null': 'null == null',
+      'undefined': 'undefined == undefined',
+      'null and undefined': 'null == undefined',
+      'null and object': 'null == {}',
+      'undefined and object': 'undefined == {}'
+    },
+    '!= operator': {
+      'null': 'null != null',
+      'undefined': 'undefined != undefined',
+      'null and undefined': 'null != undefined',
+      'null and object': 'null != {}',
+      'undefined and object': 'undefined != {}'
+    },
+    'typeof': {
+      'number': 'typeof 123',
+      'string': 'typeof "asd"',
+      'boolean': 'typeof true',
+      'null': 'typeof null',
+      'undefined': 'typeof undefined',
+      'object': 'typeof ({})',
+      'function': 'typeof (function () {})'
+    },
     'if expressions': {
       'booleans cast to boolean': 'true ? 123 : 321',
       'numbers cast to boolean': '123 ? 456 : 789',
@@ -109,11 +142,19 @@
       'lookup reached proto': 'var a = {};\na.__proto__ = { b: 123 };\na.b',
       'lookup does not reach proto': 'var a = { b: 456 };\na.__proto__ = { b: 123 };\na.b',
       'prototype chain': 'var a = {\n	__proto__: {\n		__proto__: {\n			b: 123\n		}\n	}\n};\na.b',
-      'lookup on __proto__ directly': 'var a = {\n	__proto__: {\n		b: 123\n	}\n};\na.__proto__.b'
+      'lookup on __proto__ directly': 'var a = {\n	__proto__: {\n		b: 123\n	}\n};\na.__proto__.b',
+      'unresolved properties evaluate to undefined': 'var a = {};\na.b',
+      'functions have a prototype': 'function A() {}\n!A.prototype'
     },
     'if statements': {
       'simple if statement': 'var a;\nif (true) {\n	a = 123;\n} else {\n	a = 321;\n}\na',
+      'if statement without alternate': 'var a;\nif (false) {\n	a = 123;\n}\na',
       'return from if statement': '(function () {\n	if (true) {\n		return 123;\n	} else {\n		return 321;\n	}\n})()'
+    },
+    'sequence expressions': {
+      'evaluate to the last term': '123, 321',
+      'evaluates all terms': 'var a, b;\n(function () { a = 123; })(),(function () { b = 321; })();\na + b',
+      'evaluates all terms, in order': 'var a = 0;\n(function () { a = a * 10 + 5; })(),\n(function () { a = a * 10 + 7; })();\na'
     },
     'new': {
       'instantiation and assignment to this': 'var A = function () { this.b = 123; };\nvar a = new A;\na.b',
@@ -147,7 +188,8 @@
       'window is located on window': 'window === window.window',
       'local variables shadow top level variables': 'var a = 123;\n(function () {\n	var a = 321;\n	return a;\n})()',
       'local variables shadow parent scopes': '(function () {\n	var a = 123;\n	return (function () {\n		var a = 321;\n		return a;\n	})()\n})()',
-      'local variables does not shadow function parameter': '(function (a) {\n	var a;\n	return a;\n})(123)'
+      'local variables does not shadow function parameter': '(function (a) {\n	var a;\n	return a;\n})(123)',
+      'the global context has a this': 'this'
     },
     'Object.create': {
       'can create an object with a prototype': 'var a = Object.create({ b: 123 });\na.b',
@@ -172,7 +214,32 @@
       'push return': '[11, 22, 33, 44, 55].push(66)',
       'push original array': 'var a = [11, 22, 33, 44, 55];\na.push(66);\na',
       'pop return': '[11, 22, 33, 44, 55].pop()',
-      'pop original array': 'var a = [11, 22, 33, 44, 55];\na.pop();\na'
+      'pop original array': 'var a = [11, 22, 33, 44, 55];\na.pop();\na',
+      'forEach iterates over an array': 'var s = 0;\n[11, 22].forEach(function (element) {\n	s = s + element;\n});\ns',
+      'forEach indices': 'var s = 0;\n[11, 22].forEach(function (element, index) {\n	s = s + index;\n});\ns',
+      'forEach array argument': 'var s = 0;\n[11, 22].forEach(function (element, index, array) {\n	s = s + array[index];\n});\ns',
+      'forEach optional this': 'var s = 0;\n[11, 22].forEach(function (element, index, array) {\n	s = s + this;\n}, 123);\ns',
+      'map iterates over an array': '[11, 22].map(function (element) {\n	return element * element;\n});',
+      'filter eliminates some elements': '[11, 22, 33, 44].filter(function (element) {\n	return element === 22;\n});',
+      'filter eliminates all elements when no return is present': '[11, 22, 33, 44].filter(function (element) {\n});',
+      'filter preserves all elements': '[11, 22, 33, 44].filter(function (element) {\n	return true;\n});',
+      'reduce can sum up numbers': '[11, 22, 33, 44].reduce(function (base, element) {\n	return base + element;\n});',
+      'reduce can take an initial value': '[11, 22, 33, 44].reduce(function (base, element) {\n	return base + element;\n}, 123);',
+      'reduce is called for all elements when the initial value is present': 'var calls = 0;\n[11, 22, 33, 44].reduce(function (base, element) {\n	calls = calls + 1;\n}, 123);\ncalls',
+      'reduce skips the first element when the initial value is missing': 'var calls = 0;\n[11, 22, 33, 44].reduce(function (base, element) {\n	calls = calls + 1;\n});\ncalls'
+    },
+    'Map': {
+      'constructor without arguments': 'var map = new Map;\nmap.get(123)',
+      'constructor with arguments': 'var map = new Map([[123, \'asd\'], [321, \'dsa\']]);\nmap.get(123) + map.get(321)'
+    },
+    'Map methods': {
+      'get returns undefined if the entry is missing': 'var map = new Map;\nmap.get(123) === undefined',
+      'has returns true': 'var map = new Map;\nmap.has(123)',
+      'has returns false': 'var map = new Map([[123, 321]]);\nmap.has(123)',
+      'set can set things': 'var map = new Map;\nmap.set(123, "dsa")\nmap.get(123)',
+      'set can re-set things': 'var map = new Map([[123, 321]]);\nmap.set(123, "asd")\nmap.get(123)',
+      'forEach iterates over entries': 'var s = 0;\nvar map = new Map([["a", 123], ["b", 321]]);\nmap.forEach(function (value) {\n	s = s + value;\n});\ns',
+      'forEach keys': 'var s = "";\nvar map = new Map([["a", 123], ["b", 321]]);\nmap.forEach(function (value, key) {\n	s = s + key;\n});\ns'
     },
     'Function methods': {
       'apply': 'var f = function (a, b) { return a + b };\nf.apply(null, [11, 22])',

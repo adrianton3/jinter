@@ -9,6 +9,8 @@
 
   BOOLEAN.prototype.type = 'boolean';
 
+  BOOLEAN.prototype.typeOf = 'boolean';
+
   BOOLEAN.prototype.toNumber = function() {
     return Number(this.value);
   };
@@ -19,10 +21,6 @@
 
   BOOLEAN.prototype.toString = function() {
     return String(this.value);
-  };
-
-  BOOLEAN.prototype.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

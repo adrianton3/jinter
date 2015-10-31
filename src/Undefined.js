@@ -7,6 +7,8 @@
 
   UNDEFINED.type = 'undefined';
 
+  UNDEFINED.typeOf = 'undefined';
+
   UNDEFINED.get = function(key) {
     throw new Error("Cannot read property " + key + " of undefined");
   };
@@ -25,10 +27,6 @@
 
   UNDEFINED.toString = function() {
     return 'undefined';
-  };
-
-  UNDEFINED.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

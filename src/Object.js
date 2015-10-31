@@ -13,6 +13,8 @@
 
   OBJECT.prototype.type = 'object';
 
+  OBJECT.prototype.typeOf = 'object';
+
   OBJECT.prototype.get = function(key) {
     if (key === '__proto__') {
       return this.proto;
@@ -67,11 +69,11 @@
   OBJECT.prototype.toNumber = function() {
     var toString, valueOf;
     valueOf = this.get('valueOf');
-    if (valueOf != null ? valueOf.isCallable() : void 0) {
+    if ((valueOf != null ? valueOf.typeOf : void 0) === 'function') {
       return jinter.call(valueOf, this, [], EMPTY);
     }
     toString = this.get('toString');
-    if (toString != null ? toString.isCallable() : void 0) {
+    if ((toString != null ? toString.typeOf : void 0) === 'function') {
       return jinter.call(toString, this, [], EMPTY);
     }
     throw new Error('Cannot convert object to primitive value');
@@ -84,11 +86,11 @@
   OBJECT.prototype.toString = function() {
     var toString, valueOf;
     toString = this.get('toString');
-    if (toString != null ? toString.isCallable() : void 0) {
+    if ((toString != null ? toString.typeOf : void 0) === 'function') {
       return jinter.call(toString, this, [], EMPTY);
     }
     valueOf = this.get('valueOf');
-    if (valueOf != null ? valueOf.isCallable() : void 0) {
+    if ((valueOf != null ? valueOf.typeOf : void 0) === 'function') {
       return jinter.call(valueOf, this, [], EMPTY);
     }
     throw new Error('Cannot convert object to primitive value');
@@ -104,10 +106,6 @@
     } else {
       return this.toString();
     }
-  };
-
-  OBJECT.prototype.isCallable = function() {
-    return false;
   };
 
   if (window.jinter == null) {

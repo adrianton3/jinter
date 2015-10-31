@@ -17,9 +17,7 @@
 
   NATIVE_FUNCTION.prototype["native"] = true;
 
-  NATIVE_FUNCTION.prototype.isCallable = function() {
-    return true;
-  };
+  NATIVE_FUNCTION.prototype.typeOf = 'function';
 
   if (window.jinter == null) {
     window.jinter = {};
