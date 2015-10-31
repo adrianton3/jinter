@@ -569,6 +569,19 @@ snippets =
 			var map = new Map([[123, 'asd'], [321, 'dsa']]);
 			map.get(123) + map.get(321)
 		'''
+	'Map methods':
+		'get returns undefined if the entry is missing': '''
+			var map = new Map;
+			map.get(123) === undefined
+		'''
+		'has returns true': '''
+			var map = new Map;
+			map.has(123)
+		'''
+		'has returns false': '''
+			var map = new Map([[123, 321]]);
+			map.has(123)
+		'''
 
 
 	'Function methods':
