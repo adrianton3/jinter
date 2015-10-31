@@ -349,7 +349,11 @@ Nodes['CallExpression'] = (exp, env) ->
 
 Nodes['NewExpression'] = (exp, env) ->
 	closure = ev exp.callee, env
-	thisArgument = new OBJECT closure.get 'prototype'
+
+	thisArgument = if closure.native
+		null
+	else
+		new OBJECT closure.get 'prototype'
 
 	args = exp.arguments.map (argument) ->
 		ev argument, env
