@@ -594,6 +594,23 @@ snippets =
 			map.set(123, "asd")
 			map.get(123)
 		'''
+		'forEach iterates over entries': '''
+			var s = 0;
+			var map = new Map([["a", 123], ["b", "321"]]);
+			map.forEach(function (value) {
+				s = s + value;
+			});
+			s
+		'''
+		'forEach keys': '''
+			var s = 0;
+			var map = new Map([["a", 123], ["b", "321"]]);
+			map.forEach(function (value, key) {
+				s = s + key;
+			});
+			s
+		'''
+
 
 	'Function methods':
 		'apply': '''
