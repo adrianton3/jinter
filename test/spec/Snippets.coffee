@@ -596,15 +596,15 @@ snippets =
 		'''
 		'forEach iterates over entries': '''
 			var s = 0;
-			var map = new Map([["a", 123], ["b", "321"]]);
+			var map = new Map([["a", 123], ["b", 321]]);
 			map.forEach(function (value) {
 				s = s + value;
 			});
 			s
 		'''
 		'forEach keys': '''
-			var s = 0;
-			var map = new Map([["a", 123], ["b", "321"]]);
+			var s = "";
+			var map = new Map([["a", 123], ["b", 321]]);
 			map.forEach(function (value, key) {
 				s = s + key;
 			});
