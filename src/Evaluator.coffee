@@ -21,15 +21,15 @@ Nodes = {}
 
 
 Nodes['Literal'] = (exp, env) ->
-	value = exp.value
-	switch exp.dataType
-		when 'number'
-			new NUMBER value
-		when 'boolean'
-			new BOOLEAN value
-		when 'string'
-			new STRING value
-		when 'object'
+	{ value, dataType } = exp
+
+	if dataType == 'number'
+		new NUMBER value
+	else if dataType == 'boolean'
+		new BOOLEAN value
+	else if dataType == 'string'
+		new STRING value
+	else if dataType == 'object'
 			NULL
 
 
@@ -250,13 +250,12 @@ Nodes['ObjectExpression'] = (exp, env) ->
 
 		value = ev value, env
 
-		switch kind
-			when 'get'
-				object.defineGet name, value
-			when 'set'
-				object.defineSet name, value
-			else
-				object.put name, value
+		if kind == 'get'
+			object.defineGet name, value
+		else if kind == 'set'
+			object.defineSet name, value
+		else
+			object.put name, value
 
 	object
 

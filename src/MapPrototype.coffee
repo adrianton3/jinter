@@ -18,10 +18,14 @@ primitiveToValue = (key) ->
 
 
 valueToPrimitive = (value) ->
-	constructor = switch typeof value
-		when 'number' then NUMBER
-		when 'boolean' then BOOLEAN
-		when 'string' then STRING
+	valueType = typeof value
+
+	constructor = if valueType == 'number'
+		NUMBER
+	else if valueType == 'boolean'
+		BOOLEAN
+	else if valueType == 'string'
+		STRING
 
 	new constructor value
 
