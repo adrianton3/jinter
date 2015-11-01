@@ -242,11 +242,15 @@ Nodes['ArrayExpression'] = (exp, env) ->
 Nodes['ObjectExpression'] = (exp, env) ->
 	object = new OBJECT jinter.OBJECT_PROTOTYPE
 
-	exp.properties.forEach (property) ->
-		name = property.key.name
-		value = ev property.value, env
+	exp.properties.forEach ({key, value, kind}) ->
+		name = if key.type == "Identifier"
+			key.name
+		else
+			key.value
 
-		switch property.kind
+		value = ev value, env
+
+		switch kind
 			when 'get'
 				object.defineGet name, value
 			when 'set'

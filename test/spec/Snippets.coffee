@@ -142,7 +142,12 @@ snippets =
 		'three parameters': '(function (a, b) { return a + b; })(123, 456)'
 
 	'objects':
-		'can lookup a member': '({ a: 123 }).a'
+		'can lookup a member': '''
+			({ a: 123 }).a
+		'''
+		'can lookup a member with a string key': '''
+			({ "a": 123 }).a
+		'''
 		'can call a member': '''
 			({
 				a: 123,
