@@ -291,15 +291,16 @@ callRaw = (closure, thisArgument, args) ->
 	# this
 	newEnv.addBinding 'this', thisArgument
 
+	# arguments
 	newEnv.addBinding 'arguments', new ARRAY args
 
 	# arguments
-	args.forEach (value, index) ->
-		# all parameters must be evaluated but only named
-		# ones must be bound in the new environment
-		if index < closure.formalArguments.length
-			name = closure.formalArguments[index]
-			newEnv.addBinding name, value
+	closure.formalArguments.forEach (formalArgument, index) ->
+		value = if index < args.length
+			args[index]
+		else
+			UNDEFINED
+		newEnv.addBinding formalArgument, value
 		return
 
 	# vars

@@ -326,7 +326,10 @@ snippets =
 
 	'function calls':
 		'more parameters than formal arguments': '''
-			(function (a, b) { return 123 })(1, 2, 3, 4)
+			(function (a, b) { return b })(11, 22, 33, 44)
+		'''
+		'less parameters than formal arguments': '''
+			(function (a, b) { return b })(321)
 		'''
 		'functions return undefined by default': '''
 			(function () {})()
