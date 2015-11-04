@@ -339,6 +339,27 @@ snippets =
 			})(123)(456)
 		'''
 
+	'the arguments object':
+		'is available in a function': '''
+			(function () {
+				return arguments[0];
+			})(123);
+		'''
+		'works outside of the function': '''
+			(function () {
+				return arguments;
+			})(123, 765)[1];
+		'''
+		'can be forwarded to apply': '''
+			function f(a, b) {
+				return a + b;
+			}
+			function g() {
+				return f.apply(null, arguments);
+			}
+			g(123, 321);
+		'''
+
 	'while':
 		'simple loop': '''
 			var i = 10, sum = 0;

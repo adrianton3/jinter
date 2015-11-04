@@ -291,6 +291,8 @@ callRaw = (closure, thisArgument, args) ->
 	# this
 	newEnv.addBinding 'this', thisArgument
 
+	newEnv.addBinding 'arguments', new ARRAY args
+
 	# arguments
 	args.forEach (value, index) ->
 		# all parameters must be evaluated but only named
