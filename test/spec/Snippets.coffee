@@ -640,7 +640,6 @@ snippets =
 			s
 		'''
 
-
 	'Function methods':
 		'apply': '''
 			var f = function (a, b) { return a + b };
@@ -658,6 +657,16 @@ snippets =
 			var f = function (a) { return this + a };
 			f.call(11, 22)
 		'''
+
+	'isNaN':
+		'number': 'isNaN(123)'
+		'NaN': 'isNaN(NaN)'
+		'boolean': 'isNaN(false)'
+		'string': 'isNaN("asd")'
+		'numeric string': 'isNaN("23")'
+		'object': 'isNaN({})'
+		'null': 'isNaN(null)'
+		'undefined': 'isNaN(undefined)'
 
 
 window.snippets ?= {}
