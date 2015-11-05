@@ -668,6 +668,29 @@ snippets =
 		'null': 'isNaN(null)'
 		'undefined': 'isNaN(undefined)'
 
+	'parseFloat':
+		'integer': 'parseFloat(123)'
+		'float': 'parseFloat(123.456)'
+		'NaN': 'parseFloat(NaN)'
+		'boolean': 'parseFloat(false)'
+		'string': 'parseFloat("asd")'
+		'numeric string': 'parseFloat("23")'
+		'object': 'parseFloat({})'
+		'null': 'parseFloat(null)'
+		'undefined': 'parseFloat(undefined)'
+
+	'parseInt':
+		'integer': 'parseInt(123)'
+		'float': 'parseInt(123.456)'
+		'NaN': 'parseInt(NaN)'
+		'boolean': 'parseInt(false)'
+		'string': 'parseInt("asd")'
+		'base 10 string': 'parseInt("23")'
+		'base 16 string': 'parseInt("FF", 16)'
+		'object': 'parseInt({})'
+		'null': 'parseInt(null)'
+		'undefined': 'parseInt(undefined)'
+
 
 window.snippets ?= {}
 Object.assign window.snippets, snippets
