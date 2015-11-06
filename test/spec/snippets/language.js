@@ -123,6 +123,7 @@
     },
     'objects': {
       'can lookup a member': '({ a: 123 }).a',
+      'can lookup a member with a string key': '({ "a": 123 }).a',
       'can call a member': '({\n	a: 123,\n	b: function () { return this.a }\n}).b()',
       'computed member expression': '({ asd: 123 })["a" + "sd"]',
       'can call a computed member': '({\n	asd: function () { return 123 }\n})["a" + "sd"]()',
@@ -166,9 +167,15 @@
       'all functions are bound to their name before execution': 'function f() { return g() }\nfunction g() { return 123 }\nf()'
     },
     'function calls': {
-      'more parameters than formal arguments': '(function (a, b) { return 123 })(1, 2, 3, 4)',
+      'more parameters than formal arguments': '(function (a, b) { return b })(11, 22, 33, 44)',
+      'less parameters than formal arguments': '(function (a, b) { return b })(321)',
       'functions return undefined by default': '(function () {})()',
       'currying': '(function (a) {\n	return function (b) {\n		return a + b\n	}\n})(123)(456)'
+    },
+    'the arguments object': {
+      'is available in a function': '(function () {\n	return arguments[0];\n})(123);',
+      'works outside of the function': '(function () {\n	return arguments;\n})(123, 765)[1];',
+      'can be forwarded to apply': 'function f(a, b) {\n	return a + b;\n}\nfunction g() {\n	return f.apply(null, arguments);\n}\ng(123, 321);'
     },
     'while': {
       'simple loop': 'var i = 10, sum = 0;\nwhile (i) {\n	sum = sum + i;\n	i = i - 1;\n}\nsum',
@@ -190,62 +197,6 @@
       'local variables shadow parent scopes': '(function () {\n	var a = 123;\n	return (function () {\n		var a = 321;\n		return a;\n	})()\n})()',
       'local variables does not shadow function parameter': '(function (a) {\n	var a;\n	return a;\n})(123)',
       'the global context has a this': 'this'
-    },
-    'Object.create': {
-      'can create an object with a prototype': 'var a = Object.create({ b: 123 });\na.b',
-      'can access prototype via __proto__': 'var a = Object.create({ b: 123 });\na.__proto__.b'
-    },
-    'Object.keys': {
-      'returns an empty array for an empty object': 'Object.keys({})',
-      'returns the keys of an object': 'Object.keys({ a: 123, b: 321 })'
-    },
-    'Array': {
-      'can construct': 'var a = [11, 22, 33];\na[1]',
-      'can set/get numeric property': 'var a = [];\na[3] = 123;\na[3]'
-    },
-    'Array length': {
-      'for empty arrays': '[].length',
-      'for non-empty arrays': '[11, 22, 33].length',
-      'for sparse arrays': 'var a = [];\na[3] = 123;\na.length'
-    },
-    'Array methods': {
-      'toString': '[11, 22, 33, 44, 55].toString()',
-      'slice': '[11, 22, 33, 44, 55].slice(2, 3)',
-      'push return': '[11, 22, 33, 44, 55].push(66)',
-      'push original array': 'var a = [11, 22, 33, 44, 55];\na.push(66);\na',
-      'pop return': '[11, 22, 33, 44, 55].pop()',
-      'pop original array': 'var a = [11, 22, 33, 44, 55];\na.pop();\na',
-      'forEach iterates over an array': 'var s = 0;\n[11, 22].forEach(function (element) {\n	s = s + element;\n});\ns',
-      'forEach indices': 'var s = 0;\n[11, 22].forEach(function (element, index) {\n	s = s + index;\n});\ns',
-      'forEach array argument': 'var s = 0;\n[11, 22].forEach(function (element, index, array) {\n	s = s + array[index];\n});\ns',
-      'forEach optional this': 'var s = 0;\n[11, 22].forEach(function (element, index, array) {\n	s = s + this;\n}, 123);\ns',
-      'map iterates over an array': '[11, 22].map(function (element) {\n	return element * element;\n});',
-      'filter eliminates some elements': '[11, 22, 33, 44].filter(function (element) {\n	return element === 22;\n});',
-      'filter eliminates all elements when no return is present': '[11, 22, 33, 44].filter(function (element) {\n});',
-      'filter preserves all elements': '[11, 22, 33, 44].filter(function (element) {\n	return true;\n});',
-      'reduce can sum up numbers': '[11, 22, 33, 44].reduce(function (base, element) {\n	return base + element;\n});',
-      'reduce can take an initial value': '[11, 22, 33, 44].reduce(function (base, element) {\n	return base + element;\n}, 123);',
-      'reduce is called for all elements when the initial value is present': 'var calls = 0;\n[11, 22, 33, 44].reduce(function (base, element) {\n	calls = calls + 1;\n}, 123);\ncalls',
-      'reduce skips the first element when the initial value is missing': 'var calls = 0;\n[11, 22, 33, 44].reduce(function (base, element) {\n	calls = calls + 1;\n});\ncalls'
-    },
-    'Map': {
-      'constructor without arguments': 'var map = new Map;\nmap.get(123)',
-      'constructor with arguments': 'var map = new Map([[123, \'asd\'], [321, \'dsa\']]);\nmap.get(123) + map.get(321)'
-    },
-    'Map methods': {
-      'get returns undefined if the entry is missing': 'var map = new Map;\nmap.get(123) === undefined',
-      'has returns true': 'var map = new Map;\nmap.has(123)',
-      'has returns false': 'var map = new Map([[123, 321]]);\nmap.has(123)',
-      'set can set things': 'var map = new Map;\nmap.set(123, "dsa")\nmap.get(123)',
-      'set can re-set things': 'var map = new Map([[123, 321]]);\nmap.set(123, "asd")\nmap.get(123)',
-      'forEach iterates over entries': 'var s = 0;\nvar map = new Map([["a", 123], ["b", 321]]);\nmap.forEach(function (value) {\n	s = s + value;\n});\ns',
-      'forEach keys': 'var s = "";\nvar map = new Map([["a", 123], ["b", 321]]);\nmap.forEach(function (value, key) {\n	s = s + key;\n});\ns'
-    },
-    'Function methods': {
-      'apply': 'var f = function (a, b) { return a + b };\nf.apply(null, [11, 22])',
-      'apply with this': 'var f = function (a) { return this + a };\nf.apply(11, [22])',
-      'call': 'var f = function (a, b) { return a + b };\nf.call(null, 11, 22)',
-      'call with this': 'var f = function (a) { return this + a };\nf.call(11, 22)'
     }
   };
 

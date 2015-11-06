@@ -11,17 +11,9 @@
   };
 
   valueToPrimitive = function(value) {
-    var constructor;
-    constructor = (function() {
-      switch (typeof value) {
-        case 'number':
-          return NUMBER;
-        case 'boolean':
-          return BOOLEAN;
-        case 'string':
-          return STRING;
-      }
-    })();
+    var constructor, valueType;
+    valueType = typeof value;
+    constructor = valueType === 'number' ? NUMBER : valueType === 'boolean' ? BOOLEAN : valueType === 'string' ? STRING : void 0;
     return new constructor(value);
   };
 

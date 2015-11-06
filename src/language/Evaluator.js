@@ -15,17 +15,16 @@
   Nodes = {};
 
   Nodes['Literal'] = function(exp, env) {
-    var value;
-    value = exp.value;
-    switch (exp.dataType) {
-      case 'number':
-        return new NUMBER(value);
-      case 'boolean':
-        return new BOOLEAN(value);
-      case 'string':
-        return new STRING(value);
-      case 'object':
-        return NULL;
+    var dataType, value;
+    value = exp.value, dataType = exp.dataType;
+    if (dataType === 'number') {
+      return new NUMBER(value);
+    } else if (dataType === 'boolean') {
+      return new BOOLEAN(value);
+    } else if (dataType === 'string') {
+      return new STRING(value);
+    } else if (dataType === 'object') {
+      return NULL;
     }
   };
 
@@ -260,17 +259,17 @@
   Nodes['ObjectExpression'] = function(exp, env) {
     var object;
     object = new OBJECT(jinter.OBJECT_PROTOTYPE);
-    exp.properties.forEach(function(property) {
-      var name, value;
-      name = property.key.name;
-      value = ev(property.value, env);
-      switch (property.kind) {
-        case 'get':
-          return object.defineGet(name, value);
-        case 'set':
-          return object.defineSet(name, value);
-        default:
-          return object.put(name, value);
+    exp.properties.forEach(function(_arg) {
+      var key, kind, name, value;
+      key = _arg.key, value = _arg.value, kind = _arg.kind;
+      name = key.type === "Identifier" ? key.name : key.value;
+      value = ev(value, env);
+      if (kind === 'get') {
+        return object.defineGet(name, value);
+      } else if (kind === 'set') {
+        return object.defineSet(name, value);
+      } else {
+        return object.put(name, value);
       }
     });
     return object;
@@ -304,12 +303,11 @@
       newEnv.addBinding(closure.ownName.name, closure);
     }
     newEnv.addBinding('this', thisArgument);
-    args.forEach(function(value, index) {
-      var name;
-      if (index < closure.formalArguments.length) {
-        name = closure.formalArguments[index];
-        newEnv.addBinding(name, value);
-      }
+    newEnv.addBinding('arguments', new ARRAY(args));
+    closure.formalArguments.forEach(function(formalArgument, index) {
+      var value;
+      value = index < args.length ? args[index] : UNDEFINED;
+      newEnv.addBinding(formalArgument, value);
     });
     closure.body.vars.forEach(function(name) {
       if (!newEnv.entryHas(name)) {

@@ -1,4 +1,8 @@
 .idea
+
 src/**/*.coffee
-test
-!test/spec/Snippets.js
+
+test/*
+!test/spec
+test/spec/*.js
+!test/spec/snippets
