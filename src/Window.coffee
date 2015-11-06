@@ -7,6 +7,7 @@
 	NULL,
 	BOOLEAN,
 	NUMBER,
+	STRING,
 	NATIVE_FUNCTION
 } = jinter
 
@@ -43,6 +44,19 @@ WINDOW.put 'parseInt', new NATIVE_FUNCTION (candidate, optionalBase) ->
 
 	return: true
 	value: value
+
+
+WINDOW.put 'Number', new NATIVE_FUNCTION (candidate) ->
+	return: true
+	value: new NUMBER candidate.toNumber()
+
+WINDOW.put 'Boolean', new NATIVE_FUNCTION (candidate) ->
+	return: true
+	value: new BOOLEAN candidate.toBoolean()
+
+WINDOW.put 'String', new NATIVE_FUNCTION (candidate) ->
+	return: true
+	value: new STRING candidate.toString()
 
 
 window.jinter ?= {}
