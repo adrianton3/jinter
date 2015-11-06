@@ -4,12 +4,13 @@ mkdir tmp
 
 cp -r src tmp
 cp -r demo tmp
-cp test/spec/Snippets.js tmp
+mkdir tmp/snippets
+cp test/spec/snippets/*.js tmp/snippets
 
 git checkout gh-pages
 
 cp -r tmp/src ./
 cp -r tmp/demo ./
-cp tmp/Snippets.js test/spec
+cp tmp/snippets test/spec
 
 rm -rf tmp
