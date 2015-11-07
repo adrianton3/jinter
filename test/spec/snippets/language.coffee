@@ -212,6 +212,12 @@ snippets =
 			var a = 123, b = a;
 			a + b
 		'''
+		'object keys are converted to string': '''
+			var a = {};
+			var key = { toString: function () { return 'asd'; } };
+			a[key] = 321;
+			a.asd
+		'''
 
 	'__proto__ and the prototype chain':
 		'lookup reached proto': '''

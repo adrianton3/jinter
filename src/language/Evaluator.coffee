@@ -182,7 +182,10 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 
 computeMemberKey = (exp, env) ->
 	if exp.computed
-		(ev exp.property, env).toString()
+		key = ev exp.property, env
+
+		# hack until OBJECT::toString is settled
+		key.toString().toString()
 	else
 		exp.property.name
 
