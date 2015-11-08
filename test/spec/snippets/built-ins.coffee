@@ -28,116 +28,137 @@ snippets =
 				a[3]
 			'''
 
-	'Array length':
-		'for empty arrays': '[].length'
-		'for non-empty arrays': '[11, 22, 33].length'
-		'for sparse arrays': '''
+	'Array::length':
+		'empty arrays': '[].length'
+		'non-empty arrays': '[11, 22, 33].length'
+		'sparse arrays': '''
 				var a = [];
 				a[3] = 123;
 				a.length
 			'''
 
-	'Array methods':
-		'toString': '''
-				[11, 22, 33, 44, 55].toString()
+	'Array::toString':
+		'empty array': '[].toString()'
+		'array with one element': '''
+				[11].toString()
 			'''
-		'slice with no parameters': '''
+		'array with more elements': '''
+				[11, 22].toString()
+			'''
+		'calls toString recursively': '''
+				[{ toString: function () { return "asd" } }]
+			'''
+
+	'Array::slice':
+		'called with no parameters': '''
 				[11, 22, 33, 44, 55].slice()
 			'''
-		'slice with one parameter': '''
+		'called with one parameter': '''
 				[11, 22, 33, 44, 55].slice(2)
 			'''
-		'slice with two parameters': '''
+		'called with two parameters': '''
 				[11, 22, 33, 44, 55].slice(2, 3)
 			'''
-		'slice converts its parameters to numbers': '''
+		'converts its parameters to numbers': '''
 				var begin = { valueOf: function () { return 2 } };
 				[11, 22, 33, 44, 55].slice(begin)
 			'''
-		'push returns the new array length': '''
+
+	'Array::push':
+		'returns the new array length': '''
 				[11, 22, 33, 44, 55].push(66)
 			'''
-		'push with multiple parameters': '''
+		'called with multiple parameters': '''
 				[11, 22, 33, 44, 55].push(66, 77, 88)
 			'''
-		'push original array': '''
+		'original array is modified': '''
 				var a = [11, 22, 33, 44, 55];
 				a.push(66);
 				a
 			'''
-		'pop return': '''
+
+	'Array::pop':
+		'returns the last element': '''
 				[11, 22, 33, 44, 55].pop()
 			'''
-		'pop original array': '''
+		'original array is modified': '''
 				var a = [11, 22, 33, 44, 55];
 				a.pop();
 				a
 			'''
-		'forEach iterates over an array': '''
+
+	'Array::forEach':
+		'iterates over an array': '''
 				var s = 0;
 				[11, 22].forEach(function (element) {
 					s = s + element;
 				});
 				s
 			'''
-		'forEach indices': '''
+		'index argument': '''
 				var s = 0;
 				[11, 22].forEach(function (element, index) {
 					s = s + index;
 				});
 				s
 			'''
-		'forEach array argument': '''
+		'array argument': '''
 				var s = 0;
 				[11, 22].forEach(function (element, index, array) {
 					s = s + array[index];
 				});
 				s
 			'''
-		'forEach optional this': '''
+		'optional this': '''
 				var s = 0;
 				[11, 22].forEach(function (element, index, array) {
 					s = s + this;
 				}, 123);
 				s
 			'''
-		'map iterates over an array': '''
+
+	'Array::map':
+		'iterates over an array': '''
 				[11, 22].map(function (element) {
 					return element * element;
 				});
 			'''
-		'filter eliminates some elements': '''
+
+	'Array::filter':
+		'eliminates some elements': '''
 				[11, 22, 33, 44].filter(function (element) {
 					return element === 22;
 				});
 			'''
-		'filter eliminates all elements when no return is present': '''
+		'eliminates all elements when no return is present': '''
 				[11, 22, 33, 44].filter(function (element) {
 				});
 			'''
-		'filter preserves all elements': '''
+		'preserves all elements': '''
 				[11, 22, 33, 44].filter(function (element) {
 					return true;
 				});
 			'''
-		'reduce can sum up numbers': '''
+
+	'Array::reduce':
+		'sums up numbers': '''
 				[11, 22, 33, 44].reduce(function (base, element) {
 					return base + element;
 				});
 			'''
-		'reduce can take an initial value': '''
+		'takes an initial value': '''
 				[11, 22, 33, 44].reduce(function (base, element) {
 					return base + element;
 				}, 123);
 			'''
-		'reduce is called for all elements when the initial value is present': '''
+		'is called for all elements when the initial value is present': '''
 				var calls = 0;
 				[11, 22, 33, 44].reduce(function (base, element) {
 					calls = calls + 1;
 				}, 123);
 				calls
 			'''
-		'reduce skips the first element when the initial value is missing': '''
+		'skips the first element when the initial value is missing': '''
 				var calls = 0;
 				[11, 22, 33, 44].reduce(function (base, element) {
 					calls = calls + 1;
