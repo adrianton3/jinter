@@ -16,15 +16,15 @@ UNDEFINED.put = (key, value) ->
 	throw new Error "Cannot set property #{key} of undefined"
 
 
-UNDEFINED.toNumber = ->
+UNDEFINED.asNumber = ->
 	NaN
 
 
-UNDEFINED.toBoolean = ->
+UNDEFINED.asBoolean = ->
 	false
 
 
-UNDEFINED.toString = ->
+UNDEFINED.asString = ->
 	'undefined'
 
 

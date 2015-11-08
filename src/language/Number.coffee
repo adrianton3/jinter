@@ -13,19 +13,19 @@ NUMBER::type = 'number'
 NUMBER::typeOf = 'number'
 
 
-NUMBER::toNumber = ->
+NUMBER::asNumber = ->
 	@value
 
 
-NUMBER::toBoolean = ->
+NUMBER::asBoolean = ->
 	Boolean @value
 
 
-NUMBER::toString = ->
+NUMBER::asString = ->
 	String @value
 
 
-NUMBER::toPrimitive = ->
+NUMBER::asPrimitive = ->
 	@
 
 

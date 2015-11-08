@@ -32,9 +32,5 @@ ARRAY::put = (key, value) ->
 		OBJECT::get.call @, key
 
 
-ARRAY::toString = ->
-	@data.toString()
-
-
 window.jinter ?= {}
 window.jinter.ARRAY = ARRAY

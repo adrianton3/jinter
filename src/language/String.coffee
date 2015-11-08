@@ -10,19 +10,19 @@ STRING::type = 'string'
 STRING::typeOf = 'string'
 
 
-STRING::toNumber = ->
+STRING::asNumber = ->
 	Number @value
 
 
-STRING::toBoolean = ->
+STRING::asBoolean = ->
 	Boolean @value
 
 
-STRING::toString = ->
+STRING::asString = ->
 	@value
 
 
-STRING::toPrimitive = ->
+STRING::asPrimitive = ->
 	@
 
 

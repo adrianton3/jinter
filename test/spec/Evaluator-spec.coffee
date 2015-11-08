@@ -19,7 +19,7 @@ describe 'ev', ->
 		result = ev tree, EMPTY
 
 		if result?
-			result.toString()
+			result.asString()
 		else
 			'undefined'
 

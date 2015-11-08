@@ -40,13 +40,13 @@ Nodes['Identifier'] = (exp, env) ->
 do ->
 	OPERATORS =
 		'+': (operand) ->
-			new NUMBER operand.toNumber()
+			new NUMBER operand.asNumber()
 
 		'-': (operand) ->
-			new NUMBER -operand.toNumber()
+			new NUMBER -operand.asNumber()
 
 		'!': (operand) ->
-			new BOOLEAN !operand.toBoolean()
+			new BOOLEAN !operand.asBoolean()
 
 		'typeof': (operand) ->
 			new STRING operand.typeOf
@@ -79,19 +79,19 @@ do ->
 
 	OPERATORS =
 		'+': (left, right) ->
-			leftPrimitive = left.toPrimitive()
-			rightPrimitive = right.toPrimitive()
+			leftPrimitive = left.asPrimitive()
+			rightPrimitive = right.asPrimitive()
 
 			if leftPrimitive.type == 'string' or rightPrimitive.type == 'string'
-				new STRING leftPrimitive.toString() + rightPrimitive.toString()
+				new STRING leftPrimitive.asString() + rightPrimitive.asString()
 			else
-				new NUMBER leftPrimitive.toNumber() + rightPrimitive.toNumber()
+				new NUMBER leftPrimitive.asNumber() + rightPrimitive.asNumber()
 
 		'-': (left, right) ->
-			new NUMBER left.toNumber() - right.toNumber()
+			new NUMBER left.asNumber() - right.asNumber()
 
 		'*': (left, right) ->
-			new NUMBER left.toNumber() * right.toNumber()
+			new NUMBER left.asNumber() * right.asNumber()
 
 		'===': (left, right) ->
 			new BOOLEAN eqeqeq left, right
@@ -115,7 +115,7 @@ do ->
 
 Nodes['LogicalExpression'] = (exp, env) ->
 	left = ev exp.left, env
-	leftBoolean = left.toBoolean()
+	leftBoolean = left.asBoolean()
 
 	switch exp.operator
 		when '&&'
@@ -129,7 +129,7 @@ Nodes['LogicalExpression'] = (exp, env) ->
 Nodes['ConditionalExpression'] = (exp, env) ->
 	testResult = ev exp.test, env
 
-	if testResult.toBoolean()
+	if testResult.asBoolean()
 		ev exp.consequent, env
 	else
 		ev exp.alternate, env
@@ -138,14 +138,14 @@ Nodes['ConditionalExpression'] = (exp, env) ->
 Nodes['IfStatement'] = (exp, env) ->
 	testResult = ev exp.test, env
 
-	if testResult.toBoolean()
+	if testResult.asBoolean()
 		ev exp.consequent, env
 	else if exp.alternate?
 		ev exp.alternate, env
 
 
 Nodes['WhileStatement'] = (exp, env) ->
-	while (ev exp.test, env).toBoolean()
+	while (ev exp.test, env).asBoolean()
 		returnCandidate = ev exp.body, env
 
 		if returnCandidate?.return
@@ -157,7 +157,7 @@ Nodes['WhileStatement'] = (exp, env) ->
 Nodes['ForStatement'] = (exp, env) ->
 	ev exp.init, env
 
-	while (ev exp.test, env).toBoolean()
+	while (ev exp.test, env).asBoolean()
 		returnCandidate = ev exp.body, env
 
 		if returnCandidate?.return
@@ -183,9 +183,7 @@ Nodes['VariableDeclaration'] = (exp, env) ->
 computeMemberKey = (exp, env) ->
 	if exp.computed
 		key = ev exp.property, env
-
-		# hack until OBJECT::toString is settled
-		key.toString().toString()
+		key.asString()
 	else
 		exp.property.name
 

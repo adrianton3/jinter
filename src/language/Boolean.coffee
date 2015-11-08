@@ -10,15 +10,15 @@ BOOLEAN::type = 'boolean'
 BOOLEAN::typeOf = 'boolean'
 
 
-BOOLEAN::toNumber = ->
+BOOLEAN::asNumber = ->
 	Number @value
 
 
-BOOLEAN::toBoolean = ->
+BOOLEAN::asBoolean = ->
 	@value
 
 
-BOOLEAN::toString = ->
+BOOLEAN::asString = ->
 	String @value
 
 

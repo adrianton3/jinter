@@ -14,25 +14,48 @@
 
 ARRAY_PROTOTYPE = new OBJECT NULL
 
-addMethod = ({ name, returnType }) ->
-	ARRAY_PROTOTYPE.put name, new NATIVE_FUNCTION ->
-		resultRaw = Array::[name].apply @data, arguments
 
-		return: true
-		value:
-			if returnType?
-				new returnType resultRaw
-			else
-				resultRaw
+slice = new NATIVE_FUNCTION (begin, end) ->
+	resultRaw = if arguments.length == 0
+		@data.slice()
+	else if arguments.length == 1
+		@data.slice begin.asNumber()
+	else
+		@data.slice begin.asNumber(), end.asNumber()
 
-methods = [
-	{ name: 'toString', returnType: STRING }
-	{ name: 'slice', returnType: jinter.ARRAY }
-	{ name: 'push', returnType: NUMBER }
-	{ name: 'pop' }
-]
+	return: true
+	value: new jinter.ARRAY resultRaw
 
-methods.forEach addMethod
+ARRAY_PROTOTYPE.put 'slice', slice
+
+
+push = new NATIVE_FUNCTION ->
+	resultRaw = Array::push.apply @data, arguments
+
+	return: true
+	value: new NUMBER resultRaw
+
+ARRAY_PROTOTYPE.put 'push', push
+
+
+pop = new NATIVE_FUNCTION ->
+	result = @data.pop()
+
+	return: true
+	value: result
+
+ARRAY_PROTOTYPE.put 'pop', pop
+
+
+toString = new NATIVE_FUNCTION ->
+	value = @data.map (element) ->
+		element.asString()
+	.join ','
+
+	return: true
+	value: new STRING value
+
+ARRAY_PROTOTYPE.put 'toString', toString
 
 
 ARRAY_PROTOTYPE.put 'length', {
@@ -72,7 +95,7 @@ filter = new NATIVE_FUNCTION (fun, optionalThis) ->
 	results = @data.filter (element, index) ->
 		args = [element, (new NUMBER index), @]
 		result = jinter.call fun, optionalThis, args, EMPTY
-		result.toBoolean()
+		result.asBoolean()
 	, @
 
 	return: true

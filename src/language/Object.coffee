@@ -56,7 +56,7 @@ OBJECT::seal = ->
 	@extensible = false
 
 
-OBJECT::toNumber = ->
+OBJECT::asNumberRaw = ->
 	valueOf = @get 'valueOf'
 
 	if valueOf?.typeOf == 'function'
@@ -70,11 +70,15 @@ OBJECT::toNumber = ->
 	throw new Error 'Cannot convert object to primitive value'
 
 
-OBJECT::toBoolean = ->
+OBJECT::asNumber = ->
+	@asNumberRaw().asNumber()
+
+
+OBJECT::asBoolean = ->
 	true
 
 
-OBJECT::toString = ->
+OBJECT::asStringRaw = ->
 	toString = @get 'toString'
 
 	if toString?.typeOf == 'function'
@@ -88,15 +92,19 @@ OBJECT::toString = ->
 	throw new Error 'Cannot convert object to primitive value'
 
 
-OBJECT::toPrimitive = (prefferedType) ->
+OBJECT::asString = ->
+	@asStringRaw().asString()
+
+
+OBJECT::asPrimitive = (prefferedType) ->
 	@defaultValue prefferedType
 
 
 OBJECT::defaultValue = (hint) ->
 	if not hint? or hint == 'number'
-		@toNumber()
+		@asNumberRaw()
 	else
-		@toString()
+		@asStringRaw()
 
 
 window.jinter ?= {}

@@ -41,11 +41,24 @@ snippets =
 		'toString': '''
 				[11, 22, 33, 44, 55].toString()
 			'''
-		'slice': '''
+		'slice with no parameters': '''
+				[11, 22, 33, 44, 55].slice()
+			'''
+		'slice with one parameter': '''
+				[11, 22, 33, 44, 55].slice(2)
+			'''
+		'slice with two parameters': '''
 				[11, 22, 33, 44, 55].slice(2, 3)
 			'''
-		'push return': '''
+		'slice converts its parameters to numbers': '''
+				var begin = { valueOf: function () { return 2 } };
+				[11, 22, 33, 44, 55].slice(begin)
+			'''
+		'push returns the new array length': '''
 				[11, 22, 33, 44, 55].push(66)
+			'''
+		'push with multiple parameters': '''
+				[11, 22, 33, 44, 55].push(66, 77, 88)
 			'''
 		'push original array': '''
 				var a = [11, 22, 33, 44, 55];
@@ -240,6 +253,7 @@ snippets =
 		'string': 'Number("asd")'
 		'numeric string': 'Number("23")'
 		'object': 'Number({})'
+		'object with valueOf': 'Number({ valueOf: function () { return 123 } })'
 		'null': 'Number(null)'
 		'undefined': 'Number(undefined)'
 
@@ -260,6 +274,7 @@ snippets =
 		'string': 'String("asd")'
 		'numeric string': 'String("23")'
 		'object': 'String({})'
+		'object with toString': 'String({ toString: function () { return "asd" } })'
 		'null': 'String(null)'
 		'undefined': 'String(undefined)'
 

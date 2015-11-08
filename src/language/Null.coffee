@@ -16,15 +16,15 @@ NULL.put = (key, value) ->
 	throw new Error "Cannot set property #{key} of null"
 
 
-NULL.toNumber = ->
+NULL.asNumber = ->
 	0
 
 
-NULL.toBoolean = ->
+NULL.asBoolean = ->
 	false
 
 
-NULL.toString = ->
+NULL.asString = ->
 	'null'
 
 

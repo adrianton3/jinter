@@ -41,6 +41,8 @@ snippets =
 		'null': '+null'
 		'undefined': '+undefined'
 		'object': '+({})'
+		'object with toString': '+{ toString: function () { return 321 }}'
+		'object with valueOf': '+{ valueOf: function () { return "123" }}'
 
 	'unary -':
 		'number': '-123'
