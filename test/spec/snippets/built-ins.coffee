@@ -222,20 +222,22 @@ snippets =
 				s
 			'''
 
-	'Function methods':
-		'apply': '''
+	'Function::apply':
+		'arguments array': '''
 				var f = function (a, b) { return a + b };
 				f.apply(null, [11, 22])
 			'''
-		'apply with this': '''
+		'this': '''
 				var f = function (a) { return this + a };
 				f.apply(11, [22])
 			'''
-		'call': '''
+
+	'Function::call':
+		'arguments': '''
 				var f = function (a, b) { return a + b };
 				f.call(null, 11, 22)
 			'''
-		'call with this': '''
+		'this': '''
 				var f = function (a) { return this + a };
 				f.call(11, 22)
 			'''
