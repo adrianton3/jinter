@@ -176,30 +176,36 @@ snippets =
 				map.get(123) + map.get(321)
 			'''
 
-	'Map methods':
-		'get returns undefined if the entry is missing': '''
+	'Map::get':
+		'returns undefined if the entry is missing': '''
 				var map = new Map;
 				map.get(123) === undefined
 			'''
-		'has returns true': '''
+
+	'Map::has':
+		'returns true': '''
 				var map = new Map;
 				map.has(123)
 			'''
-		'has returns false': '''
+		'returns false': '''
 				var map = new Map([[123, 321]]);
 				map.has(123)
 			'''
-		'set can set things': '''
+
+	'Map::set':
+		'sets things': '''
 				var map = new Map;
 				map.set(123, "dsa")
 				map.get(123)
 			'''
-		'set can re-set things': '''
+		're-sets things': '''
 				var map = new Map([[123, 321]]);
 				map.set(123, "asd")
 				map.get(123)
 			'''
-		'forEach iterates over entries': '''
+
+	'Map::forEach':
+		'iterates over entries': '''
 				var s = 0;
 				var map = new Map([["a", 123], ["b", 321]]);
 				map.forEach(function (value) {
@@ -207,7 +213,7 @@ snippets =
 				});
 				s
 			'''
-		'forEach keys': '''
+		'keys': '''
 				var s = "";
 				var map = new Map([["a", 123], ["b", 321]]);
 				map.forEach(function (value, key) {
