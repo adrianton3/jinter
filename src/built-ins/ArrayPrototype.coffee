@@ -12,7 +12,13 @@
 } = jinter
 
 
+ARRAY_FUNCTION = new NATIVE_FUNCTION ->
+	throw new Error 'Array function not implemented'
+
+
 ARRAY_PROTOTYPE = new OBJECT NULL
+
+ARRAY_FUNCTION.put 'prototype', ARRAY_PROTOTYPE
 
 
 slice = new NATIVE_FUNCTION (begin, end) ->
@@ -122,3 +128,4 @@ ARRAY_PROTOTYPE.put 'reduce', reduce
 
 window.jinter ?= {}
 window.jinter.ARRAY_PROTOTYPE = ARRAY_PROTOTYPE
+window.jinter.ARRAY_FUNCTION = ARRAY_FUNCTION

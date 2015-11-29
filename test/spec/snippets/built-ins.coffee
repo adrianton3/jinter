@@ -28,6 +28,15 @@ snippets =
 				a[3]
 			'''
 
+	'Array function':
+		'is a function defined on window': '''
+			typeof Array
+		'''
+		'can alter array prototypes': '''
+			Array.prototype.f = function () { return 123 };
+			[].f()
+		'''
+
 	'Array::length':
 		'empty arrays': '[].length'
 		'non-empty arrays': '[11, 22, 33].length'

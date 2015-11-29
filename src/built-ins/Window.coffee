@@ -27,6 +27,9 @@ WINDOW.put 'Object', jinter.OBJECT_FUNCTION
 WINDOW.put 'Map', jinter.MAP_FUNCTION
 
 
+WINDOW.put 'Array', jinter.ARRAY_FUNCTION
+
+
 WINDOW.put 'NaN', new NUMBER NaN
 
 
