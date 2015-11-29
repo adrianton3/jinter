@@ -176,6 +176,9 @@ snippets =
 			'''
 
 	'Map':
+		'is a function defined on window': '''
+			typeof Map
+		'''
 		'constructor without arguments': '''
 				var map = new Map;
 				map.get(123)
@@ -184,6 +187,10 @@ snippets =
 				var map = new Map([[123, 'asd'], [321, 'dsa']]);
 				map.get(123) + map.get(321)
 			'''
+		'can alter map prototypes': '''
+			Map.prototype.f = function () { return 123 };
+			new Map().f()
+		'''
 
 	'Map::get':
 		'returns undefined if the entry is missing': '''

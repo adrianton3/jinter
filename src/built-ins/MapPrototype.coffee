@@ -45,7 +45,7 @@ MAP_FUNCTION = new NATIVE_FUNCTION (pairsRaw) ->
 
 MAP_PROTOTYPE = new OBJECT NULL
 
-MAP_FUNCTION.put 'prototype', MAP_FUNCTION
+MAP_FUNCTION.put 'prototype', MAP_PROTOTYPE
 
 
 get = new NATIVE_FUNCTION (key) ->
