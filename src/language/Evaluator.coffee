@@ -108,6 +108,24 @@ do ->
 		'!=': (left, right) ->
 			new BOOLEAN not eqeq left, right
 
+		'<': (left, right) ->
+			leftPrimitive = if left.type == 'object' then left.asPrimitive() else left
+			rightPrimitive = if right.type == 'object' then right.asPrimitive() else right
+
+			if leftPrimitive.type == 'string' and rightPrimitive.type == 'string'
+				new BOOLEAN leftPrimitive.value < rightPrimitive.value
+			else
+				new BOOLEAN leftPrimitive.asNumber() < rightPrimitive.asNumber()
+
+		'<=': (left, right) ->
+			leftPrimitive = if left.type == 'object' then left.asPrimitive() else left
+			rightPrimitive = if right.type == 'object' then right.asPrimitive() else right
+
+			if leftPrimitive.type == 'string' and rightPrimitive.type == 'string'
+				new BOOLEAN leftPrimitive.value <= rightPrimitive.value
+			else
+				new BOOLEAN leftPrimitive.asNumber() <= rightPrimitive.asNumber()
+
 
 	Nodes['BinaryExpression'] = (exp, env) ->
 		left = ev exp.left, env

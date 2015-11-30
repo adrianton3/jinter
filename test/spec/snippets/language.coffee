@@ -132,6 +132,22 @@ snippets =
 		'null and object': 'null != {}'
 		'undefined and object': 'undefined != {}'
 
+	'< operator':
+		'numbers': '1 < 2'
+		'strings': '"3" < "2"'
+		'number and string': '1 < "asd"'
+		'booleans': 'false < true'
+		'undefined': 'undefined < undefined'
+		'null and undefined': 'null < undefined'
+
+	'<= operator':
+		'numbers': '1 < 2'
+		'strings': '"3" < "2"'
+		'number and string': '1 < "asd"'
+		'booleans': 'false < true'
+		'undefined': 'undefined < undefined'
+		'null and undefined': 'null < undefined'
+
 	'typeof':
 		'number': 'typeof 123'
 		'string': 'typeof "asd"'
