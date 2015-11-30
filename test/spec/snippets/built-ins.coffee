@@ -1,4 +1,13 @@
 snippets =
+	'Object function':
+		'is a function defined on window': '''
+			typeof Object
+		'''
+		'can alter object prototypes': '''
+			Object.prototype.f = function () { return 123 };
+			({}).f()
+		'''
+
 	'Object.create':
 		'can create an object with a prototype': '''
 				var a = Object.create({ b: 123 });

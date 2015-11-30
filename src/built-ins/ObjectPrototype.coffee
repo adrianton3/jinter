@@ -1,8 +1,16 @@
 'use strict'
 
-{ OBJECT, NULL, NATIVE_FUNCTION, STRING } = jinter
 
-OBJECT_FUNCTION = new OBJECT NULL
+{
+	OBJECT
+	NULL
+	NATIVE_FUNCTION
+	STRING
+} = jinter
+
+
+OBJECT_FUNCTION = new NATIVE_FUNCTION ->
+	throw new Error 'Object function not implemented'
 
 
 create = new NATIVE_FUNCTION (proto) ->
