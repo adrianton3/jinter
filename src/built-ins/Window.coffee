@@ -30,6 +30,9 @@ WINDOW.put 'Map', jinter.MAP_FUNCTION
 WINDOW.put 'Array', jinter.ARRAY_FUNCTION
 
 
+WINDOW.put 'Function', jinter.FUNCTION_FUNCTION
+
+
 WINDOW.put 'NaN', new NUMBER NaN
 
 

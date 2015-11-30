@@ -247,6 +247,15 @@ snippets =
 				s
 			'''
 
+	'Function function':
+		'is a function defined on window': '''
+			typeof Function
+		'''
+		'can alter function prototypes': '''
+			Function.prototype.f = function () { return 123 };
+			(function () {}).f()
+		'''
+
 	'Function::apply':
 		'arguments array': '''
 				var f = function (a, b) { return a + b };
