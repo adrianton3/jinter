@@ -51,6 +51,9 @@ do ->
 		'typeof': (operand) ->
 			new STRING operand.typeOf
 
+		'void': (operand) ->
+			UNDEFINED
+
 
 	Nodes['UnaryExpression'] = (exp, env) ->
 		operand = ev exp.argument, env

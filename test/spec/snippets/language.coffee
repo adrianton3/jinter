@@ -61,6 +61,14 @@ snippets =
 		'undefined': '!undefined'
 		'object': '!({})'
 
+	'void operator':
+		'void 0': 'void 0'
+		'side effects': '''
+			var a;
+			void (a = 123);
+			a
+		'''
+
 	'binary -':
 		'numbers': '2 - 3'
 		'strings': '"2" - "3"'
