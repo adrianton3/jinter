@@ -9,7 +9,7 @@ generate = {}
 
 generate['Literal'] = do ->
 	literals = [
-		'2', '3', '5', '7',
+		'0', '1', '2',
 		'true', 'false',
 		'"a"', '"s"', '"d"',
 		'null'
@@ -22,8 +22,8 @@ generate['Literal'] = do ->
 generate['UnaryExpression'] = do ->
 	OPERATORS = ['+', '-', '!', 'typeof']
 
-	->
-		operand = generate['Expression']()
+	(level) ->
+		operand = generate['Expression'](level + 1)
 
 		operator = rand.sample(OPERATORS)
 
@@ -33,21 +33,31 @@ generate['UnaryExpression'] = do ->
 generate['BinaryExpression'] = do ->
 	OPERATORS = ['+', '-', '*', '===', '!==']
 
-	->
-		left = generate['Expression']()
-		right = generate['Expression']()
+	(level) ->
+		left = generate['Expression'](level + 1)
+		right = generate['Expression'](level + 1)
 
 		operator = rand.sample(OPERATORS)
 
 		"(#{left} #{operator} #{right})"
 
 
-generate['ConditionalExpression'] = ->
-	test = generate['Expression']()
-	consequent = generate['Expression']()
-	alternate = generate['Expression']()
+generate['ConditionalExpression'] = (level) ->
+	test = generate['Expression'](level + 1)
+	consequent = generate['Expression'](level + 1)
+	alternate = generate['Expression'](level + 1)
 
 	"(#{test} ? #{consequent} : #{alternate})"
+
+
+generate['ArrayExpression'] = (level) ->
+	length = rand.randInt 3
+
+	array = []
+	for i in [0...length]
+		array.push generate['Expression'](level + 1)
+
+	"[#{array.join ','}]"
 
 
 generate['Expression'] = do ->
@@ -56,22 +66,26 @@ generate['Expression'] = do ->
 		generate['UnaryExpression']
 		generate['BinaryExpression']
 		generate['ConditionalExpression']
+		generate['ArrayExpression']
 	]
 
-	->
-		(rand.sample GENERATORS)()
+	(level) ->
+		if level > 5
+			generate['Literal']()
+		else
+			(rand.sample GENERATORS)(level)
 
 
-generate['ExpressionStatement'] = ->
-	generate['Expression']()
+generate['ExpressionStatement'] = (level) ->
+	generate['Expression'](level)
 
 
-generate['Statement'] = ->
-	generate['ExpressionStatement']()
+generate['Statement'] = (level) ->
+	generate['ExpressionStatement'](level)
 
 
 generate['Program'] = ->
-	generate['Statement']()
+	generate['Statement'](0)
 
 
 window.fuzz ?= {}

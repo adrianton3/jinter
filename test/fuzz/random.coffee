@@ -5,8 +5,9 @@ makeRNG = (
 	a = 1140671485,
 	c = 12820163,
 	m = Math.pow(2, 24)
+	initialX = 103
 ) ->
-	x = 123
+	x = initialX
 
 	randRaw = ->
 		x = (x * a + c) % m
