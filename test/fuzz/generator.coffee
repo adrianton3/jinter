@@ -27,7 +27,7 @@ generate['UnaryExpression'] = do ->
 
 		operator = rand.sample(OPERATORS)
 
-		"#{operator} #{operand}"
+		"(#{operator} #{operand})"
 
 
 generate['BinaryExpression'] = do ->
@@ -39,7 +39,7 @@ generate['BinaryExpression'] = do ->
 
 		operator = rand.sample(OPERATORS)
 
-		"#{left} #{operator} #{right}"
+		"(#{left} #{operator} #{right})"
 
 
 generate['Expression'] = do ->
