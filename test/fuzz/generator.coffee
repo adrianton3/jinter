@@ -42,11 +42,20 @@ generate['BinaryExpression'] = do ->
 		"(#{left} #{operator} #{right})"
 
 
+generate['ConditionalExpression'] = ->
+	test = generate['Expression']()
+	consequent = generate['Expression']()
+	alternate = generate['Expression']()
+
+	"(#{test} ? #{consequent} : #{alternate})"
+
+
 generate['Expression'] = do ->
 	GENERATORS = [
 		generate['Literal']
 		generate['UnaryExpression']
 		generate['BinaryExpression']
+		generate['ConditionalExpression']
 	]
 
 	->
