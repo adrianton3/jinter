@@ -55,7 +55,10 @@ ARRAY_PROTOTYPE.put 'pop', pop
 
 toString = new NATIVE_FUNCTION ->
 	value = @data.map (element) ->
-		element.asString()
+		if element == UNDEFINED || element == NULL
+			''
+		else
+			element.asString()
 	.join ','
 
 	return: true

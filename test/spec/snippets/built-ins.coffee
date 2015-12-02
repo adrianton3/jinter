@@ -66,6 +66,12 @@ snippets =
 		'calls toString recursively': '''
 				[{ toString: function () { return "asd" } }]
 			'''
+		'null becomes empty string': '''
+				[123, null, 321].toString()
+			'''
+		'undefined becomes empty string': '''
+				[123, undefined, 321].toString()
+			'''
 
 	'Array::slice':
 		'called with no parameters': '''
