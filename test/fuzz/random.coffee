@@ -1,12 +1,10 @@
 'use strict'
 
+a = 1140671485
+c = 12820163
+m = Math.pow(2, 24)
 
-makeRNG = (
-	a = 1140671485,
-	c = 12820163,
-	m = Math.pow(2, 24)
-	initialX = 103
-) ->
+makeRNG = (initialX = 103) ->
 	x = initialX
 
 	randRaw = ->

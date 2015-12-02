@@ -41,8 +41,12 @@ wrappedJsEv = wrapTryCatch jsEv
 
 
 run = (times) ->
+	seed = Math.floor Math.random() * 100000
+	console.log 'seed', seed
+	rand = window.fuzz.makeRNG seed
+
 	for i in [1..times]
-		program = fuzz.generate['Program']()
+		program = fuzz.randomProgram(rand)
 
 		{ result: jinterResult, reason: jinterReason } = wrappedJinterEv program
 		{ result: jsResult, reason: jsReason } = wrappedJsEv program
@@ -58,5 +62,7 @@ run = (times) ->
 			else
 				console.warn 'both evaluators threw for', program, 'but cannot compare exceptions (yet)'
 
+	console.log 'done'
+	return
 
-run(100)
+run(1000)

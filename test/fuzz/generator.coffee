@@ -1,9 +1,6 @@
 'use strict'
 
 
-rand = window.fuzz.makeRNG()
-
-
 generate = {}
 
 
@@ -88,5 +85,11 @@ generate['Program'] = ->
 	generate['Statement'](0)
 
 
+rand = null
+randomProgram = (_rand) ->
+	rand = _rand
+	generate['Program']()
+
+
 window.fuzz ?= {}
-window.fuzz.generate = generate
+window.fuzz.randomProgram = randomProgram
