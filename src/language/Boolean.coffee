@@ -22,5 +22,9 @@ BOOLEAN::asString = ->
 	String @value
 
 
+BOOLEAN::asPrimitive = ->
+	@
+
+
 window.jinter ?= {}
 window.jinter.BOOLEAN = BOOLEAN

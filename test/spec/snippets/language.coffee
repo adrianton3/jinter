@@ -9,6 +9,9 @@ snippets =
 		'strings': '"asd" + "dsa"'
 		'number and string': '123 + "asd"'
 		'string and number': '"asd" + 123'
+		'boolean and number': 'true + 123'
+		'null and number': 'null + 123'
+		'undefined and number': 'undefined + 123'
 		'with toString': '''
 			var a = { toString: function () { return "asd" } };
 			a + 123

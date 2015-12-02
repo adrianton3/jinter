@@ -28,5 +28,9 @@ NULL.asString = ->
 	'null'
 
 
+NULL.asPrimitive = ->
+	NULL
+
+
 window.jinter ?= {}
 window.jinter.NULL = NULL

@@ -28,5 +28,9 @@ UNDEFINED.asString = ->
 	'undefined'
 
 
+UNDEFINED.asPrimitive = ->
+	UNDEFINED
+
+
 window.jinter ?= {}
 window.jinter.UNDEFINED = UNDEFINED
