@@ -19,11 +19,19 @@ generate['Literal'] = do ->
 		rand.sample literals
 
 
+generate['UnaryExpression'] = do ->
+	OPERATORS = ['+', '-', '!', 'typeof']
+
+	->
+		operand = generate['Expression']()
+
+		operator = rand.sample(OPERATORS)
+
+		"#{operator} #{operand}"
+
+
 generate['BinaryExpression'] = do ->
-	OPERATORS = [
-		'+', '-', '*',
-		'===', '!==',
-	]
+	OPERATORS = ['+', '-', '*', '===', '!==']
 
 	->
 		left = generate['Expression']()
@@ -34,11 +42,15 @@ generate['BinaryExpression'] = do ->
 		"#{left} #{operator} #{right}"
 
 
-generate['Expression'] = ->
-	if Math.random() < 0.6
-		generate['Literal']()
-	else
-		generate['BinaryExpression']()
+generate['Expression'] = do ->
+	GENERATORS = [
+		generate['Literal']
+		generate['UnaryExpression']
+		generate['BinaryExpression']
+	]
+
+	->
+		(rand.sample GENERATORS)()
 
 
 generate['ExpressionStatement'] = ->
