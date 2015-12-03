@@ -138,11 +138,10 @@ Nodes['LogicalExpression'] = (exp, env) ->
 	left = ev exp.left, env
 	leftBoolean = left.asBoolean()
 
-	switch exp.operator
-		when '&&'
-			return left unless leftBoolean
-		when '||'
-			return left if leftBoolean
+	if exp.operator == '&&'
+		return left unless leftBoolean
+	else
+		return left if leftBoolean
 
 	ev exp.right, env
 
