@@ -376,6 +376,12 @@ snippets =
 				}
 			})(123)(456)
 		'''
+		'functions return undefined implicitly': '''
+			(function () {})()
+		'''
+		'empty return returns undefined': '''
+			(function () { return; })()
+		'''
 
 	'the arguments object':
 		'is available in a function': '''

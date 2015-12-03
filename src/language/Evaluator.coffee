@@ -242,8 +242,13 @@ Nodes['BlockStatement'] = (exp, env) ->
 
 
 Nodes['ReturnStatement'] = (exp, env) ->
+	value = if exp.argument?
+		ev exp.argument, env
+	else
+		UNDEFINED
+
 	return: true
-	value: ev exp.argument, env
+	value: value
 
 
 Nodes['ThisExpression'] = (exp, env) ->
