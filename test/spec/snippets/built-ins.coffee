@@ -64,7 +64,7 @@ snippets =
 				[11, 22].toString()
 			'''
 		'calls toString recursively': '''
-				[{ toString: function () { return "asd" } }]
+				[{ toString: function () { return "asd" } }].toString()
 			'''
 		'null becomes empty string': '''
 				[123, null, 321].toString()
