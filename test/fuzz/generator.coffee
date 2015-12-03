@@ -39,6 +39,18 @@ generate['BinaryExpression'] = do ->
 		"(#{left} #{operator} #{right})"
 
 
+generate['LogicalExpression'] = do ->
+	OPERATORS = ['&&', '||']
+
+	(level) ->
+		left = generate['Expression'](level + 1)
+		right = generate['Expression'](level + 1)
+
+		operator = rand.sample(OPERATORS)
+
+		"(#{left} #{operator} #{right})"
+
+
 generate['ConditionalExpression'] = (level) ->
 	test = generate['Expression'](level + 1)
 	consequent = generate['Expression'](level + 1)
@@ -64,6 +76,7 @@ generate['Expression'] = do ->
 		generate['BinaryExpression']
 		generate['ConditionalExpression']
 		generate['ArrayExpression']
+		generate['LogicalExpression']
 	]
 
 	(level) ->
