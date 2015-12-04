@@ -228,6 +228,40 @@ Nodes['AssignmentExpression'] = (exp, env) ->
 	value
 
 
+Nodes['UpdateExpression'] = (exp, env) ->
+	# covering postfix ++ only for now
+	if exp.operator != '++' or exp.prefix
+		throw new Error "update operator #{exp.operator} not implemented"
+
+	if exp.argument.type == 'MemberExpression'
+		object = ev exp.argument.object, env
+		key = computeMemberKey exp.argument, env
+		entry = object.get key
+
+		oldValue = if entry?.descriptor?
+				if entry.get?
+					call entry.get, object, []
+				else
+					UNDEFINED
+			else
+				entry
+
+		value = new NUMBER oldValue.asNumber() + 1
+
+		if entry?.descriptor?
+			if entry.set?
+				call entry.set, object, [value]
+		else
+			object.put key, value
+	else
+		name = exp.argument.name
+		oldValue = ev exp.argument, env
+		value = new NUMBER oldValue.asNumber() + 1
+		env.set name, value
+
+	oldValue
+
+
 Nodes['SequenceExpression'] = (exp, env) ->
 	exp.expressions.reduce (prev, expression) ->
 		ev expression, env
@@ -239,6 +273,8 @@ Nodes['BlockStatement'] = (exp, env) ->
 		returnCandidate = ev statement, env
 		if returnCandidate?.return
 			return returnCandidate
+
+	return
 
 
 Nodes['ReturnStatement'] = (exp, env) ->

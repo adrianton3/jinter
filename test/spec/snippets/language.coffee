@@ -248,6 +248,44 @@ snippets =
 			a.asd
 		'''
 
+	'update expressions':
+		'return value': '''
+			var a = 123;
+			a++
+		'''
+		'update a variable': '''
+			var a = 123;
+			a++;
+			a
+		'''
+		'update a member': '''
+			var a = { b: 123 };
+			a.b++;
+			a.b
+		'''
+		'getter is called when updating a member': '''
+			var called;
+			var a = {
+				get b() {
+					called = true;
+				},
+				set b(value) {}
+			};
+			a.b++;
+			called
+		'''
+		'setter is called when updating a member': '''
+			var called;
+			var a = {
+				get b() {},
+				set b(value) {
+					called = true;
+				}
+			};
+			a.b++;
+			called
+		'''
+
 	'__proto__ and the prototype chain':
 		'lookup reached proto': '''
 			var a = {};
