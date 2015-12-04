@@ -3,7 +3,7 @@
 
 getVars = (ast) ->
 	vars = new Set
-	functionDeclarations = new Set
+	functionDeclarations = new Map
 	functions = []
 
 	estraverse.traverse ast, {
@@ -16,10 +16,14 @@ getVars = (ast) ->
 			if node.type == 'VariableDeclarator'
 				vars.add node.id.name
 			if node.type == 'FunctionDeclaration'
-				functionDeclarations.add node
+				functionDeclarations.set node.id.name, node
 	}
 
-	{ vars, functions, functionDeclarations }
+	{
+		vars: Array.from vars
+		functionDeclarations: Array.from functionDeclarations.values()
+		functions
+	}
 
 
 processVars = (ast) ->
