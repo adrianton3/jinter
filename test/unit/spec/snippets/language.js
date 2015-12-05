@@ -13,6 +13,9 @@
       'strings': '"asd" + "dsa"',
       'number and string': '123 + "asd"',
       'string and number': '"asd" + 123',
+      'boolean and number': 'true + 123',
+      'null and number': 'null + 123',
+      'undefined and number': 'undefined + 123',
       'with toString': 'var a = { toString: function () { return "asd" } };\na + 123',
       'with valueOf': 'var a = { valueOf: function () { return 234 } };\na + 123',
       'valueOf has precedence over toString': 'var a = {\n	toString: function () { return "asd" },\n	valueOf: function () { return 234 }\n};\na + 123',
@@ -26,7 +29,9 @@
       'boolean': '+true',
       'null': '+null',
       'undefined': '+undefined',
-      'object': '+({})'
+      'object': '+({})',
+      'object with toString': '+{ toString: function () { return 321 }}',
+      'object with valueOf': '+{ valueOf: function () { return "123" }}'
     },
     'unary -': {
       'number': '-123',
@@ -44,6 +49,10 @@
       'null': '!null',
       'undefined': '!undefined',
       'object': '!({})'
+    },
+    'void operator': {
+      'void 0': 'void 0',
+      'side effects': 'var a;\nvoid (a = 123);\na'
     },
     'binary -': {
       'numbers': '2 - 3',
@@ -102,6 +111,22 @@
       'null and object': 'null != {}',
       'undefined and object': 'undefined != {}'
     },
+    '< operator': {
+      'numbers': '1 < 2',
+      'strings': '"3" < "2"',
+      'number and string': '1 < "asd"',
+      'booleans': 'false < true',
+      'undefined': 'undefined < undefined',
+      'null and undefined': 'null < undefined'
+    },
+    '<= operator': {
+      'numbers': '1 < 2',
+      'strings': '"3" < "2"',
+      'number and string': '1 < "asd"',
+      'booleans': 'false < true',
+      'undefined': 'undefined < undefined',
+      'null and undefined': 'null < undefined'
+    },
     'typeof': {
       'number': 'typeof 123',
       'string': 'typeof "asd"',
@@ -137,7 +162,15 @@
       'assignment to object member': 'var a;\na = {};\na.b = 123;\na.b',
       'assignment to computed object member': 'var a;\na = {};\na["a" + "sd"] = 123;\na.asd',
       'assignment from declaration': 'var a = 123, b = 456;\na + b',
-      'assignment from var': 'var a = 123, b = a;\na + b'
+      'assignment from var': 'var a = 123, b = a;\na + b',
+      'object keys are converted to string': 'var a = {};\nvar key = { toString: function () { return \'asd\'; } };\na[key] = 321;\na.asd'
+    },
+    'update expressions': {
+      'return value': 'var a = 123;\na++',
+      'update a variable': 'var a = 123;\na++;\na',
+      'update a member': 'var a = { b: 123 };\na.b++;\na.b',
+      'getter is called when updating a member': 'var called;\nvar a = {\n	get b() {\n		called = true;\n	},\n	set b(value) {}\n};\na.b++;\ncalled',
+      'setter is called when updating a member': 'var called;\nvar a = {\n	get b() {},\n	set b(value) {\n		called = true;\n	}\n};\na.b++;\ncalled'
     },
     '__proto__ and the prototype chain': {
       'lookup reached proto': 'var a = {};\na.__proto__ = { b: 123 };\na.b',
@@ -170,7 +203,9 @@
       'more parameters than formal arguments': '(function (a, b) { return b })(11, 22, 33, 44)',
       'less parameters than formal arguments': '(function (a, b) { return b })(321)',
       'functions return undefined by default': '(function () {})()',
-      'currying': '(function (a) {\n	return function (b) {\n		return a + b\n	}\n})(123)(456)'
+      'currying': '(function (a) {\n	return function (b) {\n		return a + b\n	}\n})(123)(456)',
+      'functions return undefined implicitly': '(function () {})()',
+      'empty return returns undefined': '(function () { return; })()'
     },
     'the arguments object': {
       'is available in a function': '(function () {\n	return arguments[0];\n})(123);',

@@ -2,7 +2,7 @@
 
 src/**/*.coffee
 
-test/*
-!test/spec
-test/spec/*.js
-!test/spec/snippets
+test/unit/*
+!test/unit/spec
+test/unit/spec/*.js
+!test/unit/spec/snippets
