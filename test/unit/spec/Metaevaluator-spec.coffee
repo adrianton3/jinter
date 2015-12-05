@@ -15,7 +15,7 @@
 } = meta
 
 
-describe 'ev', ->
+describe 'ev (meta)', ->
 	jsEv = (string) ->
 		result = eval string
 
