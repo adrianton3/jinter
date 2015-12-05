@@ -53,13 +53,27 @@ pop = new NATIVE_FUNCTION ->
 ARRAY_PROTOTYPE.put 'pop', pop
 
 
+join = new NATIVE_FUNCTION (separator) ->
+	value = @data.map (element) ->
+		if element == UNDEFINED || element == NULL
+			''
+		else
+			element.asString()
+	.join separator.asString()
+
+	return: true
+	value: new STRING value
+
+ARRAY_PROTOTYPE.put 'join', join
+
+
 toString = new NATIVE_FUNCTION ->
 	value = @data.map (element) ->
 		if element == UNDEFINED || element == NULL
 			''
 		else
 			element.asString()
-	.join ','
+	.join ',' # spec mentions using join
 
 	return: true
 	value: new STRING value
