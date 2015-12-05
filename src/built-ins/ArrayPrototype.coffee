@@ -54,12 +54,17 @@ ARRAY_PROTOTYPE.put 'pop', pop
 
 
 join = new NATIVE_FUNCTION (separator) ->
+	separatorString = if separator
+			separator.asString()
+		else
+			','
+
 	value = @data.map (element) ->
 		if element == UNDEFINED || element == NULL
 			''
 		else
 			element.asString()
-	.join separator.asString()
+	.join separatorString
 
 	return: true
 	value: new STRING value
@@ -68,15 +73,13 @@ ARRAY_PROTOTYPE.put 'join', join
 
 
 toString = new NATIVE_FUNCTION ->
-	value = @data.map (element) ->
-		if element == UNDEFINED || element == NULL
-			''
-		else
-			element.asString()
-	.join ',' # spec mentions using join
+	joinMethod = @get 'join'
 
-	return: true
-	value: new STRING value
+	if joinMethod.typeOf == 'function'
+		jinter.callRaw joinMethod, @, [new STRING ','], EMPTY
+	else
+		fallback = jinter.OBJECT_PROTOTYPE.get 'toString'
+		jinter.callRaw fallback, @, [], EMPTY
 
 ARRAY_PROTOTYPE.put 'toString', toString
 

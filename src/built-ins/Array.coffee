@@ -12,24 +12,29 @@ ARRAY:: = Object.create OBJECT::
 ARRAY::constructor = ARRAY
 
 
-isIntegery = (value) ->
-	return if isNaN value
+ARRAY::class = 'Array'
 
-	(parseFloat value) == (parseInt value, 10)
+
+isNatural = (value) ->
+	(not isNaN value) &&
+	(parseFloat value) == (parseInt value, 10) &&
+	(0 <= value)
 
 
 ARRAY::get = (key) ->
-	if isIntegery key
+	if isNatural key
 		@data[key]
 	else
 		OBJECT::get.call @, key
 
 
 ARRAY::put = (key, value) ->
-	if isIntegery key
+	if isNatural key
 		@data[key] = value
 	else
-		OBJECT::get.call @, key
+		OBJECT::put.call @, key, value
+
+	return
 
 
 window.jinter ?= {}

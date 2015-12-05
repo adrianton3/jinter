@@ -36,6 +36,11 @@ snippets =
 				a[3] = 123;
 				a[3]
 			'''
+		'can set/get non-numeric property': '''
+				var a = [];
+				a.b = 123;
+				a.b
+			'''
 
 	'Array function':
 		'is a function defined on window': '''
@@ -55,23 +60,38 @@ snippets =
 				a.length
 			'''
 
-	'Array::toString':
-		'empty array': '[].toString()'
+	'Array::join':
+		'empty array': '[].join()'
 		'array with one element': '''
-				[11].toString()
+				[11].join()
 			'''
 		'array with more elements': '''
-				[11, 22].toString()
+				[11, 22].join()
+			'''
+		'custom separator': '''
+				[11, 22].join("_")
 			'''
 		'calls toString recursively': '''
-				[{ toString: function () { return "asd" } }].toString()
+				[{ toString: function () { return "asd" } }].join()
 			'''
 		'null becomes empty string': '''
-				[123, null, 321].toString()
+				[123, null, 321].join()
 			'''
 		'undefined becomes empty string': '''
-				[123, undefined, 321].toString()
+				[123, undefined, 321].join()
 			'''
+
+	'Array::toString':
+		'calls Array::join': '''
+			var a = [11, 22, 33];
+			a.join = function () { return "asd" };
+			a.toString()
+		'''
+		'calls Object::toString if Array::join is not a function': '''
+			var a = [11, 22, 33];
+			a.join = "asd";
+			a.toString()
+		'''
 
 	'Array::slice':
 		'called with no parameters': '''
