@@ -66,8 +66,8 @@ getEvaluator = ->
 		sources.reduce (prev, cur) -> prev + cur
 
 
-metaEval = (expression) ->
-	(evaluator) ->
+metaEval = (evaluator) ->
+	(expression) ->
 		tree = getDecoratedTree expression
 		stringifiedTree = JSON.stringify tree
 
@@ -82,16 +82,6 @@ metaEval = (expression) ->
 		jinterEv bundle
 
 
-run = ->
-	expression = """
-		(function (a, b) {
-			return a + b
-		})(3, 4)
-	"""
-
-	getEvaluator()
-	.then metaEval(expression)
-	.then (result) -> console.log result
-
-
-run()
+window.meta ?= {}
+window.meta.getEvaluator = getEvaluator
+window.meta.metaEval = metaEval
