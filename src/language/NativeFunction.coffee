@@ -4,7 +4,7 @@
 
 
 NATIVE_FUNCTION = (@fun) ->
-	OBJECT.call @, NULL
+	OBJECT.call @, jinter.FUNCTION_PROTOTYPE
 	@put 'prototype', new OBJECT NULL
 
 	return
