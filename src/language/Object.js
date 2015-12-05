@@ -66,7 +66,7 @@
     return this.extensible = false;
   };
 
-  OBJECT.prototype.toNumber = function() {
+  OBJECT.prototype.asNumberRaw = function() {
     var toString, valueOf;
     valueOf = this.get('valueOf');
     if ((valueOf != null ? valueOf.typeOf : void 0) === 'function') {
@@ -79,11 +79,15 @@
     throw new Error('Cannot convert object to primitive value');
   };
 
-  OBJECT.prototype.toBoolean = function() {
+  OBJECT.prototype.asNumber = function() {
+    return this.asNumberRaw().asNumber();
+  };
+
+  OBJECT.prototype.asBoolean = function() {
     return true;
   };
 
-  OBJECT.prototype.toString = function() {
+  OBJECT.prototype.asStringRaw = function() {
     var toString, valueOf;
     toString = this.get('toString');
     if ((toString != null ? toString.typeOf : void 0) === 'function') {
@@ -96,15 +100,19 @@
     throw new Error('Cannot convert object to primitive value');
   };
 
-  OBJECT.prototype.toPrimitive = function(prefferedType) {
+  OBJECT.prototype.asString = function() {
+    return this.asStringRaw().asString();
+  };
+
+  OBJECT.prototype.asPrimitive = function(prefferedType) {
     return this.defaultValue(prefferedType);
   };
 
   OBJECT.prototype.defaultValue = function(hint) {
     if ((hint == null) || hint === 'number') {
-      return this.toNumber();
+      return this.asNumberRaw();
     } else {
-      return this.toString();
+      return this.asStringRaw();
     }
   };
 

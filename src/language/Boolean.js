@@ -11,16 +11,20 @@
 
   BOOLEAN.prototype.typeOf = 'boolean';
 
-  BOOLEAN.prototype.toNumber = function() {
+  BOOLEAN.prototype.asNumber = function() {
     return Number(this.value);
   };
 
-  BOOLEAN.prototype.toBoolean = function() {
+  BOOLEAN.prototype.asBoolean = function() {
     return this.value;
   };
 
-  BOOLEAN.prototype.toString = function() {
+  BOOLEAN.prototype.asString = function() {
     return String(this.value);
+  };
+
+  BOOLEAN.prototype.asPrimitive = function() {
+    return this;
   };
 
   if (window.jinter == null) {

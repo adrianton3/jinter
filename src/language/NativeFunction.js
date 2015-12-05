@@ -7,7 +7,7 @@
 
   NATIVE_FUNCTION = function(fun) {
     this.fun = fun;
-    OBJECT.call(this, NULL);
+    OBJECT.call(this, jinter.FUNCTION_PROTOTYPE);
     this.put('prototype', new OBJECT(NULL));
   };
 

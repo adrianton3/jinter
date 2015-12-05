@@ -5,7 +5,9 @@
 
   OBJECT = jinter.OBJECT, NULL = jinter.NULL, NATIVE_FUNCTION = jinter.NATIVE_FUNCTION, STRING = jinter.STRING;
 
-  OBJECT_FUNCTION = new OBJECT(NULL);
+  OBJECT_FUNCTION = new NATIVE_FUNCTION(function() {
+    throw new Error('Object function not implemented');
+  });
 
   create = new NATIVE_FUNCTION(function(proto) {
     return {

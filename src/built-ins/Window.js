@@ -15,50 +15,54 @@
 
   WINDOW.put('Map', jinter.MAP_FUNCTION);
 
+  WINDOW.put('Array', jinter.ARRAY_FUNCTION);
+
+  WINDOW.put('Function', jinter.FUNCTION_FUNCTION);
+
   WINDOW.put('NaN', new NUMBER(NaN));
 
   WINDOW.put('isNaN', new NATIVE_FUNCTION(function(candidate) {
     return {
       "return": true,
-      value: new BOOLEAN(isNaN(candidate.toNumber()))
+      value: new BOOLEAN(isNaN(candidate.asNumber()))
     };
   }));
 
   WINDOW.put('parseFloat', new NATIVE_FUNCTION(function(candidate) {
     return {
       "return": true,
-      value: new NUMBER(parseFloat(candidate.toString()))
+      value: new NUMBER(parseFloat(candidate.asString()))
     };
   }));
 
   WINDOW.put('parseInt', new NATIVE_FUNCTION(function(candidate, optionalBase) {
-    var candidateValue, value;
-    candidateValue = candidate.toString();
-    value = (optionalBase != null) && optionalBase !== UNDEFINED ? parseInt(candidateValue, optionalBase.toNumber()) : parseInt(candidateValue);
+    var candidateValue, resultRaw;
+    candidateValue = candidate.asString();
+    resultRaw = (optionalBase != null) && optionalBase !== UNDEFINED ? parseInt(candidateValue, optionalBase.asNumber()) : parseInt(candidateValue);
     return {
       "return": true,
-      value: value
+      value: new NUMBER(resultRaw)
     };
   }));
 
   WINDOW.put('Number', new NATIVE_FUNCTION(function(candidate) {
     return {
       "return": true,
-      value: new NUMBER(candidate.toNumber())
+      value: new NUMBER(candidate.asNumber())
     };
   }));
 
   WINDOW.put('Boolean', new NATIVE_FUNCTION(function(candidate) {
     return {
       "return": true,
-      value: new BOOLEAN(candidate.toBoolean())
+      value: new BOOLEAN(candidate.asBoolean())
     };
   }));
 
   WINDOW.put('String', new NATIVE_FUNCTION(function(candidate) {
     return {
       "return": true,
-      value: new STRING(candidate.toString())
+      value: new STRING(candidate.asString())
     };
   }));
 

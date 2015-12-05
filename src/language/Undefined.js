@@ -17,16 +17,20 @@
     throw new Error("Cannot set property " + key + " of undefined");
   };
 
-  UNDEFINED.toNumber = function() {
+  UNDEFINED.asNumber = function() {
     return NaN;
   };
 
-  UNDEFINED.toBoolean = function() {
+  UNDEFINED.asBoolean = function() {
     return false;
   };
 
-  UNDEFINED.toString = function() {
+  UNDEFINED.asString = function() {
     return 'undefined';
+  };
+
+  UNDEFINED.asPrimitive = function() {
+    return UNDEFINED;
   };
 
   if (window.jinter == null) {

@@ -17,16 +17,20 @@
     throw new Error("Cannot set property " + key + " of null");
   };
 
-  NULL.toNumber = function() {
+  NULL.asNumber = function() {
     return 0;
   };
 
-  NULL.toBoolean = function() {
+  NULL.asBoolean = function() {
     return false;
   };
 
-  NULL.toString = function() {
+  NULL.asString = function() {
     return 'null';
+  };
+
+  NULL.asPrimitive = function() {
+    return NULL;
   };
 
   if (window.jinter == null) {

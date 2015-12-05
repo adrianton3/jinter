@@ -13,19 +13,19 @@
 
   NUMBER.prototype.typeOf = 'number';
 
-  NUMBER.prototype.toNumber = function() {
+  NUMBER.prototype.asNumber = function() {
     return this.value;
   };
 
-  NUMBER.prototype.toBoolean = function() {
+  NUMBER.prototype.asBoolean = function() {
     return Boolean(this.value);
   };
 
-  NUMBER.prototype.toString = function() {
+  NUMBER.prototype.asString = function() {
     return String(this.value);
   };
 
-  NUMBER.prototype.toPrimitive = function() {
+  NUMBER.prototype.asPrimitive = function() {
     return this;
   };
 

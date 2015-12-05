@@ -6,7 +6,7 @@
   getVars = function(ast) {
     var functionDeclarations, functions, vars;
     vars = new Set;
-    functionDeclarations = new Set;
+    functionDeclarations = new Map;
     functions = [];
     estraverse.traverse(ast, {
       enter: function(node, parent) {
@@ -21,14 +21,14 @@
           vars.add(node.id.name);
         }
         if (node.type === 'FunctionDeclaration') {
-          return functionDeclarations.add(node);
+          return functionDeclarations.set(node.id.name, node);
         }
       }
     });
     return {
-      vars: vars,
-      functions: functions,
-      functionDeclarations: functionDeclarations
+      vars: Array.from(vars),
+      functionDeclarations: Array.from(functionDeclarations.values()),
+      functions: functions
     };
   };
 

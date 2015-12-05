@@ -36,16 +36,19 @@
     var OPERATORS;
     OPERATORS = {
       '+': function(operand) {
-        return new NUMBER(operand.toNumber());
+        return new NUMBER(operand.asNumber());
       },
       '-': function(operand) {
-        return new NUMBER(-operand.toNumber());
+        return new NUMBER(-operand.asNumber());
       },
       '!': function(operand) {
-        return new BOOLEAN(!operand.toBoolean());
+        return new BOOLEAN(!operand.asBoolean());
       },
       'typeof': function(operand) {
         return new STRING(operand.typeOf);
+      },
+      'void': function(operand) {
+        return UNDEFINED;
       }
     };
     return Nodes['UnaryExpression'] = function(exp, env) {
@@ -79,19 +82,19 @@
     OPERATORS = {
       '+': function(left, right) {
         var leftPrimitive, rightPrimitive;
-        leftPrimitive = left.toPrimitive();
-        rightPrimitive = right.toPrimitive();
+        leftPrimitive = left.asPrimitive();
+        rightPrimitive = right.asPrimitive();
         if (leftPrimitive.type === 'string' || rightPrimitive.type === 'string') {
-          return new STRING(leftPrimitive.toString() + rightPrimitive.toString());
+          return new STRING(leftPrimitive.asString() + rightPrimitive.asString());
         } else {
-          return new NUMBER(leftPrimitive.toNumber() + rightPrimitive.toNumber());
+          return new NUMBER(leftPrimitive.asNumber() + rightPrimitive.asNumber());
         }
       },
       '-': function(left, right) {
-        return new NUMBER(left.toNumber() - right.toNumber());
+        return new NUMBER(left.asNumber() - right.asNumber());
       },
       '*': function(left, right) {
-        return new NUMBER(left.toNumber() * right.toNumber());
+        return new NUMBER(left.asNumber() * right.asNumber());
       },
       '===': function(left, right) {
         return new BOOLEAN(eqeqeq(left, right));
@@ -104,6 +107,26 @@
       },
       '!=': function(left, right) {
         return new BOOLEAN(!eqeq(left, right));
+      },
+      '<': function(left, right) {
+        var leftPrimitive, rightPrimitive;
+        leftPrimitive = left.type === 'object' ? left.asPrimitive() : left;
+        rightPrimitive = right.type === 'object' ? right.asPrimitive() : right;
+        if (leftPrimitive.type === 'string' && rightPrimitive.type === 'string') {
+          return new BOOLEAN(leftPrimitive.value < rightPrimitive.value);
+        } else {
+          return new BOOLEAN(leftPrimitive.asNumber() < rightPrimitive.asNumber());
+        }
+      },
+      '<=': function(left, right) {
+        var leftPrimitive, rightPrimitive;
+        leftPrimitive = left.type === 'object' ? left.asPrimitive() : left;
+        rightPrimitive = right.type === 'object' ? right.asPrimitive() : right;
+        if (leftPrimitive.type === 'string' && rightPrimitive.type === 'string') {
+          return new BOOLEAN(leftPrimitive.value <= rightPrimitive.value);
+        } else {
+          return new BOOLEAN(leftPrimitive.asNumber() <= rightPrimitive.asNumber());
+        }
       }
     };
     return Nodes['BinaryExpression'] = function(exp, env) {
@@ -117,17 +140,15 @@
   Nodes['LogicalExpression'] = function(exp, env) {
     var left, leftBoolean;
     left = ev(exp.left, env);
-    leftBoolean = left.toBoolean();
-    switch (exp.operator) {
-      case '&&':
-        if (!leftBoolean) {
-          return left;
-        }
-        break;
-      case '||':
-        if (leftBoolean) {
-          return left;
-        }
+    leftBoolean = left.asBoolean();
+    if (exp.operator === '&&') {
+      if (!leftBoolean) {
+        return left;
+      }
+    } else {
+      if (leftBoolean) {
+        return left;
+      }
     }
     return ev(exp.right, env);
   };
@@ -135,7 +156,7 @@
   Nodes['ConditionalExpression'] = function(exp, env) {
     var testResult;
     testResult = ev(exp.test, env);
-    if (testResult.toBoolean()) {
+    if (testResult.asBoolean()) {
       return ev(exp.consequent, env);
     } else {
       return ev(exp.alternate, env);
@@ -145,7 +166,7 @@
   Nodes['IfStatement'] = function(exp, env) {
     var testResult;
     testResult = ev(exp.test, env);
-    if (testResult.toBoolean()) {
+    if (testResult.asBoolean()) {
       return ev(exp.consequent, env);
     } else if (exp.alternate != null) {
       return ev(exp.alternate, env);
@@ -154,7 +175,7 @@
 
   Nodes['WhileStatement'] = function(exp, env) {
     var returnCandidate;
-    while ((ev(exp.test, env)).toBoolean()) {
+    while ((ev(exp.test, env)).asBoolean()) {
       returnCandidate = ev(exp.body, env);
       if (returnCandidate != null ? returnCandidate["return"] : void 0) {
         return returnCandidate;
@@ -165,7 +186,7 @@
   Nodes['ForStatement'] = function(exp, env) {
     var returnCandidate;
     ev(exp.init, env);
-    while ((ev(exp.test, env)).toBoolean()) {
+    while ((ev(exp.test, env)).asBoolean()) {
       returnCandidate = ev(exp.body, env);
       if (returnCandidate != null ? returnCandidate["return"] : void 0) {
         return returnCandidate;
@@ -187,8 +208,10 @@
   };
 
   computeMemberKey = function(exp, env) {
+    var key;
     if (exp.computed) {
-      return (ev(exp.property, env)).toString();
+      key = ev(exp.property, env);
+      return key.asString();
     } else {
       return exp.property.name;
     }
@@ -216,6 +239,33 @@
     return value;
   };
 
+  Nodes['UpdateExpression'] = function(exp, env) {
+    var entry, key, name, object, oldValue, value;
+    if (exp.operator !== '++' || exp.prefix) {
+      throw new Error("update operator " + exp.operator + " not implemented");
+    }
+    if (exp.argument.type === 'MemberExpression') {
+      object = ev(exp.argument.object, env);
+      key = computeMemberKey(exp.argument, env);
+      entry = object.get(key);
+      oldValue = (entry != null ? entry.descriptor : void 0) != null ? entry.get != null ? call(entry.get, object, []) : UNDEFINED : entry;
+      value = new NUMBER(oldValue.asNumber() + 1);
+      if ((entry != null ? entry.descriptor : void 0) != null) {
+        if (entry.set != null) {
+          call(entry.set, object, [value]);
+        }
+      } else {
+        object.put(key, value);
+      }
+    } else {
+      name = exp.argument.name;
+      oldValue = ev(exp.argument, env);
+      value = new NUMBER(oldValue.asNumber() + 1);
+      env.set(name, value);
+    }
+    return oldValue;
+  };
+
   Nodes['SequenceExpression'] = function(exp, env) {
     return exp.expressions.reduce(function(prev, expression) {
       return ev(expression, env);
@@ -235,9 +285,11 @@
   };
 
   Nodes['ReturnStatement'] = function(exp, env) {
+    var value;
+    value = exp.argument != null ? ev(exp.argument, env) : UNDEFINED;
     return {
       "return": true,
-      value: ev(exp.argument, env)
+      value: value
     };
   };
 

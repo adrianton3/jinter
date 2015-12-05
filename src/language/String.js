@@ -11,19 +11,19 @@
 
   STRING.prototype.typeOf = 'string';
 
-  STRING.prototype.toNumber = function() {
+  STRING.prototype.asNumber = function() {
     return Number(this.value);
   };
 
-  STRING.prototype.toBoolean = function() {
+  STRING.prototype.asBoolean = function() {
     return Boolean(this.value);
   };
 
-  STRING.prototype.toString = function() {
+  STRING.prototype.asString = function() {
     return this.value;
   };
 
-  STRING.prototype.toPrimitive = function() {
+  STRING.prototype.asPrimitive = function() {
     return this;
   };
 
