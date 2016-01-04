@@ -11,7 +11,6 @@
 
 {
 	getEvaluator
-	metaEval
 } = meta
 
 
@@ -27,9 +26,11 @@ describe 'ev (meta)', ->
 			result.toString()
 
 
+	metaEv = null
+
 	beforeAll (done) ->
 		getEvaluator().then (evaluator) ->
-			metaEval = metaEval evaluator
+			metaEv = evaluator
 			done()
 		return
 
@@ -42,8 +43,4 @@ describe 'ev (meta)', ->
 			(Object.keys its).forEach (text) ->
 				spec = its[text]
 				it text, ->
-					(expect metaEval spec).toEqual (jsEv spec)
-					return
-				return
-			return
-		return
+					(expect metaEv spec).toEqual (jsEv spec)

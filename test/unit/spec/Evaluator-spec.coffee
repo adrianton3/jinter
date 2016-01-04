@@ -44,7 +44,3 @@ describe 'ev', ->
 				spec = its[text]
 				it text, ->
 					(expect jinterEv spec).toEqual (jsEv spec)
-					return
-				return
-			return
-		return

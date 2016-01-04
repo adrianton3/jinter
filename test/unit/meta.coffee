@@ -60,19 +60,13 @@ getDecoratedTree = (string) ->
 	tree
 
 
-getEvaluator = ->
-	fetchFiles files
-	.then (sources) ->
-		sources.reduce (prev, cur) -> prev + cur
-
-
-metaEval = (evaluator) ->
+makeEv = (evaluatorSource) ->
 	(expression) ->
 		tree = getDecoratedTree expression
 		stringifiedTree = JSON.stringify tree
 
 		bundle = """
-			#{evaluator}
+			#{evaluatorSource}
 			var tree = #{stringifiedTree};
 
 			var result = jinter.ev(tree, jinter.EMPTY);
@@ -82,6 +76,12 @@ metaEval = (evaluator) ->
 		jinterEv bundle
 
 
+getEvaluator = ->
+	fetchFiles files
+	.then (sources) ->
+		completeSource = sources.reduce (prev, cur) -> prev + cur
+		makeEv completeSource
+
+
 window.meta ?= {}
 window.meta.getEvaluator = getEvaluator
-window.meta.metaEval = metaEval
