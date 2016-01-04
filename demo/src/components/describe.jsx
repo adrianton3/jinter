@@ -12,12 +12,12 @@ var Describe = React.createClass({
 	},
 	render: function () {
 		if (this.state.visible) {
-			function createIt(text, source, index) {
-				return <It text={text} source={source} key={index} />;
+			function createIt(text, source) {
+				return <It text={text} source={source} key={text} />;
 			}
 
-			var items = Object.keys(this.props.its).map(function (it, index) {
-				return createIt(it, this.props.its[it], index);
+			var items = Object.keys(this.props.its).map(function (it) {
+				return createIt(it, this.props.its[it]);
 			}, this);
 
 			return <div>
