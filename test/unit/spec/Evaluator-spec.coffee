@@ -35,13 +35,16 @@ describe 'ev', ->
 			result.toString()
 
 
-	for title, its of window.snippets
-		do (title, its) ->
-			describe title, ->
-				for text, spec of its
-					do (text, spec) ->
-						it text, ->
-							(expect jinterEv spec).toEqual (jsEv spec)
-							return
+	snippets = window.snippets
+
+	(Object.keys snippets).forEach (title) ->
+		its = snippets[title]
+		describe title, ->
+			(Object.keys its).forEach (text) ->
+				spec = its[text]
+				it text, ->
+					(expect jinterEv spec).toEqual (jsEv spec)
+					return
 				return
-	return
+			return
+		return
