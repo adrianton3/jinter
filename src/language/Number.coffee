@@ -13,6 +13,14 @@ NUMBER::type = 'number'
 NUMBER::typeOf = 'number'
 
 
+NUMBER::get = (key) ->
+	jinter.NUMBER_PROTOTYPE.get key
+
+
+NUMBER::set = ->
+	null
+
+
 NUMBER::asNumber = ->
 	@value
 

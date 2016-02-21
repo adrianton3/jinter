@@ -346,6 +346,16 @@ snippets =
 		'null': 'Number(null)'
 		'undefined': 'Number(undefined)'
 
+	'Number prototype':
+		'can call methods on numbers': '''
+			Number.prototype.f = function () { return "asd" }
+			123..f()
+		'''
+		'can call methods on numbers and pass this': '''
+			Number.prototype.f = function () { return this }
+			123..f()
+		'''
+
 	'Boolean':
 		'number': 'Boolean(123)'
 		'NaN': 'Boolean(NaN)'

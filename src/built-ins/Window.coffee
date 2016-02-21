@@ -8,6 +8,7 @@
 	BOOLEAN,
 	NUMBER,
 	STRING,
+	NUMBER_FUNCTION
 	NATIVE_FUNCTION
 } = jinter
 
@@ -58,9 +59,7 @@ WINDOW.put 'parseInt', new NATIVE_FUNCTION (candidate, optionalBase) ->
 	value: new NUMBER resultRaw
 
 
-WINDOW.put 'Number', new NATIVE_FUNCTION (candidate) ->
-	return: true
-	value: new NUMBER candidate.asNumber()
+WINDOW.put 'Number', NUMBER_FUNCTION
 
 
 WINDOW.put 'Boolean', new NATIVE_FUNCTION (candidate) ->
