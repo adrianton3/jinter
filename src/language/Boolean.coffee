@@ -10,6 +10,14 @@ BOOLEAN::type = 'boolean'
 BOOLEAN::typeOf = 'boolean'
 
 
+BOOLEAN::get = (key) ->
+	jinter.BOOLEAN_PROTOTYPE.get key
+
+
+BOOLEAN::set = ->
+	null
+
+
 BOOLEAN::asNumber = ->
 	Number @value
 

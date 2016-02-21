@@ -1,9 +1,6 @@
 'use strict'
 
 
-{ STRING } = jinter
-
-
 NUMBER = (value) ->
 	@value = Number value
 	return

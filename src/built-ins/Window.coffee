@@ -2,13 +2,15 @@
 
 
 {
-	OBJECT,
-	UNDEFINED,
-	NULL,
-	BOOLEAN,
-	NUMBER,
-	STRING,
+	OBJECT
+	UNDEFINED
+	NULL
+	BOOLEAN
+	NUMBER
+	STRING
 	NUMBER_FUNCTION
+	BOOLEAN_FUNCTION
+	STRING_FUNCTION
 	NATIVE_FUNCTION
 } = jinter
 
@@ -62,14 +64,10 @@ WINDOW.put 'parseInt', new NATIVE_FUNCTION (candidate, optionalBase) ->
 WINDOW.put 'Number', NUMBER_FUNCTION
 
 
-WINDOW.put 'Boolean', new NATIVE_FUNCTION (candidate) ->
-	return: true
-	value: new BOOLEAN candidate.asBoolean()
+WINDOW.put 'Boolean', BOOLEAN_FUNCTION
 
 
-WINDOW.put 'String', new NATIVE_FUNCTION (candidate) ->
-	return: true
-	value: new STRING candidate.asString()
+WINDOW.put 'String', STRING_FUNCTION
 
 
 window.jinter ?= {}

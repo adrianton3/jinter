@@ -10,6 +10,14 @@ STRING::type = 'string'
 STRING::typeOf = 'string'
 
 
+STRING::get = (key) ->
+	jinter.STRING_PROTOTYPE.get key
+
+
+STRING::set = ->
+	null
+
+
 STRING::asNumber = ->
 	Number @value
 

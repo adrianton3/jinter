@@ -22,6 +22,8 @@ files = [
 	'../../src/built-ins/FunctionPrototype.js'
 	'../../src/language/Function.js'
 	'../../src/built-ins/NumberPrototype.js'
+	'../../src/built-ins/BooleanPrototype.js'
+	'../../src/built-ins/StringPrototype.js'
 	'../../src/built-ins/ObjectPrototype.js'
 	'../../src/built-ins/ArrayPrototype.js'
 	'../../src/built-ins/Array.js'

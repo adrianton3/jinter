@@ -366,6 +366,16 @@ snippets =
 		'null': 'Boolean(null)'
 		'undefined': 'Boolean(undefined)'
 
+	'Boolean prototype':
+		'can call methods on booleans': '''
+			Boolean.prototype.f = function () { return "asd" }
+			true.f()
+		'''
+		'can call methods on booleans and pass this': '''
+			Boolean.prototype.f = function () { return this }
+			false.f()
+		'''
+
 	'String':
 		'number': 'String(123)'
 		'NaN': 'String(NaN)'
@@ -376,6 +386,16 @@ snippets =
 		'object with toString': 'String({ toString: function () { return "asd" } })'
 		'null': 'String(null)'
 		'undefined': 'String(undefined)'
+
+	'String prototype':
+		'can call methods on strings': '''
+			String.prototype.f = function () { return "asd" }
+			'dsa'.f()
+		'''
+		'can call methods on strings and pass this': '''
+			String.prototype.f = function () { return this }
+			'dsa'.f()
+		'''
 
 
 window.snippets ?= {}
