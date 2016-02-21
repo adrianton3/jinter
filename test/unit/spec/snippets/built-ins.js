@@ -154,6 +154,10 @@
       'null': 'Number(null)',
       'undefined': 'Number(undefined)'
     },
+    'Number prototype': {
+      'can call methods on numbers': 'Number.prototype.f = function () { return "asd" }\n123..f()',
+      'can call methods on numbers and pass this': 'Number.prototype.f = function () { return this }\n123..f()'
+    },
     'Boolean': {
       'number': 'Boolean(123)',
       'NaN': 'Boolean(NaN)',
@@ -163,6 +167,10 @@
       'object': 'Boolean({})',
       'null': 'Boolean(null)',
       'undefined': 'Boolean(undefined)'
+    },
+    'Boolean prototype': {
+      'can call methods on booleans': 'Boolean.prototype.f = function () { return "asd" }\ntrue.f()',
+      'can call methods on booleans and pass this': 'Boolean.prototype.f = function () { return this }\nfalse.f()'
     },
     'String': {
       'number': 'String(123)',
@@ -174,6 +182,10 @@
       'object with toString': 'String({ toString: function () { return "asd" } })',
       'null': 'String(null)',
       'undefined': 'String(undefined)'
+    },
+    'String prototype': {
+      'can call methods on strings': 'String.prototype.f = function () { return "asd" }\n\'dsa\'.f()',
+      'can call methods on strings and pass this': 'String.prototype.f = function () { return this }\n\'dsa\'.f()'
     }
   };
 
