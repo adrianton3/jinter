@@ -19,6 +19,7 @@ Language constructs supported:
  + function expressions/declarations
  + the `new` operator and `this`
  + prototypes, prototype chains, the non-standard `__proto__`
+ + methods on primitives
  + Arrays (`pop`, `push`, `slice`, `join`, `toString`, `forEach`, `map`, `filter`, `reduce`)
  + Maps (`get`, `has`, `set`, `forEach`)
  + `Function::apply`, `Function::call`
