@@ -11,6 +11,14 @@
 
   BOOLEAN.prototype.typeOf = 'boolean';
 
+  BOOLEAN.prototype.get = function(key) {
+    return jinter.BOOLEAN_PROTOTYPE.get(key);
+  };
+
+  BOOLEAN.prototype.set = function() {
+    return null;
+  };
+
   BOOLEAN.prototype.asNumber = function() {
     return Number(this.value);
   };

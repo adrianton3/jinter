@@ -11,6 +11,14 @@
 
   STRING.prototype.typeOf = 'string';
 
+  STRING.prototype.get = function(key) {
+    return jinter.STRING_PROTOTYPE.get(key);
+  };
+
+  STRING.prototype.set = function() {
+    return null;
+  };
+
   STRING.prototype.asNumber = function() {
     return Number(this.value);
   };
